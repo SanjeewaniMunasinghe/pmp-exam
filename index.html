@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ── Open Graph / WhatsApp / iMessage preview ── -->
+<title>PMP Mock Exam | Sanjeewani Munasinghe</title>
+<meta name="description" content="PMP Exam Practice — 80 scenario-based questions across Paper 1 (Foundation) and Paper 2 (Advanced). Covering PMP Fundamentals, People Domain, and Process Domain. Instant feedback on every answer.">
+
+<!-- Open Graph tags — these control WhatsApp/Facebook/Telegram previews -->
+<meta property="og:title" content="PMP Mock Exam Practice | Sanjeewani Munasinghe">
+<meta property="og:description" content="80 real-style PMP exam questions — Paper 1 (Foundation) + Paper 2 (Advanced). Instant answer feedback. Trainer dashboard with student progress tracking.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://raw.githubusercontent.com/YOUR-USERNAME/pmp-exam/main/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="PMP Exam Prep by Sanjeewani Munasinghe">
+
+<!-- Twitter card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PMP Mock Exam Practice | Sanjeewani Munasinghe">
+<meta name="twitter:description" content="80 real-style PMP exam questions with instant feedback and trainer dashboard.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/YOUR-USERNAME/pmp-exam/main/preview.png">
+
+<!-- WhatsApp specifically uses og:image — update the URL above after deployment -->
+
+<!-- Favicon -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+  #root { min-height: 100vh; }
+  input, button, textarea { font-family: inherit; }
+  button { cursor: pointer; }
+  @media (max-width: 600px) {
+    h1 { font-size: 28px !important; }
+    h2 { font-size: 18px !important; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- React + ReactDOM from CDN -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+<!-- Babel for JSX (in-browser transpilation) -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- ── LocalStorage-based storage (replaces Claude artifact storage) ── -->
+<script>
+window.storage = {
+  set: function(key, value, shared) {
+    try {
+      var prefix = shared ? 'shared_' : 'private_';
+      localStorage.setItem(prefix + key, value);
+      return Promise.resolve({ key: key, value: value, shared: !!shared });
+    } catch(e) {
+      return Promise.reject(e);
+    }
+  },
+  get: function(key, shared) {
+    try {
+      var prefix = shared ? 'shared_' : 'private_';
+      var v = localStorage.getItem(prefix + key);
+      if (v === null) return Promise.reject(new Error('Key not found: ' + key));
+      return Promise.resolve({ key: key, value: v, shared: !!shared });
+    } catch(e) {
+      return Promise.reject(e);
+    }
+  },
+  delete: function(key, shared) {
+    try {
+      var prefix = shared ? 'shared_' : 'private_';
+      localStorage.removeItem(prefix + key);
+      return Promise.resolve({ key: key, deleted: true, shared: !!shared });
+    } catch(e) {
+      return Promise.reject(e);
+    }
+  },
+  list: function(prefix, shared) {
+    try {
+      var storePrefix = shared ? 'shared_' : 'private_';
+      var keys = [];
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && k.startsWith(storePrefix + (prefix || ''))) {
+          keys.push(k.substring(storePrefix.length));
+        }
+      }
+      return Promise.resolve({ keys: keys, prefix: prefix, shared: !!shared });
+    } catch(e) {
+      return Promise.reject(e);
+    }
+  }
+};
+</script>
+
+<!-- ── The App ── -->
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef } = React;
+
+// ─── ALL QUESTIONS ────────────────────────────────────────────────
+const PAPERS = {
+  1: {
+    title: "Mock Exam — Paper 1",
+    subtitle: "PMP Fundamentals · People Domain · Process Domain Part 1",
+    color: "#0F2557",
+    accent: "#0D9488",
+    questions: [
+      { id:1, section:"PMP Fundamentals", diff:"Easy", q:"A project manager has been assigned to build a new mobile payment platform for a bank. The project has a defined start date, a budget of $2 million, and must be completed within 12 months. The team has not built this type of system before. Which characteristic BEST identifies this as a project rather than an operation?", opts:["It has a defined budget and timeline","It produces a unique outcome and is temporary in nature","It requires a project manager to oversee it","It involves multiple stakeholders and complex dependencies"], correct:1, explanation:"Projects are temporary endeavours producing unique outcomes. Temporary + unique = the defining characteristics. Budget and timeline alone do not distinguish projects from operations." },
+      { id:2, section:"PMP Fundamentals", diff:"Medium", q:"A company runs an annual performance review process that repeats every year with the same steps, the same team, and the same outputs. The HR director asks the PM to 'manage' this as a project each year. Is this correct, and why?", opts:["Yes — any planned work managed by a PM is a project","No — it is an operation; it is repetitive, ongoing, and produces no unique outcomes","Yes — it has a start and end date each year which makes it temporary","No — it should be managed as a programme since it repeats annually"], correct:1, explanation:"Operations are ongoing, repetitive activities sustaining the organisation. The annual review repeats with the same process and outputs — it is an operation, not a project." },
+      { id:3, section:"PMI Talent Triangle", diff:"Medium", q:"A newly certified PMP is advising a client on restructuring their project governance framework. She draws on her knowledge of organisational dynamics, stakeholder engagement, and change management. According to the PMI Talent Triangle 2022, which skill area is she demonstrating?", opts:["Ways of Working","Power Skills","Business Acumen","Technical Project Management"], correct:1, explanation:"Power Skills (formerly Leadership) covers interpersonal skills, stakeholder engagement, change management, and influencing." },
+      { id:4, section:"6 Constraints", diff:"Easy", q:"A project manager is managing the construction of a hospital wing. The project is 70% complete. The sponsor requests a 20% reduction in scope to bring the project under budget. Which constraint is the sponsor asking the PM to modify?", opts:["Schedule","Quality","Risk","Scope"], correct:3, explanation:"The sponsor is asking to reduce SCOPE to address the cost issue. Changing one constraint affects others." },
+      { id:5, section:"6 Constraints", diff:"Hard", q:"During project execution, the customer requests an additional feature not in the original scope. The PM analyses the impact: +2 weeks to schedule, +$50,000 to budget, quality unaffected. The sponsor approves the change. Which statement BEST describes this scenario?", opts:["The PM failed by allowing scope creep to occur","The PM successfully managed a scope change by assessing and documenting all constraint impacts before approval","The PM should have refused the request since it changes the original plan","The customer's request should be handled informally since the sponsor has approved it verbally"], correct:1, explanation:"Approved scope changes that assess all constraint impacts are GOOD project management — not scope creep. Scope creep is UNAPPROVED change." },
+      { id:6, section:"Role of the PM", diff:"Medium", q:"A project manager notices a team member has skills that are not being utilised. She reassigns them to a critical path activity that aligns with their skills, improving efficiency. Which PM role is she demonstrating?", opts:["Risk Manager","Sponsor Liaison","Resource Optimiser and Leader","Change Control Authority"], correct:2, explanation:"The PM's role includes optimising resources and leading people. Identifying underutilised talent and realigning assignments is a core PM leadership and resource management responsibility." },
+      { id:7, section:"PMI Talent Triangle", diff:"Medium", q:"A project manager presents quarterly results to the Board of Directors. She connects project metrics to the organisation's strategic goals, explains how the project ROI justifies continued investment, and provides a competitive analysis. Which skill area from the PMI Talent Triangle 2022 is she applying?", opts:["Power Skills","Ways of Working","Business Acumen","Technical Project Management"], correct:2, explanation:"Business Acumen involves understanding the organisation's strategy, connecting project outcomes to business value, and financial literacy." },
+      { id:8, section:"PMP Fundamentals", diff:"Hard", q:"A PM manages three concurrent projects. A portfolio manager oversees 12 projects and programmes. A programme manager coordinates four related projects delivering a new logistics platform. Which statement correctly describes the relationship?", opts:["Programme and portfolio managers have the same responsibilities","PM manages individual projects; programme manager coordinates related projects for strategic benefit; portfolio manager oversees all investments for strategic alignment","The portfolio manager must approve every change the PM makes","Portfolio management focuses on day-to-day delivery while programme management focuses on strategy"], correct:1, explanation:"PM = individual projects. Programme manager = coordinating related projects for combined benefits. Portfolio manager = strategic oversight of all programmes, projects, and operations." },
+      { id:9, section:"People Domain", diff:"Medium", q:"Two senior developers argue about technical approach for a critical module. The PM facilitates a structured discussion where both present evidence-based arguments and the team evaluates both approaches collaboratively before making a joint decision. Which conflict resolution technique is the PM using?", opts:["Compromising","Smoothing","Collaborate/Problem-Solve","Forcing"], correct:2, explanation:"Collaborate/Problem-Solve involves addressing the conflict directly, gathering facts from both sides, and working to a mutually acceptable solution. It is the PMI-preferred FIRST approach." },
+      { id:10, section:"People Domain", diff:"Easy", q:"A project manager has limited time before a major delivery milestone. She acknowledges a disagreement between two team members, asks both parties to set it aside temporarily, and schedules a structured resolution session for the following week. Which conflict resolution technique is she using?", opts:["Forcing","Withdraw/Avoid","Smooth/Accommodate","Compromise"], correct:1, explanation:"Withdraw/Avoid is deliberately postponing a conflict for a later time. It is NOT always wrong, but it is PMI's LAST preferred choice in most situations." },
+      { id:11, section:"Leadership Styles", diff:"Medium", q:"A project manager leads a high-performing, experienced agile team. The team has worked together for two years and consistently delivers above expectations. The PM provides general direction and trusts the team without micromanaging. Which leadership style BEST describes this approach?", opts:["Directing (Telling)","Delegating","Coaching","Transactional"], correct:1, explanation:"Delegating is appropriate for experienced, high-performing teams who need minimal oversight. Situational leadership matches style to team maturity." },
+      { id:12, section:"Motivation Theories", diff:"Medium", q:"A PM notices team members are satisfied with their salaries but still seem disengaged. She implements a recognition programme, assigns more challenging work, and creates advancement opportunities. According to Herzberg's Two-Factor Theory, which category of factors is she applying?", opts:["Hygiene factors — addressing basic needs","Motivators — providing growth, recognition, and achievement","Theory Y — assuming people are self-motivated","Expectancy factors — increasing the value of rewards"], correct:1, explanation:"Herzberg: Hygiene factors (salary) prevent dissatisfaction but do NOT motivate. MOTIVATORS (recognition, growth, achievement, challenging work) create positive motivation." },
+      { id:13, section:"Motivation Theories", diff:"Hard", q:"A colleague's management philosophy: 'He believes team members are fundamentally lazy and will avoid work if they can. He monitors attendance closely, sets rigid procedures, and relies on penalties for poor performance.' Which motivation theory does this reflect?", opts:["Theory Y — a positive assumption about worker motivation","Maslow's Hierarchy — meeting basic safety and security needs","Theory X — a negative assumption that workers must be controlled","McClelland's Theory — driven by need for power"], correct:2, explanation:"McGregor's Theory X assumes workers are lazy, avoid responsibility, and must be directed and controlled. Theory Y assumes workers are self-motivated and can be trusted." },
+      { id:14, section:"Tuckman's Stages", diff:"Medium", q:"A new cross-functional project team has just been assembled. In the first week, members are polite and cautious, learning about each other's backgrounds and the project goals. There is little conflict and everyone is on their best behaviour. In which stage of Tuckman's Team Development model is this team?", opts:["Norming","Storming","Performing","Forming"], correct:3, explanation:"Forming: team members meet, establish relationships, and understand goals. Behaviour is polite, cautious, and exploratory. The team is not yet productive." },
+      { id:15, section:"Tuckman's Stages", diff:"Medium", q:"Three months into a project, two team members have established a great workflow ahead of schedule. However, a third member consistently submits work late and the team is frustrated. They establish ground rules about deadlines. Which Tuckman stage BEST describes this team?", opts:["Forming","Storming","Norming","Adjourning"], correct:2, explanation:"Norming: team establishes working agreements, norms, and procedures. Conflict from Storming is being resolved. The team is developing cohesion." },
+      { id:16, section:"Servant Leadership", diff:"Hard", q:"A PM notices her team's velocity has dropped. She discovers a key team member is blocked waiting for a security review from another department. Rather than asking the team member to keep waiting, she personally schedules a meeting with the security department head and clears the impediment. Which leadership characteristic is she demonstrating?", opts:["Authoritative leadership — using her authority to force resolution","Servant leadership — removing impediments to enable the team to deliver","Transactional leadership — exchanging favours for performance","Laissez-faire — giving the team freedom to solve their own problems"], correct:1, explanation:"Servant leadership prioritises the needs of the team. Removing impediments — proactively eliminating obstacles that block team productivity — is the PRIMARY servant leadership behaviour." },
+      { id:17, section:"Stakeholder Management", diff:"Medium", q:"A PM identifies a stakeholder with HIGH influence over the project budget but LOW interest in day-to-day activities. The stakeholder could block project funding if dissatisfied. On the Power/Interest Grid, where should this stakeholder be placed?", opts:["Low power, high interest — Keep Informed","High power, high interest — Manage Closely","High power, low interest — Keep Satisfied","Low power, low interest — Monitor"], correct:2, explanation:"High power + Low interest = Keep Satisfied. These stakeholders can block your project but don't want details. Engage at a strategic level and address their concerns proactively." },
+      { id:18, section:"People Domain", diff:"Hard", q:"A PM leads a virtual team across Sri Lanka, India, and Singapore. Sri Lankan team members are reluctant to openly disagree with suggestions from senior colleagues in Singapore, even when they have valid concerns. What should the PM do FIRST?", opts:["Ignore cultural differences — people should adapt to professional standards","Establish team ground rules that explicitly create psychological safety for all team members to raise concerns without fear of hierarchy-based reprisal","Replace Sri Lankan team members with people who communicate more assertively","Report the Singapore team for creating an intimidating environment"], correct:1, explanation:"The PM's role in virtual/multicultural teams is to create psychological safety and explicit communication norms. Establishing ground rules that make concern-raising safe is the first proactive step." },
+      { id:19, section:"Emotional Intelligence", diff:"Medium", q:"During a project status meeting, the PM notices that a usually confident team lead seems withdrawn and gives unusually short answers. After the meeting, the PM privately asks if everything is okay. The team lead shares they are overwhelmed with competing demands. The PM adjusts the workload and offers support. Which dimension of EI is the PM primarily demonstrating?", opts:["Self-awareness","Self-regulation","Empathy","Motivation"], correct:2, explanation:"Empathy is recognising and understanding the emotional states of others and responding appropriately. The PM noticed the non-verbal cues and proactively addressed the team lead's situation." },
+      { id:20, section:"People Domain", diff:"Hard", q:"A project is experiencing performance issues. A team member consistently misses deadlines, produces below-standard work, and has been coached twice with no improvement. What should the PM do next?", opts:["Immediately remove the team member from the project","Document the performance issues formally, follow the organisation's HR process, and discuss consequences if performance does not improve within a defined timeframe","Give the team member more time — performance issues always resolve themselves","Assign all their work to other team members without addressing the issue"], correct:1, explanation:"PMI expects PMs to follow due process: document, coach, provide formal feedback, and follow HR procedures. Immediate removal without process is inappropriate." },
+      { id:21, section:"5 Process Groups", diff:"Easy", q:"A PM has just received approval to proceed with a new software project. Her next step is to formally authorise the project, identify the project manager, and document high-level scope, schedule, and budget. Which Process Group is she working in?", opts:["Planning","Executing","Initiating","Monitoring & Controlling"], correct:2, explanation:"Initiating is where the project is formally authorised. Key outputs include the Project Charter and Stakeholder Register. The PM is also formally appointed during this phase." },
+      { id:22, section:"Project Charter", diff:"Medium", q:"The IT Director verbally tells a PM to 'start building the new HR system.' The PM begins assigning resources and initiating development without any written authorisation. Two months later, the project is cancelled by the Finance department, which was never informed. What was the PRIMARY mistake?", opts:["The PM should have built the system faster before the Finance team noticed","No Project Charter was created — the project lacked formal authorisation, visibility, and executive commitment","The IT Director should have had more authority","The Finance department should not have had cancellation authority"], correct:1, explanation:"The Project Charter formally authorises the project and grants the PM authority. Without it, the project lacks visibility, commitment, and stakeholder alignment." },
+      { id:23, section:"Project Charter", diff:"Medium", q:"Who is PRIMARILY responsible for creating and signing the Project Charter?", opts:["The Project Manager — they have the most detailed knowledge","The Project Sponsor — they authorise the project and provide funding","The PMO — they own all project governance documents","The Steering Committee — collective approval is required"], correct:1, explanation:"The PROJECT SPONSOR creates and signs the Project Charter. The PM may assist in drafting it but is NOT the author. The sponsor's signature provides the official authorisation." },
+      { id:24, section:"Stakeholder Identification", diff:"Medium", q:"A PM has completed the Project Charter and is now identifying all parties who may affect or be affected by the project. She is documenting their interests, influence, involvement, and potential impact. What is the primary output of this process?", opts:["Risk Register","Stakeholder Register","Communications Management Plan","Project Management Plan"], correct:1, explanation:"Identify Stakeholders produces the STAKEHOLDER REGISTER — listing all stakeholders, their contact information, roles, interests, influence, and engagement classification." },
+      { id:25, section:"Stakeholder Identification", diff:"Hard", q:"A PM identifies 50 stakeholders for a government digital ID system. The minister has enormous political power but delegated all technical decisions to his deputy. A community group has low formal authority but could generate significant public opposition. How should the PM approach each?", opts:["Both stakeholders are equal — treat them the same way","The minister: Keep Satisfied (high power, low interest in technical detail). The community group: Keep Informed — their concern could create reputational risk","The minister should be actively managed daily. The community group should be ignored until launch","Both should be placed in the Manage Closely quadrant"], correct:1, explanation:"High power/low interest = Keep Satisfied with strategic updates. The community group has low formal power but high reputational impact — Keep Informed proactively." },
+      { id:26, section:"Planning Process Group", diff:"Easy", q:"A PM has completed Initiating and is now developing the scope statement, WBS, schedule, budget, risk register, and communications plan. Which Process Group is she working in?", opts:["Initiating","Planning","Executing","Closing"], correct:1, explanation:"Planning is where all subsidiary management plans are created. It is the most process-rich group with 24 processes across 10 knowledge areas." },
+      { id:27, section:"Scope Management", diff:"Medium", q:"A PM is defining the boundary of the project — what is included and what is explicitly excluded. She documents deliverables, acceptance criteria, constraints, and assumptions in detail. What document is she creating?", opts:["Project Charter","Scope Management Plan","Project Scope Statement","Work Breakdown Structure"], correct:2, explanation:"The PROJECT SCOPE STATEMENT defines what is included and excluded from the project. It documents deliverables, acceptance criteria, assumptions, and constraints." },
+      { id:28, section:"WBS", diff:"Medium", q:"A PM decomposes the project scope into smaller, more manageable components. She stops decomposing when she reaches work packages — the lowest level. What fundamental rule governs a correct WBS?", opts:["The WBS must have exactly five levels of decomposition","The 100% Rule — the WBS must capture 100% of the project work, no more and no less","The WBS must be organised by time in chronological order","Each work package must take no more than 8 hours to complete"], correct:1, explanation:"The 100% Rule: the WBS must include ALL work in the project scope — nothing more, nothing less. Missing work means unplanned effort. Extra work means out-of-scope tasks consuming budget." },
+      { id:29, section:"WBS", diff:"Hard", q:"During a project review, an auditor finds that significant integration testing is not in the WBS. Additionally, 'Stakeholder Training' in the WBS was never part of the agreed scope. What are the issues?", opts:["The WBS is too detailed — this is normal variation","Two violations of the 100% Rule: missing work (integration testing not in WBS) and extra work (training not in scope). Both indicate scope control failures","Only the missing integration testing is a problem — extra deliverables are acceptable","The WBS is a living document and can be changed freely during execution"], correct:1, explanation:"Both are 100% Rule violations. Missing work = scope gap. Extra deliverable not in scope = unauthorised scope addition. Both must go through formal change control." },
+      { id:30, section:"Schedule Management", diff:"Medium", q:"Activity B can only start after Activity A finishes. Activity D can start after Activity B STARTS (not after it finishes). Activities C and E can both begin once Activity A finishes. Which scheduling concept does Activity B-to-D represent?", opts:["Finish-to-Start (FS) — B must finish before D starts","Start-to-Start (SS) — D can start when B starts","Finish-to-Finish (FF) — both must finish together","Start-to-Finish (SF) — B starts when D finishes"], correct:1, explanation:"Start-to-Start (SS): the successor can START when the predecessor STARTS. D can start once B has started — they run in parallel from B's start point." },
+      { id:31, section:"Critical Path Method", diff:"Medium", q:"A project network has four paths: Path 1 = 18 days, Path 2 = 24 days, Path 3 = 21 days, Path 4 = 24 days. What is the project duration, which path(s) are critical, and what is the float on Path 1?", opts:["Project duration = 21 days. Path 3 is critical. Float on Path 1 = 3 days","Project duration = 24 days. Paths 2 and 4 are critical. Float on Path 1 = 6 days","Project duration = 18 days. Path 1 is critical. Paths 2, 3, and 4 have negative float","Project duration = 24 days. Only Path 2 is critical since it appeared first"], correct:1, explanation:"Project duration = the LONGEST path = 24 days. Paths 2 AND 4 are both critical (both = 24 days). Float on Path 1 = 24 - 18 = 6 days." },
+      { id:32, section:"Critical Path Method", diff:"Hard", q:"Activity X: ES=10, EF=16, LS=14, LF=20, Duration=6. What is the Total Float for Activity X, and is it on the critical path?", opts:["Total Float = 6 days. Yes, it is on the critical path","Total Float = 4 days. No, it is NOT on the critical path","Total Float = 0 days. Yes, it is on the critical path","Total Float = 4 days. It depends on the project duration"], correct:1, explanation:"Total Float = LS - ES = 14 - 10 = 4 days (or LF - EF = 20 - 16 = 4). Float > 0 means X is NOT on the critical path." },
+      { id:33, section:"Schedule Compression", diff:"Medium", q:"The sponsor asks the PM to reduce the schedule by 3 weeks. Option A: add 5 developers to coding on the critical path at $60,000. Option B: overlap testing with the last 3 weeks of coding by having the test team begin writing test cases while coding continues. Which techniques are Options A and B?", opts:["Option A = Fast Tracking. Option B = Crashing","Option A = Crashing. Option B = Fast Tracking","Both are crashing — just different types","Option A = Resource levelling. Option B = Schedule compression"], correct:1, explanation:"CRASHING = adding resources to shorten duration (costs more money). FAST TRACKING = overlapping activities that were originally sequential (increases risk)." },
+      { id:34, section:"Schedule Compression", diff:"Hard", q:"A PM needs to recover 2 weeks. Activity P: crash from 10 to 8 days for $20,000 ($10,000/day). Activity Q: crash from 15 to 12 days for $15,000 ($5,000/day). Which activity should she crash FIRST to recover 2 days at LOWEST cost?", opts:["Activity P — crash it first because it saves more total time (2 days)","Activity Q — crash it first because it costs less per day ($5,000/day vs $10,000/day)","Both activities should be crashed simultaneously","Neither — the PM should use fast tracking since it is cheaper"], correct:1, explanation:"Crash cost per day: P = $10,000/day. Q = $5,000/day. Always crash the activity with the LOWEST cost per day first." },
+      { id:35, section:"WBS", diff:"Medium", q:"A PM creates a WBS. The lowest level under Development shows specific screens to build. What is this lowest level called, and what can be done with it?", opts:["Control accounts — they can be assigned budgets for cost tracking","Work packages — they can be scheduled, estimated, monitored, and assigned to a team member","Decomposed tasks — they can only be used for resource planning","Milestones — they mark the completion of significant deliverables"], correct:1, explanation:"WORK PACKAGES are the lowest level of the WBS. They are small enough to schedule, estimate, monitor, and assign. They feed directly into the activity list for schedule development." },
+      { id:36, section:"5 Process Groups", diff:"Medium", q:"A PM is comparing actual project performance against the baseline, identifying variances, and taking corrective actions. He updates the schedule, requests changes through the change control process, and reports status. Which Process Group BEST describes these activities?", opts:["Planning — updating plans is a planning activity","Executing — the team is still doing work","Monitoring & Controlling — tracking, reviewing, and regulating progress","Closing — preparing final status reports"], correct:2, explanation:"Monitoring & Controlling involves measuring performance against baselines, identifying variances, and initiating corrective or preventive actions." },
+      { id:37, section:"Scope Management", diff:"Hard", q:"The QA team has verified all deliverables meet quality specifications (passed QC checks). The PM schedules a formal acceptance meeting with the customer, who accepts and signs. Which two processes occurred in sequence?", opts:["Plan Quality Management → Control Quality","Control Quality (QC check) → Validate Scope (customer acceptance)","Validate Scope → Control Quality","Scope Definition → WBS Creation"], correct:1, explanation:"Control Quality (QC) = PM/team inspects deliverables for defects. THEN Validate Scope = customer formally accepts deliverables. QC comes BEFORE Validate Scope." },
+      { id:38, section:"Project Charter", diff:"Hard", q:"A PM needs a document that defines the business problem being solved, the strategic justification, the expected benefits and ROI, and outlines the high-level approach. A colleague says this should be the Project Charter. Who is correct?", opts:["The colleague — the Project Charter covers all of this","The PM — what is described is a Business Case, which precedes and informs the Project Charter","Both documents are the same","Neither — this information belongs in the Project Management Plan"], correct:1, explanation:"The BUSINESS CASE justifies WHY the project should be approved (problem, ROI, alternatives). It is created BEFORE the project is authorised. The Project Charter is created AFTER approval." },
+      { id:39, section:"Schedule Management", diff:"Hard", q:"Activity A: ES=0, EF=5. Activity B: ES=0, EF=8. Activity C depends on both A and B, duration=4 days. Activities D (3d) and E (6d) both depend on C. Activity F depends on both D and E, duration=2 days. Calculate the total project duration.", opts:["Project duration = 14 days via path A-C-D-F","Project duration = 17 days via A-C-E-F","Project duration = 20 days via B-C-E-F (ES(C)=8, EF(C)=12, ES(E)=12, EF(E)=18, ES(F)=18, EF(F)=20)","Project duration = 16 days via B-C-D-F"], correct:2, explanation:"C's ES=MAX(EF_A=5, EF_B=8)=8. EF(C)=12. D:ES=12,EF=15. E:ES=12,EF=18. F's ES=MAX(15,18)=18. EF(F)=20. Critical path: B→C→E→F = 20 days." },
+      { id:40, section:"5 Process Groups", diff:"Medium", q:"A project has just been completed. The PM is conducting final project reviews, obtaining formal stakeholder sign-off, archiving project documents, releasing team members, and documenting lessons learned. Which Process Group is she working in?", opts:["Monitoring & Controlling","Executing","Closing","Planning"], correct:2, explanation:"Closing involves final acceptance, formal closure, archiving records, releasing resources, and capturing lessons learned. Key output: Final Project Report." },
+    ]
+  },
+  2: {
+    title: "Mock Exam — Paper 2",
+    subtitle: "Advanced Scenarios · PMI Mindset · Harder Questions",
+    color: "#1E1B4B",
+    accent: "#7C3AED",
+    questions: [
+      { id:1, section:"PMP Fundamentals", diff:"Hard", q:"A PM is assigned to implement a new hospital management system. Midway through, the board changes strategy — the system will be replaced with a cloud platform in 18 months, making the current project obsolete. The sponsor says to continue since funds are committed. What should the PM recommend?", opts:["Continue the project — the sponsor has authority to make this decision","Immediately stop all project work and refund unused budget","Conduct a formal reassessment of the business case, present the strategic misalignment to the sponsor and steering committee, and recommend terminating or redirecting the project based on current organisational value","Reduce scope to complete a minimal version quickly before the 18-month deadline"], correct:2, explanation:"PMI expects PMs to challenge decisions that undermine project value. The PM must reassess the business case when strategic direction changes. Continuing purely due to sunk cost is wrong — PMI does not accept sunk cost as justification." },
+      { id:2, section:"6 Constraints", diff:"Hard", q:"A customer requests a new feature for a software project. Analysis shows: +3 weeks to schedule, +$40,000 cost, +2 developers needed, quality unaffected. The sponsor approves informally over the phone. What must the PM do NEXT?", opts:["Begin adding the feature immediately since the sponsor approved it","Document the sponsor's verbal approval in an email and proceed","Raise a formal change request, assess impacts on ALL constraints, get WRITTEN approval through change control, then update the project management plan","Ask the customer to wait until the next phase"], correct:2, explanation:"PMI requires ALL scope changes to go through formal Integrated Change Control — regardless of verbal sponsor approval. A phone call is NOT a change request. The PM must document, assess all constraints, get written approval, and update the plan." },
+      { id:3, section:"PMI Talent Triangle", diff:"Medium", q:"A PM preparing for project kickoff researches how similar projects have been delivered across the industry, studies the latest agile and hybrid delivery models, and identifies which approach best fits the project context. She decides to use a hybrid lifecycle. Which PMI Talent Triangle skill area is she primarily demonstrating?", opts:["Power Skills — she is influencing stakeholders with her delivery decision","Business Acumen — she is connecting project approach to organisational value","Ways of Working — she is selecting the most appropriate delivery methodology and practices for the project","Technical Project Management — she is applying scheduling and planning tools"], correct:2, explanation:"Ways of Working covers knowledge of delivery approaches — predictive, agile, hybrid — and selecting the right method for the context." },
+      { id:4, section:"PMP Fundamentals", diff:"Hard", q:"An organisation runs three related projects (customer portal, data migration, staff training) coordinated to deliver a full digital transformation. A new PM joins and is told to 'manage the programme.' Each project already has its own PM. What is the programme manager's PRIMARY role?", opts:["Manage the day-to-day delivery of all three projects simultaneously","Replace the three individual PMs with a single unified project team","Coordinate the interdependencies between the three projects, manage shared resources, and ensure the combined deliverables produce the intended strategic outcome","Report project status to the PMO on behalf of all three project managers"], correct:2, explanation:"Programme management adds value by coordinating related projects to achieve COMBINED BENEFITS that individual projects cannot deliver alone. The programme manager manages interdependencies, shared risks, and strategic alignment." },
+      { id:5, section:"Role of the PM", diff:"Hard", q:"A PM notices two functional teams are developing components that need to integrate at the end of the project. Neither team is aware of the other's technical specifications. The integration is 4 months away. The PM is not a technical expert. What should she do FIRST?", opts:["Escalate to the sponsor immediately and ask them to resolve the issue","Wait until integration testing to identify and resolve any incompatibilities","Facilitate a technical alignment meeting between the two teams now, document integration specifications, and update the project plan with integration checkpoints","Hire an external integration consultant to manage the technical dependency"], correct:2, explanation:"The PM's role is to proactively identify and manage risks and dependencies — not wait for problems to occur. The PM facilitates collaboration between teams, even without being a technical expert." },
+      { id:6, section:"PMP Fundamentals", diff:"Medium", q:"A project is high-risk because the organisation has never attempted this type of project and requirements are poorly understood. A colleague suggests an iterative approach where the team delivers working outputs in small increments to gather feedback and refine requirements. Which characteristic of projects does this scenario BEST illustrate?", opts:["Projects are always delivered using predictive (waterfall) methods","Projects involve uncertainty — different delivery approaches manage that uncertainty differently, and the PM must select the approach that fits the context","Projects must always produce a full plan before beginning — uncertainty is not acceptable","Projects with high uncertainty should be cancelled until requirements are clear"], correct:1, explanation:"PMI ECO 2021: projects involve uncertainty. The PM tailors the delivery approach to the level of uncertainty. High uncertainty = iterative/agile approaches." },
+      { id:7, section:"PMI Talent Triangle", diff:"Hard", q:"A PM proposes to the board to increase the project budget by 15% due to unexpected regulatory changes. She presents a revised cost-benefit analysis showing the investment protects the organisation from a $2M compliance penalty and maps the project outcome to the company's 3-year strategic revenue target. The board approves. Which PMI Talent Triangle skill area enabled the PM to secure approval?", opts:["Ways of Working — she used project management tools effectively","Power Skills — she influenced stakeholders and communicated persuasively","Business Acumen — she demonstrated financial literacy, strategic alignment, and value justification","Both Power Skills and Business Acumen — both were equally demonstrated"], correct:3, explanation:"This scenario demonstrates BOTH Power Skills (stakeholder influence, persuasive communication) AND Business Acumen (financial analysis, ROI, cost-benefit, strategic mapping). Real PM situations often require multiple Talent Triangle skills simultaneously." },
+      { id:8, section:"6 Constraints", diff:"Hard", q:"A project is 2 weeks behind schedule due to a supplier delay. Option 1: Fast track two activities (increases risk). Option 2: Add a weekend shift (+$30,000). Option 3: Reduce scope by removing two non-critical deliverables. The sponsor says 'Money is not the constraint here.' What should the PM do?", opts:["Immediately implement Option 2 — adding resources — since the sponsor approved cost increase","Select Option 3 since reducing scope is always the safest option","Analyse all three options including their impact on quality, risk, and stakeholder satisfaction, present the options to the sponsor with a recommendation, and implement the approved approach through formal change control","Use Option 1 and Option 2 simultaneously for maximum schedule recovery"], correct:2, explanation:"Even with verbal sponsor approval, the PM must analyse all constraint impacts, document options, and get formal approval before implementing. The sponsor's comment narrows focus but does not eliminate the PM's obligation to present options and get formal sign-off." },
+      { id:9, section:"People Domain", diff:"Hard", q:"A team member consistently delivers excellent technical work but frequently dismisses colleagues' ideas in team meetings. Two team members have privately complained and are considering transferring off the project. What should the PM do FIRST?", opts:["Reassign the disruptive team member to solo technical tasks away from team meetings","Report the behaviour to HR immediately","Have a private, direct conversation with the team member, share specific observations of the behaviour and its impact on the team, listen to their perspective, and establish agreed expectations","Address the issue publicly in the next team meeting so all team members understand the expected behaviour"], correct:2, explanation:"PMI: address interpersonal issues directly and privately FIRST. The PM should describe the observable behaviour (not label the person), explain the impact, listen, and agree on expectations. HR is a last resort. Public confrontation damages trust." },
+      { id:10, section:"Conflict Resolution", diff:"Hard", q:"Two senior stakeholders have a long-standing disagreement about which technology platform to use. The conflict is delaying key architectural decisions and impacting the project schedule. The PM has attempted to facilitate discussions multiple times but neither party will budge. Both stakeholders report to the same VP. What should the PM do?", opts:["Make the technology decision herself to unblock the project","Escalate the decision to the VP and document that the delay is caused by stakeholder disagreement, while continuing to keep both parties engaged","Tell both stakeholders the project will be cancelled if they don't decide within 48 hours","Flip a coin or randomise the selection to appear neutral"], correct:1, explanation:"When the PM has exhausted direct facilitation and the conflict involves stakeholders outside the PM's authority, escalation to the appropriate authority is appropriate. PMI expects escalation as a legitimate tool — not a failure." },
+      { id:11, section:"Leadership Styles", diff:"Hard", q:"A PM takes over a troubled project. The previous PM left abruptly, the team is demoralised, processes are unclear, and deliverables are overdue. Team members are experienced professionals who previously worked well together. What leadership approach is MOST appropriate?", opts:["Delegating — experienced teams should self-organise without PM direction","Coaching — the PM should teach the team new project management techniques","Directing (Telling) — the situational need is stability and clear structure, temporarily requiring more directive leadership despite the team's experience level","Laissez-faire — give the team space to recover and self-direct"], correct:2, explanation:"Situational leadership: the appropriate style depends on CONTEXT, not just team experience. Even experienced teams in a crisis need directive, stabilising leadership temporarily." },
+      { id:12, section:"Motivation Theories", diff:"Hard", q:"Despite offering bonuses for early delivery, team performance has not improved. Under Herzberg, bonuses are hygiene factors, not motivators. Which redesign BEST applies Herzberg's motivator principles?", opts:["Increase the bonus amount — if the current bonus is not working, a larger one will","Reduce working hours to improve work-life balance","Assign team members to challenging and meaningful work, provide public recognition for achievements, and create clear paths for advancement","Implement stricter accountability measures to ensure team members deliver"], correct:2, explanation:"Herzberg's MOTIVATORS are: achievement, recognition, the work itself (challenging/meaningful), responsibility, and advancement. Hygiene factors (salary, bonuses, work conditions) only prevent dissatisfaction — they do NOT motivate." },
+      { id:13, section:"Tuckman's Stages", diff:"Hard", q:"A team working together for 8 months collaborates seamlessly, resolves issues independently, and delivers above expectations. One team member says 'We barely need the PM anymore.' A new team member joins and immediately challenges the team's established workflow. Which two Tuckman stages are happening simultaneously?", opts:["Forming (due to the new member) and Norming (original team establishing rules)","The original team is in Performing. The addition of the new member has re-triggered Forming/Storming dynamics for the whole team","The team is in Adjourning since the PM is no longer needed","The team is in Norming and the new member is in Forming — these run separately"], correct:1, explanation:"A high-performing team can regress when its composition changes. The new member challenging established workflows is a Storming trigger. PMI: team development is not linear." },
+      { id:14, section:"Servant Leadership", diff:"Hard", q:"An agile PM leads a Scrum team. The Product Owner continuously asks the SM to assign specific tasks to specific developers, arguing she knows which developer is best for each story. The SM is concerned this is undermining self-organisation. Which response BEST reflects servant leadership principles?", opts:["Allow the PO to assign tasks — she has the authority as Product Owner to direct all project work","Ignore the PO's requests and tell the team to self-assign work as usual","Meet privately with the PO, explain that task assignment is the team's authority (not the PO's), and coach her on the Scrum role boundaries — the PO sets WHAT, the team decides HOW","Escalate the PO's behaviour to the project sponsor as a Scrum process violation"], correct:2, explanation:"Servant leadership includes coaching all roles — including the PO — on the boundaries of their authority. The SM protects the team's right to self-organise. Direct private coaching is the first step." },
+      { id:15, section:"People Domain", diff:"Hard", q:"A high-performing team member who has been excellent for 6 months has recently become disengaged, missing reviews and delivering lower quality work. In a recent all-hands, they seemed withdrawn. What should the PM do FIRST?", opts:["Put the team member on a formal performance improvement plan immediately","Ask other team members to find out what is happening with their colleague","Schedule a private one-on-one conversation with the team member — ask open-ended questions to understand what has changed, listen without judgment, and offer support BEFORE any performance management decisions","Reassign the team member's critical tasks to others to protect project delivery"], correct:2, explanation:"PMI: a sudden performance change in a previously excellent team member is almost always a signal of an underlying issue. The PM must enquire privately and empathetically BEFORE any performance management action." },
+      { id:16, section:"Stakeholder Management", diff:"Hard", q:"A PM mapped all stakeholders. The Head of IT Security has low current interest but could block deployment if security requirements are not met. The PM has only been sending the standard weekly status report. In month 2, the Head of IT Security raises a critical security concern that should have been flagged in month 1. What mistake did the PM make?", opts:["No mistake — the standard report was sent. The IT Security Head should have raised concerns earlier","The PM engaged the wrong stakeholder — IT Security is not part of a software project's stakeholder group","The PM failed to proactively identify and manage a high-impact stakeholder's specific needs. The PM should now immediately engage the Head of IT Security in a structured way — review requirements together, assess the gap, raise a change request if needed, and adjust the engagement plan","The PM should escalate the IT Security Head's late concern to the sponsor"], correct:2, explanation:"High power + potentially high impact ≠ low engagement. The PM misjudged this stakeholder's importance. A standard report was insufficient — the PM should have proactively engaged with domain-specific questions about security requirements early." },
+      { id:17, section:"People Domain", diff:"Medium", q:"A team member says: 'I cannot keep working at this pace. I haven't been home for dinner with my family in three weeks. I'm burning out.' Three critical deliverables are due next week. What should you do FIRST?", opts:["Acknowledge their concern and tell them to hold on until next week's milestone is passed","Tell the team member the project comes first and they agreed to the timeline when they joined","Listen to the team member fully, validate their concern, then work with them to explore what workload adjustments or support is possible — even during the critical period — and commit to a longer-term fix after the milestone","Immediately reassign all their critical tasks to another team member to relieve the pressure"], correct:2, explanation:"PMI: the PM is responsible for the team's wellbeing. Sustainable pace is a core principle. Dismissing burnout signals leads to team breakdown. The PM must listen, validate, and problem-solve collaboratively." },
+      { id:18, section:"Motivation Theories", diff:"Hard", q:"A PM finds: Team A members are energised by solving complex technical problems autonomously. Team B members are motivated by leading sub-teams and building influence. Team C members want collaborative success and team belonging. Using McClelland's Needs Theory, how should she structure motivation for each group?", opts:["Apply the same reward system to everyone — fairness means identical treatment","Team A: Achievement (challenging autonomous work). Team B: Power (leadership roles, influence). Team C: Affiliation (team-based goals and social connection). Tailor the environment for each need","Apply Maslow — focus on salary and safety for all teams first before any other motivation","Ignore the cultural differences — the project has a single performance standard that applies to everyone"], correct:1, explanation:"McClelland's three needs: Achievement (nAch) = challenging work. Power (nPow) = influence, leadership. Affiliation (nAff) = belonging, collaboration. Effective PMs identify the dominant need and create conditions that address it." },
+      { id:19, section:"Emotional Intelligence", diff:"Hard", q:"During a tense project review, the PM receives harsh criticism about a schedule delay. Several executives are openly sceptical. The PM feels flustered internally but responds calmly: 'Thank you for raising this directly. I understand the concern. I'd like to walk through the recovery plan we've developed.' She then presents a clear recovery strategy. Which EI dimension does this BEST demonstrate?", opts:["Empathy — she acknowledged the executives' perspective","Self-awareness — she recognised her internal emotional state","Self-regulation — she was aware of her emotional reaction but managed it to respond constructively rather than defensively","Social skill — she used the situation to build a relationship with the executives"], correct:2, explanation:"Self-regulation is the ability to control disruptive emotions and impulses — especially under pressure. The PM felt flustered (self-awareness) but chose NOT to act from that emotion (self-regulation)." },
+      { id:20, section:"People Domain", diff:"Hard", q:"A PM discovers that a team member has been reporting 8 hours per day on the timesheet while actually working only 4-5 hours. The project is a government contract where labour hours are billed to the client. The team member is well-liked and delivers good work. What must the PM do?", opts:["Speak privately with the team member and ask them to correct the behaviour — no need to escalate if they agree to change","Ignore the issue — the team member delivers good work and the relationship is more important","Report the timesheet fraud through the appropriate organisational and/or contractual compliance channel immediately — this is a legal and ethical obligation regardless of the team member's likability","Remove the team member from the project quietly and do not document the reason to protect their career"], correct:2, explanation:"PMI Code of Ethics: honesty and responsibility are mandatory. Billing false hours to a government client is fraud. The PM has a legal and ethical obligation to report through proper channels. Concealing it makes the PM complicit." },
+      { id:21, section:"Project Charter", diff:"Hard", q:"A PM has been verbally assigned to a project. After two weeks, she has been gathering requirements and building a project plan. A colleague says: 'You shouldn't be doing any of this yet — you don't have a Project Charter.' Is the colleague correct?", opts:["No — the verbal assignment from the department head is sufficient authority to begin planning","Yes — without a Project Charter, the PM has no formal authority to use resources, commit budget, or represent the project. All work done so far is at risk of being disowned if the project is not formally authorised","The colleague is partially correct — the PM can plan but not spend budget without a Charter","No — the Project Charter is a formality. Real PM authority comes from relationships and influence"], correct:1, explanation:"The Project Charter is the ONLY document that formally authorises the project and grants the PM authority. Verbal assignment creates no formal authority. All work done without it is at risk of being challenged or cancelled." },
+      { id:22, section:"5 Process Groups", diff:"Hard", q:"A PM realises that a risk she identified in planning has occurred and has caused a schedule variance. She immediately implements the risk response plan, submits a change request, updates the risk register, issues a revised status report, and schedules a lessons learned session. Which Process Groups are ACTIVE simultaneously?", opts:["Only Monitoring & Controlling — since the PM is responding to a variance","Only Executing — since the PM is implementing the response plan","Executing (implementing the response), Monitoring & Controlling (tracking variance, submitting change request, updating register, reporting status), and Planning (updating the PM plan post-change approval)","Initiating and Closing — the project must be restarted to address the risk"], correct:2, explanation:"Multiple Process Groups run simultaneously throughout a project. Executing, Monitoring & Controlling, and Planning (for re-planning after change approval) are all active. PMI emphasises that process groups are iterative and overlapping." },
+      { id:23, section:"Stakeholder Identification", diff:"Hard", q:"A highway project passes through three villages. The PM identifies the Ministry of Transport, the construction contractor, and the engineering team as stakeholders. A colleague notes that the 12,000 residents of the affected villages, local environmental groups, and opposition MPs representing those constituencies have NOT been identified. What is the consequence?", opts:["No consequence — individual citizens are not project stakeholders; only formal organisations qualify","The PM has violated the 100% Rule of the WBS by missing scope","The omission creates significant project risk — unidentified stakeholders with high interest and potential influence can oppose, delay, or stop the project. The PM must immediately conduct a comprehensive stakeholder analysis","The omission is acceptable — community groups have no formal authority over government infrastructure projects"], correct:2, explanation:"PMI: stakeholders are anyone who may affect or be affected by the project — formal authority is NOT required. Residents, community groups, and elected officials representing affected communities have high interest and can create powerful opposition." },
+      { id:24, section:"Scope Management", diff:"Hard", q:"A PM successfully delivers all scope in the WBS and the customer signs final acceptance. Six months later, the customer says the system cannot handle peak load volumes that were never discussed during the project. The customer insists this was an implied requirement. Who bears responsibility?", opts:["The customer is correct — implied requirements are always the PM's responsibility","The PM bears full responsibility because performance requirements should always be included in software projects","The PM fulfilled their contractual obligation based on the agreed scope statement. However, non-functional requirements (performance, scalability, security) must be explicitly documented during scope definition","The contractor bears full responsibility — they should have stress-tested the system regardless of the scope statement"], correct:2, explanation:"The PM delivered to the agreed scope statement. However, this illustrates a common trap: non-functional requirements (NFRs) are often missed during scope definition. Best practice requires explicitly eliciting and documenting NFRs." },
+      { id:25, section:"WBS", diff:"Hard", q:"During project execution review, the team discovers 'System Integration Testing' was never included in the WBS or project schedule. It is estimated to take 3 weeks and require a specialist. The project is currently on schedule for delivery in 6 weeks. What should the PM do?", opts:["Absorb the testing within the existing 6-week timeline by compressing other activities","Simply add integration testing to the schedule without a formal change request since it was always part of the work","Raise a formal change request to add the missing scope, assess the impact on schedule, cost, and resources, inform the sponsor, and adjust the baseline accordingly","Complete the project as planned and conduct integration testing as a post-project activity"], correct:2, explanation:"A missing WBS element discovered during execution represents a gap in the original plan. Even if the work was always required, adding it now changes the baseline. A formal change request is required." },
+      { id:26, section:"Schedule Management", diff:"Hard", q:"The project network has four paths: Path Alpha: 22 days, Path Beta: 27 days, Path Gamma: 27 days, Path Delta: 19 days. The sponsor mandates completion in 24 days. What is the current situation and what must the PM address?", opts:["The project can be delivered in 24 days — average all four paths","The project is currently 3 days over the 24-day mandate. Paths Beta and Gamma are BOTH critical at 27 days. Both must be compressed by at least 3 days — compressing only one will not solve the problem","Only Path Beta needs compression since it appeared first in the analysis","The project should be delivered in 27 days and the sponsor's 24-day mandate should be renegotiated"], correct:1, explanation:"Project duration = LONGEST path = 27 days. TWO paths (Beta and Gamma) are both at 27 days — both are critical. To meet 24 days, BOTH must be compressed. Compressing only Beta by 3 days would still leave Gamma as the new critical path." },
+      { id:27, section:"Critical Path Method", diff:"Hard", q:"Activity calculations: J has ES=14, EF=19, LS=14, LF=19 (TF=0). K has ES=10, EF=18, LS=12, LF=20 (TF=?). L has ES=18, EF=22, LS=18, LF=22 (TF=0). The sponsor asks the PM to add resources to Activity K to shorten the project. The PM advises against it. Why is the PM correct?", opts:["The PM is wrong — adding resources always shortens the project","The PM is correct because Activity K has a Total Float of 2 days. It is NOT on the critical path. Crashing K will not shorten the project end date — only critical path activities (Float=0) affect project duration when crashed","The PM is correct because Activity K cannot be crashed due to its dependency on Activity J","The PM is correct because crashing is always more expensive than fast tracking and should be avoided"], correct:1, explanation:"TF(K) = LS-ES = 12-10 = 2 days. Non-zero float = NOT on the critical path. Activities J and L have TF=0 — they ARE critical. Crashing K wastes money without shortening the project." },
+      { id:28, section:"Critical Path Method", diff:"Hard", q:"5 activities: A(dur=3, no predecessor). B(dur=6, pred A). C(dur=4, pred A). D(dur=5, preds B and C). E(dur=2, pred D). Calculate the Early Start and Early Finish for Activity D.", opts:["ES(D)=9, EF(D)=14 — by taking EF(B)=9 as D's start","ES(D)=7, EF(D)=12 — by taking EF(C)=7 as D's start","ES(D)=9, EF(D)=14 — ES(D) = MAX(EF_B=9, EF_C=7) = 9; EF(D) = 9+5 = 14","ES(D)=8, EF(D)=13 — by averaging EF(B) and EF(C)"], correct:2, explanation:"A: ES=0,EF=3. B(pred A): ES=3,EF=9. C(pred A): ES=3,EF=7. D(preds B AND C): ES = MAX(EF_B=9, EF_C=7) = 9. EF(D) = 9+5 = 14. Critical rule: when multiple predecessors, take the LARGEST EF. Never average." },
+      { id:29, section:"Schedule Compression", diff:"Hard", q:"A PM must recover 4 days. Activity M: crash 2 days for $8,000 ($4,000/day). Activity N: crash 3 days for $6,000 ($2,000/day). Activity P: crash 4 days for $20,000 ($5,000/day). What is the MINIMUM cost to recover exactly 4 days?", opts:["Crash P by 4 days — it saves the most time for one activity: $20,000","Crash N by 3 days ($6,000) + Crash M by 1 day ($4,000) = $10,000 total — lowest cost per day approach","Crash M by 2 days ($8,000) + Crash N by 2 days ($4,000) = $12,000","Crash all three activities simultaneously to ensure 4 days are recovered"], correct:1, explanation:"Always crash the CHEAPEST per-day activity first. N=$2,000/day (cheapest) — crash 3 days = $6,000. Still need 1 more day. Next cheapest: M=$4,000/day — crash 1 day = $4,000. Total: $10,000 for 4 days recovered." },
+      { id:30, section:"Project Charter", diff:"Hard", q:"During project execution, a PM realises the Project Charter was created without consulting her and contained unrealistic timeline and budget commitments. A team member suggests simply ignoring the Charter and creating a new plan. What should the PM do?", opts:["Agree with the team member and create a new, realistic plan without informing the sponsor","Conduct a formal analysis of the variance between Charter targets and realistic estimates, present findings and a change request to the sponsor for approval of revised targets, and update the project management plan formally","Continue trying to meet the unrealistic Charter targets — the PM accepted the project and is bound by the original commitments","Escalate to the PMO to have the Charter rewritten by a different team"], correct:1, explanation:"The PM must surface unrealistic baselines honestly and formally. Creating a hidden parallel plan is dishonest. The correct approach is a formal change request to reset targets based on realistic estimates — with transparency to the sponsor." },
+      { id:31, section:"Scope Management", diff:"Hard", q:"The development team is working on a feature in the WBS. A senior developer says: 'I added a data analytics dashboard to this module because I knew the customer would love it — it only took me two days.' The dashboard was not in the scope statement or WBS. The customer did not request it. What is this, and what must the PM do?", opts:["This is a value-adding initiative and should be praised as going above and beyond","This is gold plating — delivering features beyond the agreed scope without authorisation. The PM must assess whether to retain or remove the dashboard, document it, and if retaining it, process it through formal change control to add it to the scope baseline","This is scope creep — but since the developer has already built it, the PM should simply include it in the project deliverables","This is acceptable as long as it does not affect the schedule or budget"], correct:1, explanation:"Gold plating = adding unauthorised features beyond agreed scope, even with good intentions. It is a scope management failure. Risks: the feature may not be tested, may cause bugs, and may misuse budget. Change control is required." },
+      { id:32, section:"5 Process Groups", diff:"Medium", q:"A PM has completed all deliverables, obtained customer acceptance, and released the project team. She is now conducting final performance reviews, archiving project records, updating the organisational process assets, and ensuring all contracts are formally closed. What is the PRIMARY purpose of this Process Group?", opts:["Monitoring & Controlling — she is reviewing final performance","Executing — she is completing remaining administrative tasks","Closing — to formally complete the project, confirm all deliverables are accepted, archive knowledge, release resources, and close all contracts formally","Planning — she is documenting lessons for future project planning"], correct:2, explanation:"Closing involves: final acceptance confirmation, releasing resources, closing contracts, archiving documents, capturing lessons learned, and issuing the Final Project Report. Projects must not simply fade away." },
+      { id:33, section:"WBS", diff:"Hard", q:"A senior engineer insists the WBS should be organised by engineering functions (Mechanical, Electrical, Civil) rather than by deliverables. The PM prefers a deliverable-based WBS. Which approach is more aligned with PMI best practice?", opts:["The engineer is correct — functional WBS is always the PMI standard because it aligns with how teams are organised","Both approaches are equally acceptable — WBS structure is a matter of organisational preference","The deliverable-based WBS is generally preferred by PMI because it focuses on WHAT must be produced (outputs) rather than WHO does the work (functions). It supports the 100% Rule by ensuring all outputs are captured regardless of which function produces them","The PM should always follow the senior engineer's preference to avoid conflict"], correct:2, explanation:"PMI: the WBS should be oriented around DELIVERABLES, not organisational functions or activities. A deliverable-based WBS applies the 100% Rule more effectively and avoids gaps." },
+      { id:34, section:"Stakeholder Management", diff:"Hard", q:"A PM identifies a stakeholder who was categorised as 'Unaware' of the project — the head of a regulatory body that must approve the project output before deployment. The PM has not engaged this stakeholder in 4 months of planning. The approval process takes 8 weeks. The project is 10 weeks from planned delivery. What is the IMMEDIATE risk?", opts:["There is no risk — regulatory approval is outside the project scope and is the sponsor's responsibility","The PM faces a schedule risk of at least 8 weeks (regulatory approval time) that was not planned. The PM must immediately engage the regulator, understand the full approval requirements, assess the schedule impact, raise a change request to extend the timeline, and update the stakeholder engagement plan","The PM should rush the approval process by delivering the minimum required documentation immediately","The PM should ask the sponsor to waive the regulatory approval to protect the project deadline"], correct:1, explanation:"An unengaged regulatory stakeholder with mandatory approval authority represents a CRITICAL schedule risk. 8-week approval + 10 weeks to delivery = potential 8-week overrun. The PM must engage the regulator now and be transparent with the sponsor." },
+      { id:35, section:"Schedule Management", diff:"Hard", q:"The UI design team wants to begin building screen prototypes (Activity B) before the requirements document (Activity A) is finalised. Activity A is 12 days long. Activity B starts 4 days before Activity A finishes. Which dependency type and modification BEST represents this relationship?", opts:["Finish-to-Start (FS): A must fully finish before B can start","Start-to-Start (SS): B can start when A starts, with no lag","Finish-to-Start with a Lead of 4 days (FS-4d): B starts 4 days before A finishes, overlapping the final 4 days","Start-to-Finish (SF): A must start before B can finish"], correct:2, explanation:"This is Fast Tracking via a LEAD on an FS dependency. FS-4d means B starts 4 days BEFORE A finishes (they overlap for 4 days). FS-4d is the precise way to model this specific timing relationship." },
+      { id:36, section:"Project Charter", diff:"Medium", q:"A project charter has been signed by the sponsor. Two weeks later, the CFO — who did not sign the charter — sends an email saying the project budget should be reduced by 30% and the timeline compressed by 2 months, effective immediately. What should the PM do?", opts:["Implement the CFO's instructions immediately — the CFO outranks the sponsor financially","Acknowledge the CFO's email, explain that the approved charter defines the current authorised parameters, and request that any changes be processed through the formal change control process with the project sponsor's involvement","Inform the project team of the changes and begin adjusting the plan","Ignore the CFO's email — only the sponsor can direct the PM"], correct:1, explanation:"The Project Charter defines the authorised parameters. Changes to charter-level commitments require formal change control involving the sponsor — not unilateral directives from non-authorising parties, regardless of seniority." },
+      { id:37, section:"5 Process Groups", diff:"Hard", q:"A PM is simultaneously: (1) executing the current sprint, (2) reviewing earned value metrics and identifying a cost variance, (3) updating the risk register with two newly identified risks, and (4) preparing the next phase's detailed plan. Which Process Groups are occurring at the same time?", opts:["Only Executing — all other activities happen sequentially after Executing is complete","Executing (sprint delivery), Monitoring & Controlling (EVM review, risk register update), and Planning (next phase planning) are all active simultaneously","Executing and Monitoring & Controlling only — Planning only happens at the start of the project","Planning and Closing — since the PM is preparing for the next phase"], correct:1, explanation:"PMI: process groups are iterative and can overlap throughout the project. Executing, Monitoring & Controlling, and Planning (for future phases) commonly run simultaneously on active projects." },
+      { id:38, section:"Scope Management", diff:"Hard", q:"A customer calls the PM directly and asks to add a new report generation feature, saying 'It's only a small change — it should take a day at most.' The team lead says it is actually a complex change requiring database schema modifications and will take at least 2 weeks. The PM agrees with the team lead's estimate. What should the PM do?", opts:["Implement the feature as the customer requests — they are paying for the project and have the right to decide what is simple","Ask the team lead to find a way to do it in one day to meet the customer's expectation","Explain to the customer that scope changes — regardless of perceived size — must go through the formal change control process. Present the team's 2-week impact assessment, raise a change request, and get formal approval before any work begins","Implement the change informally and track it as a separate project outside the main scope"], correct:2, explanation:"There is no such thing as a 'small' change that bypasses change control. PMI: ALL scope changes require formal change requests. The customer's perception of simplicity is irrelevant — the team's technical assessment defines the actual impact." },
+      { id:39, section:"Schedule Management", diff:"Hard", q:"Activity Q shows: ES=8, EF=13, LS=10, LF=15, Duration=5. Activity R (which follows Q in an FS relationship): ES=13, EF=20, LS=13, LF=20, Duration=7. What can the PM conclude about Activities Q and R?", opts:["Both Q and R are on the critical path since R has zero float","Activity Q has Total Float=2 days and is NOT on the critical path. Activity R has Total Float=0 and IS on the critical path. Q can be delayed up to 2 days without delaying R's start or the project end","Both Q and R have zero float and are both critical path activities","Activity Q is critical because it directly precedes Activity R"], correct:1, explanation:"TF(Q) = LS-ES = 10-8 = 2 days. NOT critical. TF(R) = LS-ES = 13-13 = 0 days. CRITICAL. Q can absorb up to 2 days of delay before impacting R." },
+      { id:40, section:"Process Domain", diff:"Hard", q:"INTEGRATION QUESTION: A PM is 60% through a government infrastructure project. CPI=0.82, SPI=0.91, business case ROI has dropped from 22% to 9%, two critical path activities have zero remaining float, a new regulatory requirement adds 3 weeks, and the project sponsor just announced she is leaving the organisation in 2 weeks. What is the PM's MOST URGENT first action?", opts:["Focus on the CPI — implement emergency cost controls to bring spending back to budget","Fast-track the two zero-float activities immediately to recover schedule","Urgently brief the incoming sponsor (or interim authority) on all project status, risks, and open issues — loss of sponsor support at this moment is the most immediately destabilising risk to project continuity. All other actions depend on having sustained governance authority","Raise a change request for the new regulatory requirement and address each issue sequentially"], correct:2, explanation:"With a deteriorating business case, schedule and cost variances, a new regulatory requirement AND a departing sponsor — the most urgent risk is GOVERNANCE CONTINUITY. Without a committed sponsor, the PM cannot get change requests approved or maintain executive support. All other corrective actions depend on it." },
+    ]
+  }
+};
+
+const SECTIONS = {
+  1: ["PMP Fundamentals","PMI Talent Triangle","6 Constraints","Role of the PM","People Domain","Leadership Styles","Motivation Theories","Tuckman's Stages","Servant Leadership","Stakeholder Management","Emotional Intelligence","5 Process Groups","Project Charter","Stakeholder Identification","Planning Process Group","Scope Management","WBS","Schedule Management","Critical Path Method","Schedule Compression"],
+  2: ["PMP Fundamentals","PMI Talent Triangle","6 Constraints","Role of the PM","People Domain","Conflict Resolution","Leadership Styles","Motivation Theories","Tuckman's Stages","Servant Leadership","Stakeholder Management","Emotional Intelligence","5 Process Groups","Project Charter","Scope Management","WBS","Schedule Management","Critical Path Method","Schedule Compression","Process Domain"]
+};
+
+const DIFF_COLOR = { Easy:"#16A34A", Medium:"#D97706", Hard:"#DC2626" };
+const DIFF_BG = { Easy:"#DCFCE7", Medium:"#FEF9C3", Hard:"#FEE2E2" };
+
+// ─── TRAINER AUTH ────────────────────────────────────────────────
+const TRAINER_PASS = "PMP@Sanj2026";  // Change this to your own password
+
+// ─── STORAGE HELPERS ──────────────────────────────────────────────
+async function saveResult(name, paperId, score, total, answers, sectBreakdown) {
+  const key = `submission:${Date.now()}:${name.replace(/\s+/g,'_')}:p${paperId}`;
+  const val = JSON.stringify({ name, paperId, score, total, pct: Math.round(score/total*100), answers, sectBreakdown, ts: new Date().toISOString() });
+  try { await window.storage.set(key, val, true); } catch(e) { console.error(e); }
+}
+
+async function loadAllResults() {
+  try {
+    const { keys } = await window.storage.list("submission:", true);
+    const results = [];
+    for (const k of keys) {
+      try {
+        const r = await window.storage.get(k, true);
+        if (r) results.push(JSON.parse(r.value));
+      } catch(e) {}
+    }
+    return results.sort((a,b) => new Date(b.ts) - new Date(a.ts));
+  } catch(e) { return []; }
+}
+
+// ─── MAIN APP ─────────────────────────────────────────────────────
+function App() {
+  const [screen, setScreen] = useState("home"); // home | exam | result | dashboard
+  const [trainerAuth, setTrainerAuth] = useState(false);
+  const [showPassModal, setShowPassModal] = useState(false);
+  const [passInput, setPassInput] = useState("");
+  const [passError, setPassError] = useState("");
+  const [paperId, setPaperId] = useState(null);
+  const [studentName, setStudentName] = useState("");
+  const [nameInput, setNameInput] = useState("");
+  const [currentQ, setCurrentQ] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [selected, setSelected] = useState(null);
+  const [confirmed, setConfirmed] = useState(false);
+  const [showExpl, setShowExpl] = useState(false);
+  const [results, setResults] = useState(null);
+  const [dashData, setDashData] = useState([]);
+  const [dashLoading, setDashLoading] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(80 * 60);
+  const timerRef = useRef(null);
+  const [nameError, setNameError] = useState("");
+
+  const paper = paperId ? PAPERS[paperId] : null;
+  const questions = paper?.questions || [];
+  const q = questions[currentQ];
+
+  // Timer
+  useEffect(() => {
+    if (screen === "exam") {
+      timerRef.current = setInterval(() => {
+        setTimeLeft(t => {
+          if (t <= 1) { clearInterval(timerRef.current); handleSubmit(); return 0; }
+          return t - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(timerRef.current);
+  }, [screen, paperId]);
+
+  const formatTime = (s) => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+
+  function startExam(pid) {
+    if (!nameInput.trim()) { setNameError("Please enter your name to begin"); return; }
+    setPaperId(pid);
+    setStudentName(nameInput.trim());
+    setCurrentQ(0);
+    setAnswers({});
+    setSelected(null);
+    setConfirmed(false);
+    setShowExpl(false);
+    setTimeLeft(80*60);
+    setScreen("exam");
+  }
+
+  function selectAnswer(idx) {
+    if (confirmed) return;
+    setSelected(idx);
+  }
+
+  function confirmAnswer() {
+    if (selected === null || confirmed) return;
+    setConfirmed(true);
+    setShowExpl(true);
+    setAnswers(prev => ({ ...prev, [currentQ]: selected }));
+  }
+
+  function nextQ() {
+    if (currentQ < questions.length - 1) {
+      setCurrentQ(c => c + 1);
+      setSelected(answers[currentQ+1] ?? null);
+      setConfirmed(answers[currentQ+1] !== undefined);
+      setShowExpl(answers[currentQ+1] !== undefined);
+    } else {
+      handleSubmit();
+    }
+  }
+
+  function prevQ() {
+    if (currentQ > 0) {
+      const prev = currentQ - 1;
+      setCurrentQ(prev);
+      setSelected(answers[prev] ?? null);
+      setConfirmed(answers[prev] !== undefined);
+      setShowExpl(answers[prev] !== undefined);
+    }
+  }
+
+  async function handleSubmit() {
+    clearInterval(timerRef.current);
+    let score = 0;
+    const sectMap = {};
+    questions.forEach((q, i) => {
+      const ans = answers[i];
+      const correct = ans === q.correct;
+      if (correct) score++;
+      if (!sectMap[q.section]) sectMap[q.section] = { correct:0, total:0 };
+      sectMap[q.section].total++;
+      if (correct) sectMap[q.section].correct++;
+    });
+    const res = { score, total: questions.length, pct: Math.round(score/questions.length*100), sectMap, answers };
+    setResults(res);
+    await saveResult(studentName, paperId, score, questions.length, answers, sectMap);
+    setScreen("result");
+  }
+
+  async function openDashboard() {
+    if (!trainerAuth) {
+      setPassInput("");
+      setPassError("");
+      setShowPassModal(true);
+      return;
+    }
+    setDashLoading(true);
+    setScreen("dashboard");
+    const data = await loadAllResults();
+    setDashData(data);
+    setDashLoading(false);
+  }
+
+  async function submitTrainerPass() {
+    if (passInput === TRAINER_PASS) {
+      setTrainerAuth(true);
+      setShowPassModal(false);
+      setPassError("");
+      setDashLoading(true);
+      setScreen("dashboard");
+      const data = await loadAllResults();
+      setDashData(data);
+      setDashLoading(false);
+    } else {
+      setPassError("Incorrect password. Please try again.");
+      setPassInput("");
+    }
+  }
+
+  function getGrade(pct) {
+    if (pct >= 90) return { label:"Outstanding", color:"#059669", bg:"#D1FAE5" };
+    if (pct >= 70) return { label:"On Track", color:"#0D9488", bg:"#CCFBF1" };
+    if (pct >= 50) return { label:"Review Required", color:"#D97706", bg:"#FEF9C3" };
+    return { label:"Intensive Study", color:"#DC2626", bg:"#FEE2E2" };
+  }
+
+  // ─── HOME ──────────────────────────────────────────────────────
+  // ─── PASS MODAL ─────────────────────────────────────────────────
+  if (showPassModal) return (
+    <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0F2557 0%,#1E3A5F 50%,#0D9488 100%)", fontFamily:"'Segoe UI',system-ui,sans-serif", display:"flex", alignItems:"center", justifyContent:"center", padding:24 }}>
+      <div style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:20, padding:"40px 36px", maxWidth:420, width:"100%", textAlign:"center" }}>
+        <div style={{ fontSize:48, marginBottom:16 }}>🔐</div>
+        <h2 style={{ color:"#fff", fontSize:22, fontWeight:700, margin:"0 0 8px" }}>Trainer Access</h2>
+        <p style={{ color:"#BAE6FD", fontSize:14, margin:"0 0 28px", lineHeight:1.6 }}>This dashboard is for Sanjeewani Munasinghe only.<br/>Enter the trainer password to continue.</p>
+        <input
+          type="password"
+          value={passInput}
+          onChange={e => { setPassInput(e.target.value); setPassError(""); }}
+          onKeyDown={e => e.key === "Enter" && submitTrainerPass()}
+          placeholder="Enter trainer password..."
+          autoFocus
+          style={{ width:"100%", padding:"14px 16px", borderRadius:10, border: passError ? "2px solid #F87171" : "2px solid rgba(255,255,255,0.2)", background:"rgba(255,255,255,0.08)", color:"#fff", fontSize:16, outline:"none", boxSizing:"border-box", marginBottom: passError ? 8 : 16 }}
+        />
+        {passError && <p style={{ color:"#F87171", fontSize:13, margin:"0 0 12px", textAlign:"left" }}>{passError}</p>}
+        <div style={{ display:"flex", gap:10 }}>
+          <button onClick={() => setShowPassModal(false)}
+            style={{ flex:1, padding:"13px", borderRadius:10, border:"1px solid rgba(255,255,255,0.2)", background:"rgba(255,255,255,0.06)", color:"rgba(255,255,255,0.7)", fontWeight:600, cursor:"pointer", fontSize:14 }}>
+            Cancel
+          </button>
+          <button onClick={submitTrainerPass}
+            style={{ flex:1, padding:"13px", borderRadius:10, border:"none", background:"#0D9488", color:"#fff", fontWeight:700, cursor:"pointer", fontSize:14 }}>
+            Unlock Dashboard
+          </button>
+        </div>
+        <p style={{ color:"rgba(255,255,255,0.3)", fontSize:11, marginTop:20 }}>Students: go back and select a paper to begin your exam</p>
+      </div>
+    </div>
+  );
+
+  if (screen === "home") return (
+    <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0F2557 0%,#1E3A5F 50%,#0D9488 100%)", fontFamily:"'Segoe UI',system-ui,sans-serif", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"24px" }}>
+      <div style={{ maxWidth:640, width:"100%" }}>
+        {/* Header */}
+        <div style={{ textAlign:"center", marginBottom:40 }}>
+          <div style={{ display:"inline-block", background:"rgba(255,255,255,0.1)", border:"1px solid rgba(255,255,255,0.2)", borderRadius:100, padding:"6px 20px", marginBottom:16 }}>
+            <span style={{ color:"#A5F3FC", fontSize:12, fontWeight:700, letterSpacing:2 }}>PMI PMP EXAM PREP</span>
+          </div>
+          <h1 style={{ color:"#fff", fontSize:36, fontWeight:800, margin:"0 0 8px", lineHeight:1.2 }}>Mock Exam Portal</h1>
+          <p style={{ color:"#BAE6FD", fontSize:16, margin:0 }}>Sanjeewani Munasinghe · PMP · PMI-ACP · PMI-RMP</p>
+        </div>
+
+        {/* Name input */}
+        <div style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:16, padding:"24px 28px", marginBottom:24 }}>
+          <label style={{ display:"block", color:"#E0F2FE", fontSize:13, fontWeight:600, marginBottom:8, letterSpacing:1 }}>YOUR NAME</label>
+          <input
+            value={nameInput}
+            onChange={e => { setNameInput(e.target.value); setNameError(""); }}
+            onKeyDown={e => e.key === "Enter" && nameInput.trim() && startExam(1)}
+            placeholder="Enter your full name..."
+            style={{ width:"100%", padding:"14px 16px", borderRadius:10, border: nameError ? "2px solid #F87171" : "2px solid rgba(255,255,255,0.2)", background:"rgba(255,255,255,0.08)", color:"#fff", fontSize:16, outline:"none", boxSizing:"border-box" }}
+          />
+          {nameError && <p style={{ color:"#F87171", fontSize:13, margin:"8px 0 0" }}>{nameError}</p>}
+        </div>
+
+        {/* Paper cards */}
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:24 }}>
+          {[1,2].map(pid => {
+            const p = PAPERS[pid];
+            return (
+              <button key={pid} onClick={() => startExam(pid)}
+                style={{ background: pid===1 ? "linear-gradient(135deg,#1D4ED8,#0F2557)" : "linear-gradient(135deg,#5B21B6,#1E1B4B)", border:"2px solid rgba(255,255,255,0.15)", borderRadius:16, padding:24, cursor:"pointer", textAlign:"left", transition:"transform 0.15s,box-shadow 0.15s", color:"#fff" }}
+                onMouseEnter={e => { e.currentTarget.style.transform="translateY(-3px)"; e.currentTarget.style.boxShadow="0 12px 40px rgba(0,0,0,0.4)"; }}
+                onMouseLeave={e => { e.currentTarget.style.transform=""; e.currentTarget.style.boxShadow=""; }}
+              >
+                <div style={{ fontSize:28, marginBottom:8 }}>{pid===1?"📋":"🎯"}</div>
+                <div style={{ fontWeight:700, fontSize:16, marginBottom:4 }}>Paper {pid}</div>
+                <div style={{ fontSize:12, color: pid===1?"#BFDBFE":"#DDD6FE", lineHeight:1.4, marginBottom:12 }}>{p.subtitle}</div>
+                <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
+                  {[["40 Questions","#ffffff22"],["80 Minutes","#ffffff22"],[pid===1?"Foundation":"Advanced", pid===1?"#0D9488":"#7C3AED"]].map(([l,bg])=>
+                    <span key={l} style={{ fontSize:10, fontWeight:700, padding:"3px 8px", borderRadius:100, background:bg, color:"#fff", border:"1px solid rgba(255,255,255,0.2)" }}>{l}</span>
+                  )}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Dashboard link */}
+        <button onClick={openDashboard}
+          style={{ width:"100%", background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:12, padding:"14px", color:"#BAE6FD", fontSize:14, fontWeight:600, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}
+          onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.1)"}
+          onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.06)"}
+        >
+          📊 Trainer Dashboard — View All Student Results
+        </button>
+
+        <p style={{ textAlign:"center", color:"rgba(255,255,255,0.35)", fontSize:12, marginTop:24 }}>
+          Sessions 1 & 2 · PMP Fundamentals · People Domain · Process Domain Part 1
+        </p>
+      </div>
+    </div>
+  );
+
+  // ─── EXAM ─────────────────────────────────────────────────────
+  if (screen === "exam" && q) {
+    const answered = Object.keys(answers).length;
+    const progress = (currentQ / questions.length) * 100;
+    const isLast = currentQ === questions.length - 1;
+    const timerWarning = timeLeft < 600;
+
+    return (
+      <div style={{ minHeight:"100vh", background:"#F8FAFC", fontFamily:"'Segoe UI',system-ui,sans-serif" }}>
+        {/* Top bar */}
+        <div style={{ background:paper.color, padding:"0 24px", height:64, display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:100, boxShadow:"0 2px 12px rgba(0,0,0,0.2)" }}>
+          <div>
+            <div style={{ color:"rgba(255,255,255,0.7)", fontSize:11, fontWeight:600, letterSpacing:1 }}>PMP MOCK EXAM · PAPER {paperId}</div>
+            <div style={{ color:"#fff", fontSize:13, fontWeight:700 }}>{studentName}</div>
+          </div>
+          <div style={{ display:"flex", alignItems:"center", gap:16 }}>
+            <div style={{ textAlign:"center" }}>
+              <div style={{ color:"rgba(255,255,255,0.7)", fontSize:10 }}>ANSWERED</div>
+              <div style={{ color:"#fff", fontWeight:700 }}>{answered}/{questions.length}</div>
+            </div>
+            <div style={{ background: timerWarning?"#EF4444":"rgba(255,255,255,0.15)", borderRadius:8, padding:"8px 16px", textAlign:"center" }}>
+              <div style={{ color:"rgba(255,255,255,0.8)", fontSize:10 }}>TIME LEFT</div>
+              <div style={{ color:"#fff", fontWeight:800, fontSize:18, fontVariantNumeric:"tabular-nums" }}>{formatTime(timeLeft)}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Progress bar */}
+        <div style={{ height:4, background:"#E2E8F0" }}>
+          <div style={{ height:4, background: paper.accent, width:`${progress}%`, transition:"width 0.3s" }} />
+        </div>
+
+        {/* Question area */}
+        <div style={{ maxWidth:820, margin:"0 auto", padding:"28px 20px" }}>
+          {/* Question header */}
+          <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:20 }}>
+            <div style={{ background:paper.color, color:"#fff", borderRadius:10, padding:"8px 16px", fontWeight:800, fontSize:16, minWidth:100, textAlign:"center" }}>
+              Q {currentQ+1} / {questions.length}
+            </div>
+            <div style={{ background:DIFF_BG[q.diff], color:DIFF_COLOR[q.diff], borderRadius:100, padding:"4px 12px", fontSize:12, fontWeight:700 }}>{q.diff}</div>
+            <div style={{ background:"#F1F5F9", color:"#64748B", borderRadius:100, padding:"4px 12px", fontSize:12, fontWeight:600 }}>{q.section}</div>
+          </div>
+
+          {/* Scenario */}
+          <div style={{ background:"#fff", border:"1px solid #E2E8F0", borderLeft:`4px solid ${paper.color}`, borderRadius:12, padding:"20px 24px", marginBottom:20, boxShadow:"0 2px 8px rgba(0,0,0,0.06)" }}>
+            <p style={{ margin:0, color:"#1E293B", fontSize:16, lineHeight:1.7 }}>{q.q}</p>
+          </div>
+
+          {/* Options */}
+          <div style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:24 }}>
+            {q.opts.map((opt, idx) => {
+              const isSelected = selected === idx;
+              const isCorrect = confirmed && idx === q.correct;
+              const isWrong = confirmed && isSelected && idx !== q.correct;
+              let bg = "#fff", border = "1px solid #E2E8F0", color = "#1E293B";
+              if (isCorrect) { bg = "#D1FAE5"; border = "2px solid #059669"; color = "#065F46"; }
+              else if (isWrong) { bg = "#FEE2E2"; border = "2px solid #DC2626"; color = "#7F1D1D"; }
+              else if (isSelected) { bg = "#EFF6FF"; border = `2px solid ${paper.color}`; color = paper.color; }
+
+              return (
+                <button key={idx} onClick={() => selectAnswer(idx)}
+                  style={{ display:"flex", alignItems:"flex-start", gap:14, padding:"16px 18px", background:bg, border, borderRadius:12, cursor:confirmed?"default":"pointer", textAlign:"left", transition:"all 0.15s", width:"100%" }}
+                  onMouseEnter={e => { if(!confirmed && !isSelected) e.currentTarget.style.background="#F8FAFC"; }}
+                  onMouseLeave={e => { if(!confirmed && !isSelected) e.currentTarget.style.background="#fff"; }}
+                >
+                  <span style={{ background: isCorrect?"#059669":isWrong?"#DC2626":isSelected?paper.color:"#E2E8F0", color:"#fff", borderRadius:6, padding:"2px 8px", fontSize:13, fontWeight:800, minWidth:28, textAlign:"center", flexShrink:0, marginTop:1 }}>
+                    {["A","B","C","D"][idx]}
+                  </span>
+                  <span style={{ color, fontSize:15, lineHeight:1.6 }}>{opt}</span>
+                  {isCorrect && <span style={{ marginLeft:"auto", flexShrink:0, color:"#059669", fontSize:18 }}>✓</span>}
+                  {isWrong && <span style={{ marginLeft:"auto", flexShrink:0, color:"#DC2626", fontSize:18 }}>✗</span>}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Explanation */}
+          {showExpl && (
+            <div style={{ background:"#F0FDF4", border:"1px solid #86EFAC", borderRadius:12, padding:"16px 20px", marginBottom:20 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
+                <span style={{ color:"#059669", fontWeight:800, fontSize:14 }}>💡 Explanation</span>
+                <span style={{ background: answers[currentQ]===q.correct?"#059669":"#DC2626", color:"#fff", borderRadius:100, padding:"2px 10px", fontSize:12, fontWeight:700 }}>
+                  {answers[currentQ]===q.correct ? "CORRECT ✓" : `INCORRECT — Answer: ${["A","B","C","D"][q.correct]}`}
+                </span>
+              </div>
+              <p style={{ color:"#166534", fontSize:14, lineHeight:1.7, margin:0 }}>{q.explanation}</p>
+            </div>
+          )}
+
+          {/* Action buttons */}
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:12 }}>
+            <button onClick={prevQ} disabled={currentQ===0}
+              style={{ padding:"12px 24px", borderRadius:10, border:"2px solid #E2E8F0", background:"#fff", color:"#64748B", fontWeight:600, cursor:currentQ===0?"not-allowed":"pointer", opacity:currentQ===0?0.4:1, fontSize:14 }}>
+              ← Previous
+            </button>
+
+            {!confirmed ? (
+              <button onClick={confirmAnswer} disabled={selected===null}
+                style={{ flex:1, maxWidth:260, padding:"14px 24px", borderRadius:10, border:"none", background:selected===null?"#CBD5E1":paper.color, color:"#fff", fontWeight:700, cursor:selected===null?"not-allowed":"pointer", fontSize:15 }}>
+                Confirm Answer
+              </button>
+            ) : (
+              <button onClick={isLast ? handleSubmit : nextQ}
+                style={{ flex:1, maxWidth:260, padding:"14px 24px", borderRadius:10, border:"none", background:isLast?"#DC2626":paper.color, color:"#fff", fontWeight:700, cursor:"pointer", fontSize:15 }}>
+                {isLast ? "🏁 Submit Exam" : "Next Question →"}
+              </button>
+            )}
+          </div>
+
+          {/* Q navigator */}
+          <div style={{ marginTop:28, display:"flex", flexWrap:"wrap", gap:6 }}>
+            {questions.map((_, i) => {
+              const isDone = answers[i] !== undefined;
+              const isRight = isDone && answers[i] === questions[i].correct;
+              const isCurrent = i === currentQ;
+              return (
+                <button key={i} onClick={() => { setCurrentQ(i); setSelected(answers[i]??null); setConfirmed(answers[i]!==undefined); setShowExpl(answers[i]!==undefined); }}
+                  style={{ width:32, height:32, borderRadius:6, border: isCurrent?`2px solid ${paper.color}`:"1px solid #E2E8F0", background: isCurrent?paper.color: !isDone?"#fff": isRight?"#D1FAE5":"#FEE2E2", color: isCurrent?"#fff": !isDone?"#94A3B8": isRight?"#059669":"#DC2626", fontWeight:700, fontSize:11, cursor:"pointer" }}>
+                  {i+1}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── RESULT ────────────────────────────────────────────────────
+  if (screen === "result" && results) {
+    const grade = getGrade(results.pct);
+    return (
+      <div style={{ minHeight:"100vh", background:"linear-gradient(135deg,#0F2557 0%,#1E3A5F 60%,#0D9488 100%)", fontFamily:"'Segoe UI',system-ui,sans-serif", padding:"32px 20px" }}>
+        <div style={{ maxWidth:760, margin:"0 auto" }}>
+          {/* Score card */}
+          <div style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:20, padding:"36px 32px", marginBottom:24, textAlign:"center" }}>
+            <div style={{ fontSize:64, marginBottom:8 }}>{results.pct>=70?"🎉":"📚"}</div>
+            <h1 style={{ color:"#fff", fontSize:32, fontWeight:800, margin:"0 0 4px" }}>{studentName}</h1>
+            <p style={{ color:"#BAE6FD", fontSize:16, margin:"0 0 28px" }}>Paper {paperId} · {paper?.title}</p>
+
+            <div style={{ display:"flex", justifyContent:"center", gap:24, marginBottom:28, flexWrap:"wrap" }}>
+              <div>
+                <div style={{ color:"rgba(255,255,255,0.6)", fontSize:12, fontWeight:600, letterSpacing:1 }}>SCORE</div>
+                <div style={{ color:"#fff", fontSize:52, fontWeight:800, lineHeight:1 }}>{results.score}<span style={{ fontSize:28, color:"rgba(255,255,255,0.5)" }}>/{results.total}</span></div>
+              </div>
+              <div style={{ borderLeft:"1px solid rgba(255,255,255,0.2)", paddingLeft:24 }}>
+                <div style={{ color:"rgba(255,255,255,0.6)", fontSize:12, fontWeight:600, letterSpacing:1 }}>PERCENTAGE</div>
+                <div style={{ color: results.pct>=70?"#6EE7B7":"#FCA5A5", fontSize:52, fontWeight:800, lineHeight:1 }}>{results.pct}%</div>
+              </div>
+            </div>
+
+            <div style={{ display:"inline-block", background:grade.bg, color:grade.color, borderRadius:100, padding:"10px 28px", fontWeight:800, fontSize:18, marginBottom:20 }}>
+              {grade.label}
+            </div>
+
+            <div style={{ background:"rgba(255,255,255,0.06)", borderRadius:12, padding:"14px 20px" }}>
+              <p style={{ color:"#BAE6FD", margin:0, fontSize:14, lineHeight:1.6 }}>
+                {results.pct>=70 ? "Well done! You are on track for the real PMP exam. Review any incorrect answers carefully before your next session." : "Keep studying! Focus on the sections highlighted in red below. Complete the recommended reading before the next session."}
+              </p>
+            </div>
+          </div>
+
+          {/* Section breakdown */}
+          <div style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:20, padding:"28px 32px", marginBottom:24 }}>
+            <h2 style={{ color:"#fff", fontSize:18, fontWeight:700, marginBottom:20 }}>Performance by Topic</h2>
+            {Object.entries(results.sectMap).sort((a,b)=>b[1].correct/b[1].total - a[1].correct/a[1].total).map(([sect, d]) => {
+              const pct = Math.round(d.correct/d.total*100);
+              const col = pct>=70?"#6EE7B7":pct>=50?"#FCD34D":"#FCA5A5";
+              return (
+                <div key={sect} style={{ marginBottom:14 }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
+                    <span style={{ color:"#E0F2FE", fontSize:13, fontWeight:600 }}>{sect}</span>
+                    <span style={{ color:col, fontSize:13, fontWeight:700 }}>{d.correct}/{d.total} ({pct}%)</span>
+                  </div>
+                  <div style={{ background:"rgba(255,255,255,0.1)", borderRadius:100, height:8 }}>
+                    <div style={{ background:col, borderRadius:100, height:8, width:`${pct}%`, transition:"width 0.6s" }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Per-question review */}
+          <div style={{ background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:20, padding:"28px 32px", marginBottom:24 }}>
+            <h2 style={{ color:"#fff", fontSize:18, fontWeight:700, marginBottom:20 }}>Question-by-Question Review</h2>
+            {questions.map((qItem, i) => {
+              const userAns = results.answers[i];
+              const correct = userAns === qItem.correct;
+              return (
+                <div key={i} style={{ borderBottom:"1px solid rgba(255,255,255,0.08)", paddingBottom:16, marginBottom:16 }}>
+                  <div style={{ display:"flex", alignItems:"flex-start", gap:10, marginBottom:8 }}>
+                    <span style={{ background:correct?"#059669":"#DC2626", color:"#fff", borderRadius:6, padding:"2px 8px", fontSize:12, fontWeight:800, flexShrink:0 }}>Q{i+1}</span>
+                    <span style={{ color:"rgba(255,255,255,0.8)", fontSize:13, lineHeight:1.5 }}>{qItem.q.slice(0,120)}…</span>
+                  </div>
+                  <div style={{ paddingLeft:36, display:"flex", gap:12, flexWrap:"wrap" }}>
+                    <span style={{ fontSize:12, color:correct?"#6EE7B7":"#FCA5A5" }}>Your answer: <b>{userAns!==undefined?["A","B","C","D"][userAns]:"Not answered"}</b></span>
+                    {!correct && <span style={{ fontSize:12, color:"#6EE7B7" }}>Correct: <b>{["A","B","C","D"][qItem.correct]}</b></span>}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Buttons */}
+          <div style={{ display:"flex", gap:12, justifyContent:"center", flexWrap:"wrap" }}>
+            <button onClick={() => { setPaperId(null); setScreen("home"); }}
+              style={{ padding:"14px 32px", borderRadius:12, border:"2px solid rgba(255,255,255,0.3)", background:"rgba(255,255,255,0.1)", color:"#fff", fontWeight:700, cursor:"pointer", fontSize:15 }}>
+              ← Back to Home
+            </button>
+            <button onClick={openDashboard}
+              style={{ padding:"14px 32px", borderRadius:12, border:"none", background:"#0D9488", color:"#fff", fontWeight:700, cursor:"pointer", fontSize:15 }}>
+              📊 View All Results
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── DASHBOARD ─────────────────────────────────────────────────
+  if (screen === "dashboard") {
+    const paper1Results = dashData.filter(r => r.paperId === 1);
+    const paper2Results = dashData.filter(r => r.paperId === 2);
+    const avgPct = dashData.length ? Math.round(dashData.reduce((s,r)=>s+r.pct,0)/dashData.length) : 0;
+
+    return (
+      <div style={{ minHeight:"100vh", background:"#0F2557", fontFamily:"'Segoe UI',system-ui,sans-serif" }}>
+        {/* Header */}
+        <div style={{ background:"#0A1628", borderBottom:"1px solid rgba(255,255,255,0.1)", padding:"20px 32px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <div>
+            <div style={{ color:"#0D9488", fontSize:11, fontWeight:700, letterSpacing:2, marginBottom:4 }}>TRAINER DASHBOARD</div>
+            <h1 style={{ color:"#fff", fontSize:24, fontWeight:800, margin:0 }}>Student Progress Overview</h1>
+          </div>
+          <div style={{ display:"flex", gap:10 }}>
+            <button onClick={() => { setTrainerAuth(false); setScreen("home"); }}
+              style={{ padding:"10px 20px", borderRadius:10, border:"1px solid rgba(255,255,255,0.2)", background:"rgba(255,255,255,0.06)", color:"#BAE6FD", fontWeight:600, cursor:"pointer", fontSize:13 }}>
+              🔒 Lock & Exit
+            </button>
+            <button onClick={() => setScreen("home")}
+              style={{ padding:"10px 16px", borderRadius:10, border:"1px solid rgba(255,255,255,0.15)", background:"rgba(255,255,255,0.04)", color:"rgba(255,255,255,0.5)", fontWeight:500, cursor:"pointer", fontSize:13 }}>
+              ← Home
+            </button>
+          </div>
+        </div>
+
+        <div style={{ maxWidth:1100, margin:"0 auto", padding:"28px 20px" }}>
+          {dashLoading ? (
+            <div style={{ textAlign:"center", padding:80, color:"#BAE6FD", fontSize:18 }}>Loading results...</div>
+          ) : dashData.length === 0 ? (
+            <div style={{ textAlign:"center", padding:80 }}>
+              <div style={{ fontSize:48, marginBottom:16 }}>📭</div>
+              <p style={{ color:"#BAE6FD", fontSize:18 }}>No submissions yet. Share the app link with students to get started.</p>
+            </div>
+          ) : (
+            <>
+              {/* Stats row */}
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:16, marginBottom:28 }}>
+                {[
+                  ["Total Attempts", dashData.length, "📝", "#1D4ED8"],
+                  ["Average Score", avgPct+"%", "📊", "#0D9488"],
+                  ["Paper 1 Attempts", paper1Results.length, "📋", "#5B21B6"],
+                  ["Paper 2 Attempts", paper2Results.length, "🎯", "#7C3AED"],
+                ].map(([label, val, icon, color]) => (
+                  <div key={label} style={{ background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:14, padding:"20px 18px", borderTop:`3px solid ${color}` }}>
+                    <div style={{ fontSize:24, marginBottom:8 }}>{icon}</div>
+                    <div style={{ color:"#fff", fontSize:26, fontWeight:800 }}>{val}</div>
+                    <div style={{ color:"rgba(255,255,255,0.5)", fontSize:12, marginTop:4 }}>{label}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Results table */}
+              <div style={{ background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:16, overflow:"hidden" }}>
+                <div style={{ padding:"18px 24px", borderBottom:"1px solid rgba(255,255,255,0.1)", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                  <h2 style={{ color:"#fff", fontSize:17, fontWeight:700, margin:0 }}>All Submissions</h2>
+                  <span style={{ color:"rgba(255,255,255,0.4)", fontSize:13 }}>Most recent first</span>
+                </div>
+
+                {/* Table header */}
+                <div style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr 1fr 1fr 1.5fr", gap:0, borderBottom:"1px solid rgba(255,255,255,0.08)" }}>
+                  {["Student Name","Paper","Score","Percentage","Grade","Date & Time"].map(h => (
+                    <div key={h} style={{ padding:"10px 16px", color:"rgba(255,255,255,0.4)", fontSize:11, fontWeight:700, letterSpacing:1 }}>{h}</div>
+                  ))}
+                </div>
+
+                {dashData.map((r, i) => {
+                  const grade = getGrade(r.pct);
+                  const d = new Date(r.ts);
+                  return (
+                    <div key={i} style={{ display:"grid", gridTemplateColumns:"2fr 1fr 1fr 1fr 1fr 1.5fr", borderBottom:"1px solid rgba(255,255,255,0.06)", background: i%2===0?"transparent":"rgba(255,255,255,0.02)" }}>
+                      <div style={{ padding:"14px 16px", color:"#fff", fontWeight:600, fontSize:14 }}>{r.name}</div>
+                      <div style={{ padding:"14px 16px" }}>
+                        <span style={{ background: r.paperId===1?"rgba(29,78,216,0.3)":"rgba(91,33,182,0.3)", color: r.paperId===1?"#93C5FD":"#C4B5FD", borderRadius:100, padding:"3px 10px", fontSize:12, fontWeight:700 }}>
+                          Paper {r.paperId}
+                        </span>
+                      </div>
+                      <div style={{ padding:"14px 16px", color:"#fff", fontWeight:700, fontSize:16 }}>{r.score}/{r.total}</div>
+                      <div style={{ padding:"14px 16px" }}>
+                        <span style={{ color: r.pct>=70?"#6EE7B7":r.pct>=50?"#FCD34D":"#FCA5A5", fontWeight:800, fontSize:16 }}>{r.pct}%</span>
+                      </div>
+                      <div style={{ padding:"14px 16px" }}>
+                        <span style={{ background:grade.bg, color:grade.color, borderRadius:100, padding:"3px 10px", fontSize:11, fontWeight:700 }}>{grade.label}</span>
+                      </div>
+                      <div style={{ padding:"14px 16px", color:"rgba(255,255,255,0.5)", fontSize:12 }}>
+                        {d.toLocaleDateString()} {d.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Per-student breakdown */}
+              <div style={{ marginTop:28 }}>
+                <h2 style={{ color:"#fff", fontSize:18, fontWeight:700, marginBottom:16 }}>Student Progress Details</h2>
+                <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(320px,1fr))", gap:16 }}>
+                  {[...new Map(dashData.map(r=>[r.name, dashData.filter(d=>d.name===r.name)])).entries()].map(([name, attempts]) => {
+                    const best = attempts.reduce((b,a)=>a.pct>b.pct?a:b, attempts[0]);
+                    const avg2 = Math.round(attempts.reduce((s,a)=>s+a.pct,0)/attempts.length);
+                    return (
+                      <div key={name} style={{ background:"rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:14, padding:"20px" }}>
+                        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:14 }}>
+                          <div>
+                            <div style={{ color:"#fff", fontWeight:700, fontSize:16 }}>{name}</div>
+                            <div style={{ color:"rgba(255,255,255,0.4)", fontSize:12 }}>{attempts.length} attempt{attempts.length>1?"s":""}</div>
+                          </div>
+                          <div style={{ textAlign:"right" }}>
+                            <div style={{ color: best.pct>=70?"#6EE7B7":"#FCA5A5", fontWeight:800, fontSize:20 }}>{best.pct}%</div>
+                            <div style={{ color:"rgba(255,255,255,0.4)", fontSize:11 }}>best score</div>
+                          </div>
+                        </div>
+                        {attempts.map((a,ai) => (
+                          <div key={ai} style={{ display:"flex", justifyContent:"space-between", alignItems:"center", background:"rgba(255,255,255,0.04)", borderRadius:8, padding:"8px 12px", marginBottom:6 }}>
+                            <span style={{ color:"rgba(255,255,255,0.6)", fontSize:12 }}>Paper {a.paperId} · {new Date(a.ts).toLocaleDateString()}</span>
+                            <span style={{ color: a.pct>=70?"#6EE7B7":a.pct>=50?"#FCD34D":"#FCA5A5", fontWeight:700, fontSize:14 }}>{a.score}/{a.total} ({a.pct}%)</span>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(App));
+</script>
+
+</body>
+</html>
