@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PMP 2026 Mock Test — Lessons 1-5 Scenario Practice</title>
+<title>PMP Prep Portal — Mock Tests</title>
 <style>
   :root{
     --navy:#0f2942; --blue:#1f6fb2; --lightblue:#eaf3fb; --green:#1e7d3c; --green-bg:#e8f6ec;
@@ -12,17 +12,39 @@
   }
   *{box-sizing:border-box;}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:#1c2733;line-height:1.5;}
-  header{background:var(--navy);color:#fff;padding:28px 20px;text-align:center;}
-  header h1{margin:0 0 6px;font-size:1.6rem;}
-  header p{margin:4px 0;opacity:.85;font-size:.92rem;}
+  header{background:var(--navy);color:#fff;padding:26px 20px;text-align:center;position:relative;}
+  header h1{margin:0 0 6px;font-size:1.5rem;}
+  header p{margin:4px 0;opacity:.85;font-size:.9rem;}
+  .topbar-row{max-width:880px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;padding-top:2px;}
+  .topbar-row span{opacity:.85;}
+  .topbar-row a, .link-btn{color:#bfe0ff;cursor:pointer;text-decoration:underline;background:none;border:none;font-size:.82rem;padding:0;}
   .wrap{max-width:880px;margin:0 auto;padding:24px 16px 80px;}
+
+  .center-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:32px;max-width:440px;margin:40px auto;text-align:center;}
+  .center-card h2{margin-top:0;color:var(--navy);font-size:1.25rem;}
+  .center-card p{color:var(--gray);font-size:.9rem;margin-bottom:22px;}
+  .center-card input[type=text],.center-card input[type=password]{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:8px;font-size:1rem;margin-bottom:14px;}
+  .role-row{display:flex;gap:10px;justify-content:center;margin-top:6px;flex-wrap:wrap;}
+  .btn-primary{background:var(--blue);color:#fff;border:none;padding:12px 26px;border-radius:8px;font-size:1rem;cursor:pointer;font-weight:600;}
+  .btn-primary:hover{background:#175a90;}
+  .btn-primary:disabled{background:#9fb8c9;cursor:not-allowed;}
+  .btn-secondary{background:#fff;color:var(--blue);border:1px solid var(--blue);padding:11px 22px;border-radius:8px;font-size:.95rem;cursor:pointer;font-weight:600;}
+  .btn-secondary:hover{background:var(--lightblue);}
+  .trainer-link{margin-top:26px;font-size:.82rem;color:var(--gray);}
+  .trainer-link button{background:none;border:none;color:var(--blue);text-decoration:underline;cursor:pointer;font-size:.82rem;padding:0;}
+
+  .test-list-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+  .test-list-header h2{margin:0;color:var(--navy);font-size:1.15rem;}
+  .test-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+  .test-card h3{margin:0 0 4px;color:var(--navy);font-size:1.05rem;}
+  .test-card p{margin:0;color:var(--gray);font-size:.85rem;}
+  .attempt-badge{display:inline-block;margin-top:8px;font-size:.78rem;font-weight:600;padding:3px 10px;border-radius:12px;background:var(--lightblue);color:var(--navy);}
+  .coming-soon{color:var(--gray);font-size:.85rem;font-style:italic;padding:18px 0;text-align:center;border:1px dashed var(--border);border-radius:10px;}
+
   .intro-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:22px;}
   .intro-card h2{margin-top:0;font-size:1.1rem;color:var(--navy);}
   .intro-card ul{margin:8px 0 0;padding-left:20px;}
   .intro-card li{margin-bottom:4px;font-size:.94rem;}
-  #start-btn,#retry-btn,#submit-btn{background:var(--blue);color:#fff;border:none;padding:12px 26px;border-radius:8px;font-size:1rem;cursor:pointer;font-weight:600;}
-  #start-btn:hover,#retry-btn:hover,#submit-btn:hover{background:#175a90;}
-  #submit-btn:disabled{background:#9fb8c9;cursor:not-allowed;}
   .case-banner{background:var(--lightblue);border-left:4px solid var(--blue);border-radius:6px;padding:16px 18px;margin:28px 0 16px;}
   .case-banner h3{margin:0 0 6px;color:var(--navy);font-size:1.05rem;}
   .case-banner p{margin:8px 0 0;font-size:.92rem;color:#2b3948;}
@@ -53,7 +75,6 @@
   .bar-track{flex:1;background:#e6edf3;border-radius:4px;height:18px;position:relative;}
   .bar-fill{background:var(--blue);height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;color:#fff;font-size:.72rem;font-weight:700;}
   .bar-n{width:56px;flex-shrink:0;color:var(--gray);font-size:.75rem;}
-  .target-line{border-top:2px dashed var(--red);position:relative;margin:-8px 0 8px 130px;}
   .target-note{font-size:.72rem;color:var(--red);margin:0 0 8px 130px;}
   table.dash{width:100%;border-collapse:collapse;font-size:.82rem;}
   table.dash th,table.dash td{border:1px solid var(--border);padding:6px 8px;text-align:left;}
@@ -72,55 +93,52 @@
   .hidden{display:none;}
   .unanswered-flag{color:var(--red);font-size:.78rem;font-weight:600;margin-left:8px;}
   footer{text-align:center;color:var(--gray);font-size:.78rem;padding:30px 16px;}
+
+  .trainer-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px 24px;margin-bottom:18px;}
+  .trainer-card h3{margin:0 0 8px;color:var(--navy);font-size:1.02rem;}
+  .trainer-card p{font-size:.88rem;color:#2b3948;margin:6px 0;}
+  .dashboard-link{display:inline-block;margin-top:10px;background:var(--navy);color:#fff;padding:11px 20px;border-radius:8px;text-decoration:none;font-size:.92rem;font-weight:600;}
+  .dashboard-link:hover{background:#153a5c;}
+  .local-table{width:100%;border-collapse:collapse;font-size:.84rem;margin-top:10px;}
+  .local-table th,.local-table td{border:1px solid var(--border);padding:7px 10px;text-align:left;}
+  .local-table th{background:#eef3f8;}
+  .note-box{background:#fff8e6;border:1px solid #f0e0a8;border-radius:8px;padding:12px 14px;font-size:.82rem;color:#6b5410;margin-top:14px;}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>PMP 2026 — Lengthy Scenario-Based Practice</h1>
-  <p>Lessons 1 to 5 | 20 questions | Case studies + standalone scenarios | ~55-65 min</p>
+  <h1 id="page-title">PMP Prep Portal</h1>
+  <p id="page-subtitle">Scenario-based mock tests with instant grading and explanations</p>
+  <div class="topbar-row" id="topbar-row"></div>
 </header>
 
-<div class="wrap">
-
-  <div id="intro" class="intro-card">
-    <h2>Before you start</h2>
-    <ul>
-      <li>Choose the single best answer, unless a question explicitly says <strong>Select THREE</strong>.</li>
-      <li>Use only the facts given in each passage — don't assume authority or information that isn't stated.</li>
-      <li>When two options look reasonable, ask: what should the project manager do FIRST or NEXT?</li>
-      <li>You'll get instant right/wrong feedback and a full explanation for every question after you submit.</li>
-      <li>Suggested time: 55-65 minutes for all 20 questions.</li>
-    </ul>
-    <div style="text-align:center;margin-top:20px;">
-      <button id="start-btn" onclick="startTest()">Start the test</button>
-    </div>
-  </div>
-
-  <div id="progress-bar-outer" class="hidden">
-    <div id="progress-bar-track"><div id="progress-bar-fill"></div></div>
-    <div id="progress-label">0 / 20 answered</div>
-  </div>
-
-  <div id="score-card" class="hidden"></div>
-
-  <form id="quiz-form" class="hidden"></form>
-
-  <div id="submit-row" class="hidden">
-    <button id="submit-btn" onclick="submitTest()" disabled>Submit test</button>
-    <div style="margin-top:10px;font-size:.82rem;color:var(--gray);" id="submit-hint"></div>
-  </div>
-
-  <div id="retry-row" class="hidden" style="text-align:center;margin:20px 0 60px;">
-    <button id="retry-btn" onclick="location.reload()">Retake the test</button>
-  </div>
-
-</div>
+<div class="wrap" id="app"></div>
 
 <footer>Original practice material — not an official PMI or PMI Study Hall product. Prepared for personal study use.</footer>
 
+<!-- Hidden static form so Netlify's form-detection bot registers it at deploy time.
+     Real submissions are sent via JS fetch() to "/" using these same field names. -->
+<form name="mock-test-results" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="text" name="test_id" />
+  <input type="text" name="test_title" />
+  <input type="text" name="student_name" />
+  <input type="text" name="score" />
+  <input type="text" name="total" />
+  <input type="text" name="percent" />
+  <input type="text" name="domain_people" />
+  <input type="text" name="domain_process" />
+  <input type="text" name="domain_business" />
+  <input type="text" name="timestamp" />
+  <textarea name="answers_json"></textarea>
+</form>
+
 <script>
-const CASES = {
+/* ============================================================
+   DATA — Mock Test 01. Add future tests by inserting another
+   entry into TESTS and pushing its id onto TEST_ORDER.
+   ============================================================ */
+const CASES_MT01 = {
   1: {
     title: "Case Study 1 — HarborGrid Port Modernization",
     subtitle: "Questions 1-4 | Hybrid | AI, sustainability, integrated planning, vision, value, and compliance",
@@ -151,7 +169,7 @@ const CASES = {
   }
 };
 
-const QUESTIONS = [
+const QUESTIONS_MT01 = [
 {
   id:1, caseId:1, meta:"Lessons 2 and 5 | Process — Integrated planning | Hybrid | Single response",
   stem:"The temporary-data proposal could preserve the digital release date, but it introduces a new cross-workstream dependency and may affect data integrity, auditability, operational support, and later migration. What should the project manager do FIRST?",
@@ -535,15 +553,230 @@ const QUESTIONS = [
 }
 ];
 
-let userAnswers = {};
-let submitted = false;
+/* Test registry — add future tests here and list their id in TEST_ORDER. */
+const TESTS = {
+  "mock-test-01": {
+    id: "mock-test-01",
+    title: "Mock Test 01",
+    fullTitle: "PMP 2026 — Lengthy Scenario-Based Practice",
+    subtitle: "Lessons 1 to 5 | 20 questions | Case studies + standalone scenarios | ~55-65 min",
+    cases: CASES_MT01,
+    questions: QUESTIONS_MT01
+  }
+};
+const TEST_ORDER = ["mock-test-01"];
 
-function startTest(){
+/* Change this to update the trainer passcode. It is stored in plain text in this
+   file (visible in page source) — it is only meant to keep casual visitors out of
+   the trainer tab, not to protect sensitive data. */
+const TRAINER_PASSCODE = "trainer2026";
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let state = {
+  view: localStorage.getItem('pmp_portal_name') ? 'testList' : 'gate',
+  studentName: localStorage.getItem('pmp_portal_name') || '',
+  currentTestId: null,
+  userAnswers: {},
+  submitted: false,
+  trainerAuthed: false
+};
+
+/* ============================================================
+   NETLIFY FORMS SYNC (student -> trainer data capture)
+   ============================================================ */
+function encodeFormData(data){
+  return Object.keys(data).map(k => encodeURIComponent(k) + "=" + encodeURIComponent(data[k])).join("&");
+}
+function sendResultToNetlify(fields){
+  try{
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encodeFormData(Object.assign({ "form-name": "mock-test-results" }, fields))
+    }).catch(()=>{ /* offline or local preview — ignore */ });
+  }catch(e){ /* ignore */ }
+}
+function saveLocalAttempt(rec){
+  const key = 'pmp_portal_attempts';
+  const all = JSON.parse(localStorage.getItem(key) || '[]');
+  all.push(rec);
+  localStorage.setItem(key, JSON.stringify(all));
+}
+function getLocalAttempts(){
+  return JSON.parse(localStorage.getItem('pmp_portal_attempts') || '[]');
+}
+function getBestLocalAttempt(testId, name){
+  const all = getLocalAttempts().filter(a => a.test_id === testId && a.student_name.toLowerCase() === name.toLowerCase());
+  if(all.length === 0) return null;
+  return all[all.length - 1];
+}
+
+/* ============================================================
+   RENDER / ROUTER
+   ============================================================ */
+function render(){
+  const app = document.getElementById('app');
+  const topbar = document.getElementById('topbar-row');
+  const title = document.getElementById('page-title');
+  const subtitle = document.getElementById('page-subtitle');
+
+  if(state.view === 'gate'){
+    title.textContent = 'PMP Prep Portal';
+    subtitle.textContent = 'Scenario-based mock tests with instant grading and explanations';
+    topbar.innerHTML = '';
+    app.innerHTML = renderGate();
+    return;
+  }
+  if(state.view === 'testList'){
+    title.textContent = 'PMP Prep Portal';
+    subtitle.textContent = 'Choose a mock test to begin';
+    topbar.innerHTML = `<span>Signed in as <strong>${escapeHtml(state.studentName)}</strong></span><a onclick="changeName()">Not you? Change name</a>`;
+    app.innerHTML = renderTestList();
+    return;
+  }
+  if(state.view === 'quiz'){
+    const test = TESTS[state.currentTestId];
+    title.textContent = test.fullTitle;
+    subtitle.textContent = test.subtitle;
+    topbar.innerHTML = `<span>${escapeHtml(state.studentName)} · ${test.title}</span><a onclick="backToList()">Back to test list</a>`;
+    app.innerHTML = renderQuizShell();
+    renderQuizQuestions();
+    return;
+  }
+  if(state.view === 'trainerLogin'){
+    title.textContent = 'Trainer Login';
+    subtitle.textContent = 'View student progress across all mock tests';
+    topbar.innerHTML = `<a onclick="goGate()">Back to student view</a>`;
+    app.innerHTML = renderTrainerLogin();
+    return;
+  }
+  if(state.view === 'trainerView'){
+    title.textContent = 'Trainer Dashboard';
+    subtitle.textContent = 'Student progress across all mock tests';
+    topbar.innerHTML = `<a onclick="goGate()">Exit trainer view</a>`;
+    app.innerHTML = renderTrainerView();
+    return;
+  }
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ---------- Gate (name entry / role choice) ---------- */
+function renderGate(){
+  return `
+  <div class="center-card">
+    <h2>Welcome</h2>
+    <p>Enter your name to access the mock tests.</p>
+    <input type="text" id="name-input" placeholder="Your full name" value="${escapeHtml(state.studentName)}" onkeydown="if(event.key==='Enter') submitName()">
+    <div class="role-row">
+      <button class="btn-primary" onclick="submitName()">Continue as Student</button>
+    </div>
+    <div class="trainer-link">
+      Are you the trainer? <button onclick="goTrainerLogin()">Trainer login</button>
+    </div>
+  </div>`;
+}
+function submitName(){
+  const val = document.getElementById('name-input').value.trim();
+  if(!val){ alert('Please enter your name to continue.'); return; }
+  state.studentName = val;
+  localStorage.setItem('pmp_portal_name', val);
+  state.view = 'testList';
+  render();
+}
+function changeName(){
+  localStorage.removeItem('pmp_portal_name');
+  state.studentName = '';
+  state.view = 'gate';
+  render();
+}
+function goGate(){
+  state.view = state.studentName ? 'testList' : 'gate';
+  state.trainerAuthed = false;
+  render();
+}
+
+/* ---------- Test list (student) ---------- */
+function renderTestList(){
+  let cards = TEST_ORDER.map(id => {
+    const t = TESTS[id];
+    const best = getBestLocalAttempt(id, state.studentName);
+    const badge = best ? `<div class="attempt-badge">Last attempt on this device: ${best.score}/${best.total} (${best.percent}%)</div>` : '';
+    return `<div class="test-card">
+      <div>
+        <h3>${escapeHtml(t.title)}</h3>
+        <p>${escapeHtml(t.subtitle)}</p>
+        ${badge}
+      </div>
+      <button class="btn-primary" onclick="startTest('${id}')">Start test</button>
+    </div>`;
+  }).join('');
+
+  return `
+    <div class="test-list-header"><h2>Available mock tests</h2></div>
+    ${cards}
+    <div class="coming-soon">More mock tests will appear here as they're added to the portal.</div>
+  `;
+}
+
+/* ---------- Quiz shell + questions (adapted from original single-test build) ---------- */
+function renderQuizShell(){
+  return `
+    <div id="intro" class="intro-card">
+      <h2>Before you start</h2>
+      <ul>
+        <li>Choose the single best answer, unless a question explicitly says <strong>Select THREE</strong>.</li>
+        <li>Use only the facts given in each passage — don't assume authority or information that isn't stated.</li>
+        <li>When two options look reasonable, ask: what should the project manager do FIRST or NEXT?</li>
+        <li>You'll get instant right/wrong feedback and a full explanation for every question after you submit.</li>
+        <li>Your name and score are recorded for your trainer once you submit.</li>
+      </ul>
+      <div style="text-align:center;margin-top:20px;">
+        <button class="btn-primary" onclick="beginQuiz()">Start the test</button>
+      </div>
+    </div>
+
+    <div id="progress-bar-outer" class="hidden">
+      <div id="progress-bar-track"><div id="progress-bar-fill"></div></div>
+      <div id="progress-label">0 answered</div>
+    </div>
+
+    <div id="score-card" class="hidden"></div>
+
+    <form id="quiz-form" class="hidden"></form>
+
+    <div id="submit-row" class="hidden">
+      <button id="submit-btn" class="btn-primary" onclick="submitTest()">Submit test</button>
+      <div style="margin-top:10px;font-size:.82rem;color:var(--gray);" id="submit-hint"></div>
+    </div>
+
+    <div id="retry-row" class="hidden" style="text-align:center;margin:20px 0 60px;">
+      <button class="btn-secondary" onclick="backToList()">Back to test list</button>
+    </div>
+  `;
+}
+
+function startTest(testId){
+  state.currentTestId = testId;
+  state.userAnswers = {};
+  state.submitted = false;
+  state.view = 'quiz';
+  render();
+}
+function backToList(){
+  state.view = 'testList';
+  state.currentTestId = null;
+  render();
+}
+function beginQuiz(){
   document.getElementById('intro').classList.add('hidden');
   document.getElementById('progress-bar-outer').classList.remove('hidden');
   document.getElementById('quiz-form').classList.remove('hidden');
   document.getElementById('submit-row').classList.remove('hidden');
-  renderQuiz();
 }
 
 function renderChart(q){
@@ -568,7 +801,10 @@ function renderChart(q){
   return '';
 }
 
-function renderQuiz(){
+function renderQuizQuestions(){
+  const test = TESTS[state.currentTestId];
+  const QUESTIONS = test.questions;
+  const CASES = test.cases;
   const form = document.getElementById('quiz-form');
   let html = '';
   let lastCase = null;
@@ -608,27 +844,29 @@ function renderQuiz(){
 }
 
 function handleChange(qid){
-  const q = QUESTIONS.find(x=>x.id===qid);
+  const test = TESTS[state.currentTestId];
+  const q = test.questions.find(x=>x.id===qid);
   if(q.type==='multi'){
     const checked = Array.from(document.querySelectorAll(`input[id^="in-${qid}-"]:checked`)).map(el=>el.value);
     if(checked.length > q.selectN){
-      // uncheck the one just checked beyond limit -- simplest: revert last change
       alert(`You can select at most ${q.selectN} options for this question.`);
       event.target.checked = false;
       return;
     }
-    userAnswers[qid] = checked;
+    state.userAnswers[qid] = checked;
   } else {
     const checked = document.querySelector(`input[name="q${qid}"]:checked`);
-    userAnswers[qid] = checked ? [checked.value] : [];
+    state.userAnswers[qid] = checked ? [checked.value] : [];
   }
   updateProgress();
 }
 
 function updateProgress(){
+  const test = TESTS[state.currentTestId];
+  const QUESTIONS = test.questions;
   let answered = 0;
   QUESTIONS.forEach(q=>{
-    const ua = userAnswers[q.id] || [];
+    const ua = state.userAnswers[q.id] || [];
     if(q.type==='multi'){
       if(ua.length === q.selectN) answered++;
     } else {
@@ -638,13 +876,10 @@ function updateProgress(){
   const pct = (answered/QUESTIONS.length*100).toFixed(0);
   document.getElementById('progress-bar-fill').style.width = pct+'%';
   document.getElementById('progress-label').textContent = `${answered} / ${QUESTIONS.length} answered`;
-  const submitBtn = document.getElementById('submit-btn');
   const hint = document.getElementById('submit-hint');
   if(answered === QUESTIONS.length){
-    submitBtn.disabled = false;
     hint.textContent = 'All questions answered — ready to submit.';
   } else {
-    submitBtn.disabled = false; // allow submitting with unanswered items; they'll be marked wrong
     hint.textContent = `${QUESTIONS.length - answered} question(s) still unanswered. You can submit anyway — unanswered items count as incorrect.`;
   }
 }
@@ -656,26 +891,25 @@ function arraysEqual(a,b){
 }
 
 function submitTest(){
-  submitted = true;
+  state.submitted = true;
+  const test = TESTS[state.currentTestId];
+  const QUESTIONS = test.questions;
   let correctCount = 0;
   const domainScore = {People:[0,0],Process:[0,0],"Business Environment":[0,0]};
 
   QUESTIONS.forEach(q=>{
-    const ua = userAnswers[q.id] || [];
+    const ua = state.userAnswers[q.id] || [];
     const isCorrect = arraysEqual(ua, q.answer);
     if(isCorrect) correctCount++;
 
-    // domain tally
     let dom = q.meta.includes('People') ? 'People' : q.meta.includes('Process') ? 'Process' : 'Business Environment';
     domainScore[dom][1]++;
     if(isCorrect) domainScore[dom][0]++;
 
-    // mark options
     q.options.forEach(opt=>{
       const el = document.getElementById(`opt-${q.id}-${opt.k}`);
       const wasPicked = ua.includes(opt.k);
       const isRight = q.answer.includes(opt.k);
-      // disable inputs
       document.getElementById(`in-${q.id}-${opt.k}`).disabled = true;
       if(isRight && wasPicked){
         el.classList.add('correct');
@@ -686,7 +920,6 @@ function submitTest(){
       }
     });
 
-    // tag + explanation
     const card = document.getElementById(`qcard-${q.id}`);
     const stem = card.querySelector('.q-stem');
     const tag = document.createElement('span');
@@ -711,12 +944,94 @@ function submitTest(){
   scoreCard.innerHTML = `
     <h2>Your Score</h2>
     <div id="score-big">${correctCount} / ${QUESTIONS.length}</div>
-    <div id="score-sub">${pct}% correct</div>
+    <div id="score-sub">${pct}% correct — recorded for ${escapeHtml(state.studentName)}</div>
     <div class="domain-breakdown">
       ${Object.keys(domainScore).map(d=>`<div class="domain-pill"><strong>${d}:</strong> ${domainScore[d][0]}/${domainScore[d][1]}</div>`).join('')}
     </div>`;
   if(typeof scoreCard.scrollIntoView === 'function'){ scoreCard.scrollIntoView({behavior:'smooth'}); }
+
+  // Record the attempt: locally (for this device's "last attempt" badge / trainer fallback view)
+  // and to Netlify Forms (so the trainer can see it from the site's Forms dashboard, any device).
+  const record = {
+    test_id: test.id,
+    test_title: test.title,
+    student_name: state.studentName,
+    score: correctCount,
+    total: QUESTIONS.length,
+    percent: pct,
+    domain_people: `${domainScore.People[0]}/${domainScore.People[1]}`,
+    domain_process: `${domainScore.Process[0]}/${domainScore.Process[1]}`,
+    domain_business: `${domainScore["Business Environment"][0]}/${domainScore["Business Environment"][1]}`,
+    timestamp: new Date().toISOString(),
+    answers_json: JSON.stringify(state.userAnswers)
+  };
+  saveLocalAttempt(record);
+  sendResultToNetlify(record);
 }
+
+/* ---------- Trainer views ---------- */
+function goTrainerLogin(){
+  state.view = 'trainerLogin';
+  render();
+}
+function renderTrainerLogin(){
+  return `
+  <div class="center-card">
+    <h2>Trainer Login</h2>
+    <p>Enter the trainer passcode to view student progress.</p>
+    <input type="password" id="passcode-input" placeholder="Passcode" onkeydown="if(event.key==='Enter') submitPasscode()">
+    <div class="role-row">
+      <button class="btn-primary" onclick="submitPasscode()">Enter</button>
+    </div>
+  </div>`;
+}
+function submitPasscode(){
+  const val = document.getElementById('passcode-input').value;
+  if(val !== TRAINER_PASSCODE){
+    alert('Incorrect passcode.');
+    return;
+  }
+  state.trainerAuthed = true;
+  state.view = 'trainerView';
+  render();
+}
+function renderTrainerView(){
+  const netlifySiteId = "d7700b24-07fc-4404-930e-aebf82e45707";
+  const formsUrl = `https://app.netlify.com/projects/pmpmockexamsanjeewani/forms`;
+
+  const local = getLocalAttempts().slice().reverse();
+  let rows = local.map(a => `<tr>
+      <td>${escapeHtml(a.student_name)}</td>
+      <td>${escapeHtml(a.test_title)}</td>
+      <td>${a.score}/${a.total} (${a.percent}%)</td>
+      <td>${escapeHtml(a.domain_people)}</td>
+      <td>${escapeHtml(a.domain_process)}</td>
+      <td>${escapeHtml(a.domain_business)}</td>
+      <td>${new Date(a.timestamp).toLocaleString()}</td>
+    </tr>`).join('');
+  if(!rows) rows = `<tr><td colspan="7" style="text-align:center;color:var(--gray);">No attempts recorded on this device yet.</td></tr>`;
+
+  return `
+  <div class="trainer-card">
+    <h3>Live results — all students, all devices</h3>
+    <p>Every submitted test is sent to this site's Netlify Forms inbox, regardless of which device the student used. Open the dashboard to see every student's name, score, and timestamp, and export to CSV.</p>
+    <a class="dashboard-link" href="${formsUrl}" target="_blank" rel="noopener">Open results dashboard ↗</a>
+  </div>
+
+  <div class="trainer-card">
+    <h3>This device's history</h3>
+    <p>A convenience copy of attempts submitted from this specific browser (e.g. if students take the test on a shared/kiosk device). It will not show attempts made on other devices — use the dashboard above for the full picture.</p>
+    <table class="local-table">
+      <tr><th>Name</th><th>Test</th><th>Score</th><th>People</th><th>Process</th><th>Bus. Env.</th><th>Submitted</th></tr>
+      ${rows}
+    </table>
+  </div>
+
+  <div class="note-box">The trainer passcode is stored in this file's source code as a convenience gate — it is not secure against someone determined to view the page source. Don't use it to protect sensitive information.</div>
+  `;
+}
+
+render();
 </script>
 </body>
 </html>
