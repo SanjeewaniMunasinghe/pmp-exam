@@ -553,6 +553,1544 @@ const QUESTIONS_MT01 = [
 }
 ];
 
+/* ============================================================
+   DATA — Mock Test 02 (100 questions)
+   ============================================================ */
+const CASES_MT02 = {
+  1: {
+    title: "Case Study 1 — NovaBank Lending Transformation",
+    subtitle: "Questions 1-5 | Hybrid",
+    passage: `NovaBank is replacing a 15-year-old consumer lending platform. Credit policy rules, audit logging, data retention, and regulatory reporting are stable and managed predictively. The mobile application, customer journey, and document-upload experience are developed by two cross-functional teams in three-week iterations. A specialist vendor provides an AI-supported affordability model and an identity-verification service. The board expects the program to reduce approval time, improve customer completion rates, and maintain responsible-lending standards.<br><br>
+    Four months before the planned launch, the regulator issues guidance requiring lenders to retain an auditable explanation for automated affordability recommendations and to demonstrate that vulnerable-customer groups are not disproportionately rejected. The vendor says it can provide the explanation logs in six weeks, but demographic validation data are incomplete. The product owner wants to continue prioritizing a pre-approved-loan feature because marketing has already announced it.<br><br>
+    At the same time, an AI-generated program dashboard remains green because it assumes the vendor milestone will be met. The vendor delivery manager privately tells the project manager that there is a 40% chance the explanation-log capability will be two weeks late. The sponsor asks the project manager not to alarm the steering committee until the vendor confirms a delay. Operations also reports that customer-service staff have not yet been trained on manual review when the AI recommendation is challenged.`
+  },
+  2: {
+    title: "Case Study 2 — GreenLink Renewable Microgrid",
+    subtitle: "Questions 6-10 | Predictive",
+    passage: `GreenLink Utilities is constructing a renewable-energy microgrid for an industrial park. The approved scope includes solar arrays, battery storage, a control building, grid interconnection, and a three-month transition to operations. Engineering and construction are managed predictively because permits, safety inspections, procurement lead times, and commissioning sequences are well defined.<br><br>
+    The business case is based on lower peak-energy costs, improved resilience, and a measurable reduction in carbon emissions. Nearby residents support the clean-energy goal but are concerned about construction traffic and night work. A new local council member begins publicly criticizing the project after residents report unexpected weekend deliveries.<br><br>
+    At month eight, the project has BAC = USD 8.0M, PV = USD 4.0M, EV = USD 3.6M, and AC = USD 3.3M. A known risk that imported switchgear may be delayed has not occurred, but the supplier now says shipping congestion has increased the probability. The risk response includes an approved local substitute if the delay exceeds a defined threshold. The commissioning manager also warns that two specialist engineers are scheduled on another company project during the planned testing window.`
+  },
+  3: {
+    title: "Case Study 3 — CarePath AI Scheduling Pilot",
+    subtitle: "Questions 11-15 | Adaptive",
+    passage: `CarePath Health is piloting an AI-enabled scheduling service across six hospitals. The teams work adaptively in two-week iterations. The shared vision is to reduce waiting time while protecting patient safety, privacy, equitable access, and staff workload. The pilot initially shows an 18% reduction in average waiting time against a 20% target. Urban attendance improves by 15%, rural attendance by only 3%, and patient satisfaction is 79% against an 85% target.<br><br>
+    A privacy impact assessment is still open because the model vendor recently changed how conversation transcripts are retained for quality improvement. The operations director wants to expand the pilot because waiting time is improving. Clinical representatives want more evidence on rural access and staff workload. The product owner argues that the team can learn faster by releasing to more hospitals.<br><br>
+    The lead data scientist, who understands the model assumptions, data-cleaning decisions, monitoring thresholds, and known failure modes, resigns with two weeks' notice. During a retrospective, a senior engineer repeatedly blames the clinical team for slow feedback and dismisses a junior analyst's concern about rural data quality. The team charter includes a no-blame rule and requires respectful challenge of assumptions.`
+  }
+};
+
+const QUESTIONS_MT02 = [
+{
+  id:1, caseId:1, meta:"Process | Hybrid | Hard | Single response",
+  stem:"What should the project manager do FIRST after receiving the vendor's 40% delay estimate?",
+  type:"single",
+  options:[
+    {k:"A", t:"Validate the vendor estimate and assumptions, assess integrated impacts on compliance, training, release dependencies, cost, and value, update the risk information, and communicate through the agreed governance path."},
+    {k:"B", t:"Change the program dashboard to red immediately because any 40% probability is unacceptable for a regulatory dependency."},
+    {k:"C", t:"Wait for the vendor to miss the milestone because uncertain events should not be escalated as issues."},
+    {k:"D", t:"Ask the vendor to add more developers and preserve the baseline before informing stakeholders."}
+  ],
+  answer:["A"],
+  why:"The delay has not occurred, so it is still a risk. The PM should validate the information, analyze cross-workstream impacts, update planning/risk artifacts, and communicate at the level required by governance.",
+  notes:["Waiting hides material uncertainty; changing status without analysis substitutes judgment for evidence."]
+},
+{
+  id:2, caseId:1, meta:"Business Environment | Hybrid | Hard | Single response",
+  stem:"The product owner argues that the new regulatory guidance can be implemented after launch because the core lending functionality already works. What is the BEST response?",
+  type:"single",
+  options:[
+    {k:"A", t:"Add the regulatory work to the backlog but do not change any baseline because agile work is not subject to formal governance."},
+    {k:"B", t:"Confirm applicability and effective dates with the relevant compliance specialists, assess the impact on acceptance and release readiness, and ensure mandatory requirements are satisfied through the authorized governance/change process before launch."},
+    {k:"C", t:"Stop all development until the regulator publishes a detailed technical design."},
+    {k:"D", t:"Launch as planned and obtain sponsor acceptance of the compliance risk."}
+  ],
+  answer:["B"],
+  why:"Mandatory compliance cannot be waived by the sponsor or product owner. The PM should confirm the requirement, assess consequences and project impacts, then use the applicable governance/change path so that release criteria remain compliant.",
+  notes:[]
+},
+{
+  id:3, caseId:1, meta:"People | Hybrid | Hard | Single response",
+  stem:"Marketing wants the pre-approved-loan feature protected, compliance wants the explanation capability first, and operations wants training and manual-review workflows completed. What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Split capacity equally among marketing, compliance, and operations to demonstrate fairness."},
+    {k:"B", t:"Let the product owner decide because backlog priority is solely a product decision."},
+    {k:"C", t:"Ask the sponsor to rank all three stakeholder groups and use that ranking for every future decision."},
+    {k:"D", t:"Facilitate a discussion around the shared outcomes, mandatory constraints, release dependencies, and value trade-offs so stakeholders agree on decision criteria before reprioritizing work."}
+  ],
+  answer:["D"],
+  why:"The conflict is about competing definitions of success and priority. The PM should establish common decision criteria based on value, mandatory constraints, and shared outcomes before choosing work. Authority should not be invented or delegated blindly.",
+  notes:[]
+},
+{
+  id:4, caseId:1, meta:"Process | Hybrid | Hard | Multiple response — Select 3",
+  stem:"Which THREE actions best support a responsible decision about the AI affordability model before broad release?",
+  type:"multi", selectN:3,
+  options:[
+    {k:"A", t:"Confirm that acceptance measures include responsible-lending outcomes, explainability, and operational handling of challenged recommendations."},
+    {k:"B", t:"Validate segment-level performance and the quality/representativeness of the data."},
+    {k:"C", t:"Disable all AI functionality permanently because any fairness concern makes AI inappropriate."},
+    {k:"D", t:"Consider a controlled release or additional experiment only if it preserves mandatory controls and produces useful evidence for the release decision."},
+    {k:"E", t:"Use the overall accuracy score as the only acceptance measure because it is objective."}
+  ],
+  answer:["A","B","D"],
+  why:"Value is broader than a single technical metric. The team should validate data and segment outcomes, ensure acceptance measures reflect regulatory and stakeholder value, and use controlled learning only when mandatory safeguards remain in place.",
+  notes:[]
+},
+{
+  id:5, caseId:1, meta:"Business Environment | Hybrid | Hard | Single response",
+  stem:"Two weeks later, the vendor misses the explanation-log milestone and the missing capability now blocks compliance testing. What should the project manager do NEXT?",
+  type:"single",
+  options:[
+    {k:"A", t:"Recognize that the risk has become an issue, record and prioritize the issue, implement or adapt the planned response with the relevant parties, and communicate/escalate based on the agreed threshold."},
+    {k:"B", t:"Use management reserve immediately to hire another vendor without approval."},
+    {k:"C", t:"Continue to track the item only as a risk because it began as an uncertain event."},
+    {k:"D", t:"Move the launch date without assessing alternatives because the compliance dependency is now late."}
+  ],
+  answer:["A"],
+  why:"Once the event occurs, it is an issue. The PM should actively manage it, use the planned response as appropriate, collaborate on alternatives, and escalate according to governance rather than taking unilateral funding or schedule decisions.",
+  notes:[]
+},
+{
+  id:6, caseId:2, meta:"People | Predictive | Hard | Single response",
+  stem:"What should the project manager do FIRST in response to the council member and residents' concerns?",
+  type:"single",
+  options:[
+    {k:"A", t:"Suspend weekend deliveries immediately even if this breaches supplier agreements."},
+    {k:"B", t:"Issue a public statement that the project already has permits, so the complaints do not affect the plan."},
+    {k:"C", t:"Ask the sponsor to meet the council member because political stakeholders should only be handled by executives."},
+    {k:"D", t:"Review the stakeholder analysis and engagement strategy, meet with the relevant representatives to understand the specific impacts and expectations, and tailor communication/mitigation actions within project authority."}
+  ],
+  answer:["D"],
+  why:"The PM should understand the stakeholder concerns and tailor engagement before jumping to solutions or escalation. Existing permits do not remove the need to manage stakeholder impact and trust.",
+  notes:[]
+},
+{
+  id:7, caseId:2, meta:"Process | Predictive | Hard | Single response",
+  stem:"Which statement BEST describes current performance?",
+  type:"single",
+  chart:{type:"table", title:"GreenLink status at month 8 — BAC = USD 8.0M", headers:["PV","EV","AC"], rows:[["USD 4.0M","USD 3.6M","USD 3.3M"]]},
+  options:[
+    {k:"A", t:"Ahead of schedule and over budget."},
+    {k:"B", t:"Behind schedule and under budget."},
+    {k:"C", t:"Behind schedule and over budget."},
+    {k:"D", t:"Ahead of schedule and under budget."}
+  ],
+  answer:["B"],
+  why:"SV = EV − PV = 3.6 − 4.0 = −0.4M, so the project is behind schedule. CV = EV − AC = 3.6 − 3.3 = +0.3M, so it is currently under budget. The PM should still investigate schedule drivers and future cost impacts.",
+  notes:[]
+},
+{
+  id:8, caseId:2, meta:"Process | Predictive | Hard | Single response",
+  stem:"The resource plan assumed the two commissioning engineers would be available full time, but portfolio information now shows only 50% availability. What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Do nothing until commissioning starts because current work is not affected."},
+    {k:"B", t:"Confirm the resource constraint, analyze effects on critical testing activities and alternatives, then negotiate availability or sequencing through the appropriate resource/governance process and update the plan."},
+    {k:"C", t:"Require overtime because the approved schedule already assumes full availability."},
+    {k:"D", t:"Replace both engineers immediately with available junior staff."}
+  ],
+  answer:["B"],
+  why:"Resource plans must reflect actual availability and competence. The PM should analyze the impact and options before negotiating or changing the schedule, rather than relying on overtime or waiting for the problem to materialize.",
+  notes:[]
+},
+{
+  id:9, caseId:2, meta:"Business Environment | Predictive | Hard | Single response",
+  stem:"Shipping congestion has increased the probability of the switchgear delay, but the supplier has not yet missed a date. What should the project manager do NEXT?",
+  type:"single",
+  options:[
+    {k:"A", t:"Close the risk because a substitute exists."},
+    {k:"B", t:"Record an issue and implement the local substitute immediately."},
+    {k:"C", t:"Reassess the risk probability/impact and trigger conditions with the supplier and technical team, update the risk information, and execute the approved response if the defined threshold is met."},
+    {k:"D", t:"Submit a change request to extend the project before reassessing the risk."}
+  ],
+  answer:["C"],
+  why:"The event remains a risk. New information should drive reassessment and monitoring against agreed triggers. The response should be executed when its trigger/threshold is met, not automatically or after the risk is closed.",
+  notes:[]
+},
+{
+  id:10, caseId:2, meta:"People | Predictive | Hard | Single response",
+  stem:"The sponsor asks for a simple green/amber/red status, but the project is cost-efficient while behind schedule and facing increasing supplier/resource uncertainty. What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Report red because any negative schedule variance means the project is failing."},
+    {k:"B", t:"Refuse to use RAG status because it oversimplifies project performance."},
+    {k:"C", t:"Report green because CPI is greater than 1.0."},
+    {k:"D", t:"Provide the requested summary status with transparent supporting information on schedule, cost, key uncertainties, thresholds, and decisions required so the sponsor can interpret the status correctly."}
+  ],
+  answer:["D"],
+  why:"Communication should be tailored to stakeholder needs without hiding important decision information. A summary indicator may be used, but it should be supported by relevant context, uncertainty, and required actions.",
+  notes:[]
+},
+{
+  id:11, caseId:3, meta:"Business Environment | Adaptive | Expert | Single response",
+  stem:"The vendor says the new transcript-retention method improves model quality and is standard industry practice. What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Allow the change because the vendor is the technical expert and the pilot is not yet production."},
+    {k:"B", t:"Delete all transcripts immediately without consulting stakeholders."},
+    {k:"C", t:"Confirm the privacy requirement and decision authority with appropriate specialists, assess the changed data practice and consequences, and ensure approval/controls are in place before expanding use of the data."},
+    {k:"D", t:"Ask the product owner to accept the privacy risk in the backlog."}
+  ],
+  answer:["C"],
+  why:"A material change in personal-data handling requires confirmation of compliance obligations and authorized controls. Product or vendor preference cannot substitute for privacy requirements and governance.",
+  notes:[]
+},
+{
+  id:12, caseId:3, meta:"People | Adaptive | Expert | Single response",
+  stem:"Operations and clinical stakeholders disagree about whether the pilot is successful. What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Use waiting-time reduction as the primary metric because it is closest to target."},
+    {k:"B", t:"Facilitate a review of the shared vision, outcome measures, assumptions, and acceptance conditions so the stakeholders agree how to interpret the evidence and trade-offs."},
+    {k:"C", t:"Expand the pilot and let production data resolve the disagreement."},
+    {k:"D", t:"Ask the sponsor to decide which stakeholder group is correct."}
+  ],
+  answer:["B"],
+  why:"The disagreement reflects different interpretations of success. The PM should reconnect stakeholders to the shared vision and agreed outcomes before making a release decision. More exposure is not a substitute for unresolved acceptance/compliance questions.",
+  notes:[]
+},
+{
+  id:13, caseId:3, meta:"People | Adaptive | Expert | Multiple response — Select 3",
+  stem:"Which THREE actions are most appropriate before the lead data scientist leaves?",
+  type:"multi", selectN:3,
+  options:[
+    {k:"A", t:"Transfer ownership only to the most senior engineer to minimize coordination overhead."},
+    {k:"B", t:"Require a single final report and consider the transfer complete once it is uploaded."},
+    {k:"C", t:"Use pairing, recorded walkthroughs, model/decision documentation, and hands-on demonstrations with multiple team members."},
+    {k:"D", t:"Identify which knowledge is critical to continued delivery and monitoring, and prioritize the highest-risk gaps."},
+    {k:"E", t:"Confirm that the receiving team can find, explain, and apply the transferred knowledge before departure."}
+  ],
+  answer:["C","D","E"],
+  why:"Knowledge transfer should identify critical knowledge, use mechanisms suitable for tacit and explicit knowledge, and verify that recipients can apply it. A single document or single successor creates avoidable concentration risk.",
+  notes:[]
+},
+{
+  id:14, caseId:3, meta:"People | Adaptive | Expert | Single response",
+  stem:"The senior engineer's behavior is reducing psychological safety and the junior analyst stops raising data-quality concerns. What should the project manager or servant leader do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Ask the team to revisit the charter at the next retrospective and defer individual action until the group reconfirms the ground rules."},
+    {k:"B", t:"Address the behavior and its impact promptly, reinforce the agreed no-blame and respectful-challenge ground rules, and facilitate a constructive resolution that restores the team's ability to surface risks and evidence."},
+    {k:"C", t:"Escalate the engineer to the functional manager because a repeated ground-rule violation is now a formal performance issue."},
+    {k:"D", t:"Meet privately with the senior engineer to understand the intent and agree that future data-quality concerns will be raised through the lead before retrospectives."}
+  ],
+  answer:["B"],
+  why:"This is primarily a People-domain conflict and team-leadership situation. The leader should manage and rectify ground-rule violations, protect psychological safety, and restore constructive challenge.",
+  notes:["A private conversation may be part of the response, but routing concerns through the lead would suppress transparency; waiting delays action; immediate formal escalation may be premature unless the behavior persists or exceeds the PM's authority."]
+},
+{
+  id:15, caseId:3, meta:"Process | Adaptive | Expert | Single response",
+  stem:"Assuming no mandatory privacy approval has yet been obtained, what is the BEST release decision?",
+  type:"single",
+  options:[
+    {k:"A", t:"Keep the current six-hospital pilot unchanged while the team gathers more rural-access data, because expansion is the only action that requires privacy approval."},
+    {k:"B", t:"Expand only to hospitals whose local privacy officers accept the vendor retention method, and treat rural-access performance as a benefits issue to be monitored later."},
+    {k:"C", t:"Do not broaden release yet; resolve the mandatory privacy readiness, evaluate the incomplete outcome evidence against the shared acceptance criteria, and use an authorized controlled experiment only if safeguards, decision rights, and measurement criteria are satisfied."},
+    {k:"D", t:"Ask the sponsor to approve a temporary release exception so the team can collect broader evidence before the privacy assessment is complete."}
+  ],
+  answer:["C"],
+  why:"Value-based delivery must operate within mandatory compliance and acceptance conditions. The PM should not broaden exposure while privacy readiness is unresolved. Controlled learning is appropriate only within authorized safeguards and decision criteria.",
+  notes:[]
+},
+
+{
+  id:16, meta:"People | Predictive | Easy | Single response",
+  passage:"A data-center relocation project has an approved charter. Finance defines success as reducing cost, while operations defines success as zero customer disruption.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Use cost reduction because finance controls the budget."},
+    {k:"B", t:"Let each function optimize its own objective."},
+    {k:"C", t:"Facilitate alignment on a shared vision and measurable success outcomes."},
+    {k:"D", t:"Wait until execution to see which objective becomes more important."}
+  ],
+  answer:["C"],
+  why:"A signed charter does not guarantee a shared interpretation. The PM should align stakeholders on common outcomes and trade-off principles before conflicting decisions emerge.",
+  notes:[]
+},
+{
+  id:17, meta:"People | Adaptive | Easy | Single response",
+  passage:"A customer representative has stopped attending sprint reviews and later says the increments do not meet operational needs.",
+  stem:"What should the project manager or agile leader do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Meet with the stakeholder to understand needs and barriers, then tailor the engagement and feedback approach."},
+    {k:"B", t:"Remove the stakeholder from the stakeholder register."},
+    {k:"C", t:"Escalate the stakeholder to the sponsor."},
+    {k:"D", t:"Send longer weekly reports."}
+  ],
+  answer:["A"],
+  why:"Direct engagement helps uncover expectations, constraints, and preferred communication. Escalation is usually premature when the PM can first attempt to restore effective collaboration.",
+  notes:[]
+},
+{
+  id:18, meta:"People | Predictive | Easy | Single response",
+  passage:"A sponsor wants a weekly one-page summary, while technical leads need detailed dependency information.",
+  stem:"What is the BEST approach?",
+  type:"single",
+  options:[
+    {k:"A", t:"Only report to the sponsor."},
+    {k:"B", t:"Send the same detailed report to everyone."},
+    {k:"C", t:"Tailor communication to stakeholder information needs while maintaining consistent source data."},
+    {k:"D", t:"Let each workstream create unrelated reports."}
+  ],
+  answer:["C"],
+  why:"Communication should be tailored in format and detail while preserving transparency and a consistent underlying view of project information.",
+  notes:[]
+},
+{
+  id:19, meta:"People | Predictive | Easy | Single response",
+  passage:"Two department managers argue about who should provide a testing specialist. The resource plan is unclear.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Identify the source and context of the conflict and facilitate a resolution based on project needs and agreed roles."},
+    {k:"B", t:"Assign the specialist without consulting either manager."},
+    {k:"C", t:"Delay testing."},
+    {k:"D", t:"Escalate immediately."}
+  ],
+  answer:["A"],
+  why:"PMI-style conflict management begins by understanding the cause/context and working collaboratively toward a resolution before unnecessary escalation.",
+  notes:[]
+},
+{
+  id:20, meta:"People | Adaptive | Easy | Single response",
+  passage:"A capable agile team asks the project manager to assign every task because members are afraid of making the wrong choice.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Empower the team, clarify outcomes and boundaries, and coach them to self-organize."},
+    {k:"B", t:"Replace the team lead."},
+    {k:"C", t:"Assign all tasks personally."},
+    {k:"D", t:"Ask the sponsor to assign tasks."}
+  ],
+  answer:["A"],
+  why:"The leader should establish clarity and empower the team rather than create dependency through unnecessary command-and-control behavior.",
+  notes:[]
+},
+{
+  id:21, meta:"People | Predictive | Easy | Single response",
+  passage:"A customer expected daily progress updates, but the communication plan specifies weekly updates and the mismatch is creating frustration.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Clarify the customer's information need and adjust the communication approach if appropriate."},
+    {k:"B", t:"Escalate the customer."},
+    {k:"C", t:"Tell the customer to follow the plan."},
+    {k:"D", t:"Send hourly updates."}
+  ],
+  answer:["A"],
+  why:"The PM should understand and manage expectations, then tailor communication where it creates value and is feasible.",
+  notes:[]
+},
+{
+  id:22, meta:"People | Predictive | Easy | Single response",
+  passage:"A senior engineer will leave one month before handover and holds critical undocumented integration knowledge.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Hire a replacement before documenting anything."},
+    {k:"B", t:"Identify the critical knowledge and start a structured transfer to multiple recipients."},
+    {k:"C", t:"Ask HR to own the issue."},
+    {k:"D", t:"Wait for the final lessons-learned meeting."}
+  ],
+  answer:["B"],
+  why:"Critical knowledge should be identified and transferred before it is lost. Knowledge transfer is a project responsibility, even if HR supports staffing actions.",
+  notes:[]
+},
+{
+  id:23, meta:"People | Hybrid | Easy | Single response",
+  passage:"A remote team misunderstands decisions because action items are discussed verbally but not captured.",
+  stem:"What is the BEST improvement?",
+  type:"single",
+  options:[
+    {k:"A", t:"Add more meetings."},
+    {k:"B", t:"Ask only managers to attend."},
+    {k:"C", t:"Establish a feedback loop and visible shared record of decisions, owners, and actions."},
+    {k:"D", t:"Stop verbal discussions."}
+  ],
+  answer:["C"],
+  why:"The issue is not simply meeting frequency; it is lack of shared, accessible communication and feedback. A visible decision/action record improves alignment.",
+  notes:[]
+},
+{
+  id:24, meta:"People | Predictive | Moderate | Single response",
+  passage:"A product owner wants a feature released this month. The operations lead refuses because support procedures are incomplete. Both believe they are protecting customer value.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Delay because operations owns production."},
+    {k:"B", t:"Release because product value is the product owner's responsibility."},
+    {k:"C", t:"Analyze the source of conflict, release criteria, operational risk, and stakeholder objectives, then facilitate an agreed resolution."},
+    {k:"D", t:"Ask the sponsor to choose."}
+  ],
+  answer:["C"],
+  why:"Both positions are plausible and value-driven. The PM should understand the underlying criteria and risks, then facilitate a resolution rather than choosing a side by role title.",
+  notes:[]
+},
+{
+  id:25, meta:"People | Predictive | Moderate | Single response",
+  passage:"A high-influence regulator has been receiving generic monthly status reports but repeatedly asks questions already addressed in technical evidence packs.",
+  stem:"What should the project manager do NEXT?",
+  type:"single",
+  options:[
+    {k:"A", t:"Remove technical detail to shorten reports."},
+    {k:"B", t:"Reassess the stakeholder's information needs and tailor the communication channel/content to the regulator's decision needs."},
+    {k:"C", t:"Ask the regulator to read the existing reports more carefully."},
+    {k:"D", t:"Send more frequent generic reports."}
+  ],
+  answer:["B"],
+  why:"Stakeholder engagement should be tailored to actual information and decision needs. More of the same communication will not resolve the mismatch.",
+  notes:[]
+},
+{
+  id:26, meta:"People | Adaptive | Moderate | Single response",
+  passage:"During backlog refinement, sales favors conversion features while customer support favors defect reduction. Both cite the product vision.",
+  stem:"What should the project manager or product leader do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Prioritize whichever item has higher story points."},
+    {k:"B", t:"Split the iteration equally."},
+    {k:"C", t:"Facilitate clarification of the shared vision, value measures, and trade-off rules so backlog decisions use common criteria."},
+    {k:"D", t:"Let sales decide because revenue is measurable."}
+  ],
+  answer:["C"],
+  why:"A common vision should guide prioritization through agreed value criteria. Story points measure effort, not business value.",
+  notes:[]
+},
+{
+  id:27, meta:"People | Hybrid | Moderate | Single response",
+  passage:"A highly experienced team performs well independently, but a new regulatory workstream introduces unfamiliar controls.",
+  stem:"Which leadership approach is BEST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Tailor leadership: preserve autonomy where competence is high and provide more direction/coaching on unfamiliar regulated work."},
+    {k:"B", t:"Replace experienced team members with compliance specialists."},
+    {k:"C", t:"Use the same hands-off style for all work."},
+    {k:"D", t:"Take over all decisions until the regulation work ends."}
+  ],
+  answer:["A"],
+  why:"Leadership should be situational and tailored to task maturity, risk, and competence. Empowerment and appropriate support can coexist.",
+  notes:[]
+},
+{
+  id:28, meta:"People | Predictive | Moderate | Single response",
+  passage:"A monthly steering report contains 40 metrics, but executives consistently ask what decisions are required and which outcomes are at risk.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Add more metrics."},
+    {k:"B", t:"Tailor the report around decision-relevant outcomes, trends, thresholds, uncertainties, and actions while keeping detailed evidence accessible."},
+    {k:"C", t:"Ask executives to attend daily stand-ups."},
+    {k:"D", t:"Stop reporting metrics."}
+  ],
+  answer:["B"],
+  why:"Reports should serve stakeholder decision needs. Detailed evidence can remain available, but executive reporting should surface the information necessary for governance and action.",
+  notes:[]
+},
+{
+  id:29, meta:"People | Hybrid | Moderate | Single response",
+  passage:"A senior stakeholder assumes every item demonstrated at a sprint review will be released immediately. The team often demonstrates experiments that may be changed or discarded.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Ask the stakeholder to read the agile guide."},
+    {k:"B", t:"Release everything shown."},
+    {k:"C", t:"Stop demonstrations."},
+    {k:"D", t:"Clarify the purpose of reviews, release criteria, and the difference between an increment/experiment and a production commitment."}
+  ],
+  answer:["D"],
+  why:"Expectation management requires explicit alignment on what project events and artifacts mean. The PM should correct the misunderstanding and maintain transparency.",
+  notes:[]
+},
+{
+  id:30, meta:"People | Hybrid | Moderate | Multiple response — Select 2",
+  passage:"A distributed team has recurring conflict because decisions made in one region are discovered by another region after work has started.",
+  stem:"Which TWO actions are most appropriate?",
+  type:"multi", selectN:2,
+  options:[
+    {k:"A", t:"Create feedback loops that include affected regions before high-impact decisions are finalized."},
+    {k:"B", t:"Require all decisions to be made only by the project manager."},
+    {k:"C", t:"Establish a shared decision log and communication working agreement."},
+    {k:"D", t:"Increase individual performance targets."},
+    {k:"E", t:"Move all work to one region."}
+  ],
+  answer:["A","C"],
+  why:"The conflict stems from decision transparency and inclusion. Shared decision artifacts and deliberate feedback loops address the cause without centralizing every decision or reorganizing the team.",
+  notes:[]
+},
+{
+  id:31, meta:"People | Predictive | Moderate | Single response",
+  passage:"A contractor completes a complex migration script. Documentation exists, but internal engineers cannot explain how to recover from a failed migration.",
+  stem:"What should the project manager do NEXT?",
+  type:"single",
+  options:[
+    {k:"A", t:"Close the knowledge-transfer activity because the script works."},
+    {k:"B", t:"Arrange practical walkthroughs/simulations and verify that the receiving team can apply the knowledge."},
+    {k:"C", t:"Extend the contractor indefinitely."},
+    {k:"D", t:"Accept the documentation because the contract requires documents."}
+  ],
+  answer:["B"],
+  why:"Knowledge transfer is successful when recipients can access and apply critical knowledge. Documents alone may not transfer tacit recovery knowledge.",
+  notes:[]
+},
+{
+  id:32, meta:"People | Adaptive | Moderate | Matching",
+  passage:"Select the best match for each item: 1) urgent production blocker, 2) executive monthly outcome review, 3) reusable technical decision, 4) sensitive one-to-one performance concern.",
+  stem:"Match each communication need to the MOST appropriate response.",
+  type:"single",
+  options:[
+    {k:"A", t:"1-Real-time team channel/call; 2-Outcome dashboard and decision summary; 3-Shared repository/decision record; 4-Private conversation"},
+    {k:"B", t:"1-Quarterly steering pack; 2-Issue log only; 3-Sponsor call; 4-Shared dashboard"},
+    {k:"C", t:"1-Monthly report; 2-Technical wiki; 3-Private call; 4-Public team channel"},
+    {k:"D", t:"1-Email newsletter; 2-Daily stand-up; 3-Verbal-only discussion; 4-Group retrospective"}
+  ],
+  answer:["A"],
+  why:"Communication method should fit urgency, audience, sensitivity, and need for persistence. Real-time blockers need fast interaction; executive reviews need concise outcomes; reusable decisions need durable records; sensitive concerns need private discussion.",
+  notes:[]
+},
+{
+  id:33, meta:"People | Predictive | Moderate | Single response",
+  passage:"A supplier executive is highly influential but currently neutral. Their engineering team is cooperative, yet commercial negotiations are tense.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Classify the entire supplier as resistant."},
+    {k:"B", t:"Communicate only through procurement."},
+    {k:"C", t:"Analyze stakeholders at the appropriate level, tailor engagement to their interests/influence, and avoid assuming one person's stance represents all supplier stakeholders."},
+    {k:"D", t:"Ignore the executive because engineers do the work."}
+  ],
+  answer:["C"],
+  why:"Stakeholder analysis should recognize different roles, influence, and interests. Engagement should be tailored rather than treating an organization as one homogeneous stakeholder.",
+  notes:[]
+},
+{
+  id:34, meta:"People | Predictive | Moderate | Single response",
+  passage:"A sponsor believes the project will deliver a 15% operating-cost reduction immediately at handover, while the business case assumes benefits will ramp up over 12 months after adoption.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Ignore the misunderstanding until closure."},
+    {k:"B", t:"Change the business case to the sponsor's expectation."},
+    {k:"C", t:"Clarify the benefit assumptions, timing, ownership, and measurement approach with the sponsor and benefit owners."},
+    {k:"D", t:"Ask finance to resolve it without project involvement."}
+  ],
+  answer:["C"],
+  why:"Stakeholder expectations should be aligned to documented benefit assumptions and measurement timing. The PM should surface the mismatch early rather than allow an unrealistic success criterion to persist.",
+  notes:[]
+},
+{
+  id:35, meta:"People | Adaptive | Moderate | Single response",
+  passage:"A new analyst makes a mistake in an experiment. A senior team member wants the project manager to approve all future analyst work.",
+  stem:"What is the BEST response?",
+  type:"single",
+  options:[
+    {k:"A", t:"Use the mistake as a coaching opportunity, clarify quality checks, and let the team provide appropriate peer support while preserving empowerment."},
+    {k:"B", t:"Approve every task personally."},
+    {k:"C", t:"Ignore the mistake because experiments are always safe to fail."},
+    {k:"D", t:"Remove the analyst from the project."}
+  ],
+  answer:["A"],
+  why:"Empowered teams still need appropriate quality controls and coaching. The goal is to learn and improve without creating unnecessary approval bottlenecks.",
+  notes:[]
+},
+{
+  id:36, meta:"People | Predictive | Hard | Single response",
+  passage:"A cybersecurity lead refuses to share threat-model details with the product team, citing confidentiality. The product team says it cannot design effective controls without understanding the threats. Both groups are following legitimate policies, but delivery is stalled.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Analyze the policy constraints and information needs with both groups, then facilitate a solution such as controlled access, sanitized threat information, or approved collaboration channels."},
+    {k:"B", t:"Let the product team design generic controls without security input."},
+    {k:"C", t:"Escalate the security lead for obstructing the team."},
+    {k:"D", t:"Order the security lead to share all threat details."}
+  ],
+  answer:["A"],
+  why:"The conflict has legitimate underlying constraints. The PM should understand the context and facilitate a solution that protects confidentiality while enabling the team to do the work.",
+  notes:[]
+},
+{
+  id:37, meta:"Business Environment | Predictive | Hard | Single response",
+  passage:"A regulator has low day-to-day involvement but very high authority over final acceptance. The project team has not confirmed regulatory evidence checkpoints since requirements sign-off six months ago, and final inspection is approaching.",
+  stem:"What should the project manager do NEXT?",
+  type:"single",
+  options:[
+    {k:"A", t:"Ask the sponsor to obtain an informal assurance that the final inspection will be successful."},
+    {k:"B", t:"Review the compliance and engagement approach, confirm required evidence/checkpoints with the regulator or authorized liaison, and close any gaps before final acceptance."},
+    {k:"C", t:"Send every internal project report to the regulator so no information can be considered withheld."},
+    {k:"D", t:"Wait for the formal inspection so the regulator's independence is not influenced by interim project discussions."}
+  ],
+  answer:["B"],
+  why:"This is primarily a compliance-readiness and acceptance-evidence question. The PM should confirm the applicable evidence/checkpoints through the authorized regulatory interface and address gaps before final acceptance.",
+  notes:["Waiting creates avoidable late risk; informal assurance does not replace compliance evidence; untailored information dumping is not effective governance."]
+},
+{
+  id:38, meta:"People | Hybrid | Hard | Graphic-based",
+  stem:"An agile team tracks the trend shown below for its operations stakeholders. Which action is MOST appropriate based on the trend?",
+  type:"single",
+  chart:{type:"table", title:"Operations Stakeholder Trend", headers:["Month","Stakeholder satisfaction (%)","Late change requests"], rows:[
+    ["M1","82","5"],["M2","78","6"],["M3","72","9"],["M4","61","14"],["M5","55","17"]
+  ]},
+  options:[
+    {k:"A", t:"Stop measuring satisfaction because it is subjective."},
+    {k:"B", t:"Investigate the falling satisfaction and growing late changes with operations stakeholders, then adapt engagement and backlog-feedback mechanisms based on root causes."},
+    {k:"C", t:"Escalate operations because late changes violate agile principles."},
+    {k:"D", t:"Increase development velocity because dissatisfaction is always caused by slow delivery."}
+  ],
+  answer:["B"],
+  why:"The chart shows declining satisfaction alongside more late change requests, suggesting an engagement/feedback problem. The PM should investigate causes and improve the feedback loop rather than assume a single cause.",
+  notes:[]
+},
+{
+  id:39, meta:"People | Predictive | Hard | Single response",
+  passage:"An AI meeting assistant creates a concise steering-committee summary. It omits a disputed dependency and incorrectly states that a risk was accepted. The sponsor wants the summary sent immediately.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Ban AI tools from project communication."},
+    {k:"B", t:"Send the AI summary and correct it at the next meeting if anyone notices."},
+    {k:"C", t:"Validate and correct material content with responsible owners before distribution, preserve any required decision evidence, and disclose uncertainty where relevant."},
+    {k:"D", t:"Send it with a disclaimer that AI may make mistakes."}
+  ],
+  answer:["C"],
+  why:"AI output should be reviewed by accountable humans before it drives governance decisions. A disclaimer does not make materially incorrect information acceptable.",
+  notes:[]
+},
+{
+  id:40, meta:"People | Predictive | Hard | Single response",
+  passage:"A vendor architect will leave before system integration. The contract requires a knowledge-transfer workshop at the end of the vendor engagement, but several undocumented design decisions are already affecting testing.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Reject all vendor deliverables until closure."},
+    {k:"B", t:"Wait for the contractual workshop date."},
+    {k:"C", t:"Replace the architect immediately before gathering knowledge."},
+    {k:"D", t:"Identify the critical knowledge gaps and negotiate/arrange earlier transfer activities because the risk is affecting current delivery."}
+  ],
+  answer:["D"],
+  why:"Contract dates do not prevent the PM from managing emerging knowledge risk. Critical transfer should be accelerated when current project work depends on it.",
+  notes:[]
+},
+{
+  id:41, meta:"People | Adaptive | Hard | Multiple response — Select 2",
+  passage:"A retrospective becomes dominated by one senior developer who interrupts others and rejects feedback. Team members stop contributing.",
+  stem:"Which TWO actions should the servant leader take?",
+  type:"multi", selectN:2,
+  options:[
+    {k:"A", t:"Ask quiet members to submit concerns anonymously forever."},
+    {k:"B", t:"End retrospectives permanently."},
+    {k:"C", t:"Reinforce the agreed ground rules and facilitate balanced participation."},
+    {k:"D", t:"Address the senior developer's behavior and impact directly, using coaching or conflict resolution as appropriate."},
+    {k:"E", t:"Promote the senior developer to formal team lead so decisions are faster."}
+  ],
+  answer:["C","D"],
+  why:"The leader should protect psychological safety and team participation by enforcing agreed norms and addressing behavior. Avoiding the forum or centralizing power fails to solve the underlying issue.",
+  notes:[]
+},
+{
+  id:42, meta:"People | Hybrid | Expert | Single response",
+  passage:"A transformation program has five workstreams. Each workstream reports green against its local milestones, yet the combined release no longer supports the original customer outcome because integration sequencing changed. Executives disagree whether the program is successful because all teams met their own commitments.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Confirm each workstream's baseline performance and ask the leads to propose local recovery actions before changing the integrated program status."},
+    {k:"B", t:"Apply the program's escalation threshold to the combined milestone variance and change the overall status only if the threshold is breached."},
+    {k:"C", t:"Update the benefits register to show the reduced outcome and keep the current sequencing until the next formal benefits review."},
+    {k:"D", t:"Reframe the discussion around the shared customer outcome and integrated value, make the gap between local milestone success and program success visible, and facilitate evaluation of sequencing/scope options before an authorized decision."}
+  ],
+  answer:["D"],
+  why:"The fundamental problem is misalignment between local delivery success and the shared program outcome. The PM should first reconnect stakeholders to the common vision and integrated value, then evaluate delivery options.",
+  notes:["Local recovery, benefits documentation, or status thresholds may follow but do not resolve the underlying outcome misalignment."]
+},
+{
+  id:43, meta:"People | Hybrid | Expert | Single response",
+  passage:"A team is using generative AI to draft customer communications. A junior member discovers that the tool occasionally inserts unsupported claims, but the team lead dismisses the concern because full manual review slows delivery. The junior member asks the project manager whether to keep raising the issue.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Ensure the concern is heard without retaliation, validate the quality risk with evidence, and work with the team to establish proportionate human review and accountability that preserve accuracy, ethics, and stakeholder trust."},
+    {k:"B", t:"Suspend use of the AI tool and escalate to governance immediately because any unsupported claim creates an unacceptable ethical risk."},
+    {k:"C", t:"Ask the junior member to document examples for the next retrospective so the self-organizing team can decide whether a process change is needed."},
+    {k:"D", t:"Ask the team lead to introduce sample-based reviews and monitor the defect rate before changing the delivery process."}
+  ],
+  answer:["A"],
+  why:"The PM should protect psychological safety and quality while using evidence to tailor controls. Sample review may ultimately be appropriate, but first the concern must be taken seriously and the risk understood.",
+  notes:["Immediate blanket suspension may be disproportionate without analysis, while waiting for a retrospective leaves a known customer-quality risk insufficiently addressed."]
+},
+
+{
+  id:44, meta:"Process | Predictive | Easy | Single response",
+  passage:"Requirements, technology, and regulatory steps for a factory upgrade are stable and the work must follow a fixed installation sequence.",
+  stem:"Which development approach is MOST appropriate?",
+  type:"single",
+  options:[
+    {k:"A", t:"Predictive"},
+    {k:"B", t:"Adaptive only"},
+    {k:"C", t:"Kanban only"},
+    {k:"D", t:"No planning until execution"}
+  ],
+  answer:["A"],
+  why:"Stable requirements and sequential, dependency-heavy physical work generally support a predictive approach, subject to tailoring for the project context.",
+  notes:[]
+},
+{
+  id:45, meta:"Process | Adaptive | Easy | Single response",
+  passage:"A product team receives a new customer request during an iteration. It is valuable but not urgent.",
+  stem:"What should the team do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Ask the sponsor to implement it."},
+    {k:"B", t:"Capture the request in the backlog and prioritize it with other work according to value and agreed rules."},
+    {k:"C", t:"Reject it because scope is fixed."},
+    {k:"D", t:"Interrupt current work immediately."}
+  ],
+  answer:["B"],
+  why:"In adaptive delivery, evolving scope is usually captured and prioritized in the backlog rather than disrupting the iteration without cause.",
+  notes:[]
+},
+{
+  id:46, meta:"Process | Hybrid | Easy | Single response",
+  passage:"A mandatory security control does not generate revenue but is required for production approval.",
+  stem:"How should it be treated when prioritizing work?",
+  type:"single",
+  options:[
+    {k:"A", t:"Optional unless customers request it."},
+    {k:"B", t:"Out of scope by definition."},
+    {k:"C", t:"Low value because it has no revenue."},
+    {k:"D", t:"Potentially high value because it protects release viability, risk exposure, and stakeholder outcomes."}
+  ],
+  answer:["D"],
+  why:"Value includes compliance, risk reduction, and the ability to realize benefits, not only direct revenue.",
+  notes:[]
+},
+{
+  id:47, meta:"Process | Predictive | Easy | Single response",
+  passage:"The resource plan requires a certified safety engineer during commissioning, but none is currently assigned.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Ask the team to self-certify."},
+    {k:"B", t:"Secure a suitably qualified resource and update/confirm the resource plan."},
+    {k:"C", t:"Skip the safety activity."},
+    {k:"D", t:"Use any available engineer."}
+  ],
+  answer:["B"],
+  why:"Resource planning considers competence and required qualifications, not just headcount.",
+  notes:[]
+},
+{
+  id:48, meta:"Process | Adaptive | Easy | Single response",
+  passage:"An adaptive product has a fixed quarterly funding envelope. The team learns that one feature is more expensive than expected but less valuable than alternatives.",
+  stem:"What should the product/project leaders do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Continue because it was originally planned."},
+    {k:"B", t:"Spend beyond the funding envelope."},
+    {k:"C", t:"Reprioritize work within authorized funding based on value and constraints, escalating if funding/governance thresholds are affected."},
+    {k:"D", t:"Stop measuring cost."}
+  ],
+  answer:["C"],
+  why:"Adaptive scope can be reprioritized within funding and governance constraints. Value and cost should inform the decision rather than sunk planning commitments alone.",
+  notes:[]
+},
+{
+  id:49, meta:"Process | Hybrid | Easy | Single response",
+  passage:"A hardware component has a fixed certification sequence while the user interface is evolving through feedback.",
+  stem:"Which approach is MOST appropriate?",
+  type:"single",
+  options:[
+    {k:"A", t:"Hybrid with integrated dependencies and governance"},
+    {k:"B", t:"Predictive for all work"},
+    {k:"C", t:"Adaptive for all work"},
+    {k:"D", t:"No defined approach"}
+  ],
+  answer:["A"],
+  why:"Hybrid delivery lets stable, regulated work use predictive controls while uncertain user-facing work evolves adaptively, with integrated planning across dependencies.",
+  notes:[]
+},
+{
+  id:50, meta:"Process | Predictive | Easy | Single response",
+  passage:"A project needs a specialist vendor to manufacture a component. The design and acceptance criteria are stable and well defined, and the buyer wants strong price certainty.",
+  stem:"Which contract approach is MOST appropriate?",
+  type:"single",
+  options:[
+    {k:"A", t:"No contract is needed if the vendor has worked with the organization before."},
+    {k:"B", t:"A fixed-price contract with clear scope and acceptance criteria."},
+    {k:"C", t:"A cost-reimbursable contract because the seller should be paid for all actual costs."},
+    {k:"D", t:"A time-and-materials arrangement with no ceiling because the design is stable."}
+  ],
+  answer:["B"],
+  why:"When scope and acceptance criteria are well defined and the buyer wants price certainty, a fixed-price approach is generally appropriate. Contract selection should still be tailored to the specific procurement risks, market conditions, and organizational policies.",
+  notes:[]
+},
+{
+  id:51, meta:"Process | Adaptive | Moderate | Single response",
+  passage:"A stakeholder asks for a feature that supports the product vision but would displace a higher-value item in the next iteration.",
+  stem:"What should happen FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Add it to the iteration because it supports the vision."},
+    {k:"B", t:"Reject it as scope creep."},
+    {k:"C", t:"Clarify the request and evaluate/prioritize it against other backlog items using agreed value criteria."},
+    {k:"D", t:"Ask the project manager to decide alone."}
+  ],
+  answer:["C"],
+  why:"Supporting the vision does not automatically make a feature the highest priority. Adaptive scope should be refined and prioritized based on relative value, risk, dependencies, and feedback.",
+  notes:[]
+},
+{
+  id:52, meta:"Process | Predictive | Moderate | Matching",
+  passage:"Choose the correct mapping: 1) product scope, 2) project scope, 3) WBS, 4) work package.",
+  stem:"Match the scope concept to its BEST description.",
+  type:"single",
+  options:[
+    {k:"A", t:"1-project schedule; 2-product backlog only; 3-risk register; 4-milestone"},
+    {k:"B", t:"1-cost baseline; 2-quality metric; 3-change request; 4-benefit"},
+    {k:"C", t:"1-business case; 2-product features only; 3-resource calendar; 4-issue"},
+    {k:"D", t:"1-features/functions of the result; 2-work needed to deliver it; 3-hierarchical decomposition of project scope; 4-lowest WBS component normally planned/controlled as a unit"}
+  ],
+  answer:["D"],
+  why:"Product scope describes features/functions of the product or result; project scope is the work required to create it. The WBS decomposes project scope, and work packages are the lowest WBS components typically managed as units.",
+  notes:[]
+},
+{
+  id:53, meta:"Process | Hybrid | Moderate | Single response",
+  passage:"A specialist is shared by a predictive infrastructure team and an agile software team. Both plans assume the specialist is available full time during the same month.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Let the teams compete for the resource."},
+    {k:"B", t:"Delay both workstreams."},
+    {k:"C", t:"Ask the specialist to work 200% capacity."},
+    {k:"D", t:"Identify the integrated demand conflict, assess dependencies/value, and negotiate a feasible allocation or sequencing with the appropriate resource owners."}
+  ],
+  answer:["D"],
+  why:"Integrated resource planning should surface conflicting assumptions and resolve them through analysis and negotiation, not unrealistic utilization.",
+  notes:[]
+},
+{
+  id:54, meta:"Process | Predictive | Moderate | Single response",
+  passage:"BAC is USD 1,000,000 and current CPI is 0.80. Current cost performance is expected to continue.",
+  stem:"What is the approximate EAC using BAC/CPI?",
+  type:"single",
+  options:[
+    {k:"A", t:"USD 1,800,000"},
+    {k:"B", t:"USD 1,250,000"},
+    {k:"C", t:"USD 800,000"},
+    {k:"D", t:"USD 1,000,000"}
+  ],
+  answer:["B"],
+  why:"EAC = BAC / CPI = 1,000,000 / 0.80 = 1,250,000. The forecast is higher than BAC because CPI below 1.0 indicates cost inefficiency.",
+  notes:[]
+},
+{
+  id:55, meta:"Process | Adaptive | Moderate | Single response",
+  passage:"A team can build either a feature with high projected revenue but low confidence, or a small compliance improvement that is required for an upcoming market release.",
+  stem:"What should guide prioritization?",
+  type:"single",
+  options:[
+    {k:"A", t:"Whichever item was requested first."},
+    {k:"B", t:"Story points only."},
+    {k:"C", t:"Relative value including release viability, risk, confidence, stakeholder outcomes, and dependencies."},
+    {k:"D", t:"Revenue only."}
+  ],
+  answer:["C"],
+  why:"Value-based delivery considers multiple dimensions of value and constraints rather than a single revenue estimate or effort measure.",
+  notes:[]
+},
+{
+  id:56, meta:"Process | Hybrid | Moderate | Multiple response — Select 3",
+  passage:"An AI planning assistant proposes a compressed release plan based on historical velocity. The current program includes a new vendor, a regulatory gate, and a specialist resource not represented in the historical dataset.",
+  stem:"Which THREE actions should the project manager take?",
+  type:"multi", selectN:3,
+  options:[
+    {k:"A", t:"Accept the plan because historical data are more objective than expert judgment."},
+    {k:"B", t:"Validate the assumptions and data used by the AI recommendation."},
+    {k:"C", t:"Remove all AI-generated information from project planning."},
+    {k:"D", t:"Use the AI output as one input to an integrated plan rather than as an automatic decision."},
+    {k:"E", t:"Assess the new vendor, regulatory, resource, and dependency conditions with relevant experts."}
+  ],
+  answer:["B","D","E"],
+  why:"AI-supported planning should be human-in-the-loop. The PM should validate data/assumptions, include current context and expert judgment, and treat the output as decision support rather than unquestioned authority.",
+  notes:[]
+},
+{
+  id:57, meta:"Process | Predictive | Moderate | Single response",
+  passage:"A supplier has missed two intermediate milestones on a fixed-price contract. The final contractual delivery date has not yet been missed, but the project's integration window is now at risk. The supplier claims it can recover without changing the contract.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Review the agreement, performance data, remedies and escalation provisions; meet the supplier to validate the recovery plan and agree corrective actions, then use the procurement/governance path if thresholds are exceeded."},
+    {k:"B", t:"Move the integration milestone without documenting the supplier performance issue."},
+    {k:"C", t:"Accept the supplier's assurance because the final delivery date has not yet been missed."},
+    {k:"D", t:"Terminate the contract immediately because two milestones were missed."}
+  ],
+  answer:["A"],
+  why:"Procurement management includes evaluating vendor performance, managing suppliers/contracts, and verifying agreement objectives. The PM should use evidence and contract terms to manage corrective action before premature termination or passive acceptance.",
+  notes:[]
+},
+{
+  id:58, meta:"Process | Adaptive | Moderate | Single response",
+  passage:"A cross-functional team repeatedly fails to finish analytics stories because only one person can validate data models.",
+  stem:"What is the BEST long-term response?",
+  type:"single",
+  options:[
+    {k:"A", t:"Hide the bottleneck by increasing estimates."},
+    {k:"B", t:"Assign more stories to the specialist."},
+    {k:"C", t:"Address the skill bottleneck through cross-training, pairing, and capacity planning while protecting current delivery."},
+    {k:"D", t:"Remove analytics work from the backlog."}
+  ],
+  answer:["C"],
+  why:"Resource optimization includes building capability and reducing single-person constraints. Cross-training/pairing improves resilience and flow.",
+  notes:[]
+},
+{
+  id:59, meta:"Process | Hybrid | Moderate | Graphic-based",
+  stem:"Review the cumulative performance chart. At period P5, which conclusion is MOST accurate?",
+  type:"single",
+  chart:{type:"table", title:"Cumulative Performance (USD thousands)", headers:["Period","PV","EV","AC"], rows:[
+    ["P1","115","110","115"],["P2","240","220","235"],["P3","360","325","350"],["P4","500","430","460"],["P5","650","545","590"]
+  ]},
+  options:[
+    {k:"A", t:"No conclusion can be drawn from EV, PV, and AC."},
+    {k:"B", t:"The project is ahead of schedule and over budget because PV is highest."},
+    {k:"C", t:"The project is ahead of schedule and under budget because AC is below PV."},
+    {k:"D", t:"The project is behind schedule and over budget because EV is below PV and below AC."}
+  ],
+  answer:["D"],
+  why:"At P5, EV (545) is below PV (650), so schedule performance is behind plan. EV is also below AC (590), so the project is over budget for the value earned.",
+  notes:[]
+},
+{
+  id:60, meta:"Process | Hybrid | Moderate | Single response",
+  passage:"During a hybrid implementation, a vendor requests a price increase after a new interface requirement is proposed. The vendor says the requirement is outside the signed statement of work; the product team says it was implied by the original outcome. No agreement has been reached on responsibility.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Confirm the requirement and contract scope with the relevant owners, assess delivery and commercial impacts, determine the negotiation/change authority and strategy, and then engage the vendor through the agreed procurement process."},
+    {k:"B", t:"Approve the increase from contingency reserve so the team can continue without delay."},
+    {k:"C", t:"Reject the price increase because vendors are responsible for all work needed to achieve the outcome."},
+    {k:"D", t:"Add the interface work to the backlog and leave the contract unchanged because the software stream is adaptive."}
+  ],
+  answer:["A"],
+  why:"The PM should first establish what the agreement requires and what has changed, then assess impacts and decision authority before negotiating or changing the contract. Adaptive backlog changes do not bypass procurement obligations or commercial governance.",
+  notes:[]
+},
+{
+  id:61, meta:"Process | Adaptive | Moderate | Single response",
+  passage:"A feature has been delivered, but the expected customer adoption is not occurring.",
+  stem:"What should the project manager or product team do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Increase story points."},
+    {k:"B", t:"Close the project immediately."},
+    {k:"C", t:"Use the benefits/measurement system and stakeholder feedback to investigate whether the outcome is being realized and adapt delivery as needed."},
+    {k:"D", t:"Declare success because scope was delivered."}
+  ],
+  answer:["C"],
+  why:"Delivery of output is not the same as realization of value. The team should measure outcomes and use evidence to adapt the product or delivery approach.",
+  notes:[]
+},
+{
+  id:62, meta:"Process | Hybrid | Moderate | Single response",
+  passage:"A software release depends on a data migration, training, and a regulatory approval owned by different workstreams. Each workstream plan is individually feasible.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Ask the sponsor to integrate the plans personally."},
+    {k:"B", t:"Assess the consolidated plan for dependencies, gaps, and continued business value and maintain an integrated delivery view."},
+    {k:"C", t:"Manage each plan separately because the workstreams have different methods."},
+    {k:"D", t:"Use only the software team schedule."}
+  ],
+  answer:["B"],
+  why:"The PM is responsible for integrated planning across dependencies regardless of different delivery methods.",
+  notes:[]
+},
+{
+  id:63, meta:"Process | Predictive | Moderate | Single response",
+  passage:"A critical-path activity requires an expert who is available only two days per week. A less experienced person is available full time.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Change the critical path manually."},
+    {k:"B", t:"Assess skill requirements, schedule impact, learning/support options, and alternatives before deciding the resource strategy."},
+    {k:"C", t:"Use both without planning."},
+    {k:"D", t:"Choose the full-time person because availability is most important."}
+  ],
+  answer:["B"],
+  why:"Resource decisions should consider competence, availability, risk, and schedule/value impact. The PM should analyze alternatives before simply choosing the most available person.",
+  notes:[]
+},
+{
+  id:64, meta:"Process | Adaptive | Moderate | Single response",
+  passage:"A stakeholder proposes a new feature during a sprint review after seeing the increment.",
+  stem:"What should happen NEXT?",
+  type:"single",
+  options:[
+    {k:"A", t:"Reject it because the sprint is complete."},
+    {k:"B", t:"Capture and clarify the feedback, then prioritize it in the backlog with other work according to value and agreed rules."},
+    {k:"C", t:"Add it to the current sprint immediately."},
+    {k:"D", t:"Raise a formal change request for every backlog change regardless of governance context."}
+  ],
+  answer:["B"],
+  why:"Sprint reviews are designed to generate feedback. The item should be refined and prioritized; whether formal change control is needed depends on the project's governance/baseline context.",
+  notes:[]
+},
+{
+  id:65, meta:"Process | Hybrid | Hard | Multiple response — Select 3",
+  passage:"A hybrid product release includes three candidate items: a revenue feature, a mandatory accessibility fix, and a performance improvement requested by operations. Capacity allows only two.",
+  stem:"Which THREE considerations should drive the decision?",
+  type:"multi", selectN:3,
+  options:[
+    {k:"A", t:"The order in which requests were received."},
+    {k:"B", t:"Dependencies, risk, and evidence/confidence."},
+    {k:"C", t:"Mandatory release/compliance constraints."},
+    {k:"D", t:"Expected stakeholder/business value and benefits."},
+    {k:"E", t:"Which team has the highest utilization."}
+  ],
+  answer:["B","C","D"],
+  why:"Value-based prioritization should consider mandatory constraints, outcomes/benefits, dependencies, risk, and confidence. Request order and utilization alone are not sufficient value criteria.",
+  notes:[]
+},
+{
+  id:66, meta:"Process | Predictive | Hard | Single response",
+  passage:"A project has BAC = USD 2.4M, EV = USD 1.0M, AC = USD 1.25M, and PV = USD 1.15M. Management asks whether the current cost trend should trigger a governance review because the threshold is forecast overrun greater than 10% of BAC. Assume current CPI continues.",
+  stem:"What should the project manager conclude?",
+  type:"single",
+  options:[
+    {k:"A", t:"Use contingency reserve to bring CPI back to 1.0."},
+    {k:"B", t:"Use PV/AC to calculate EAC."},
+    {k:"C", t:"No review is needed because the project is ahead of schedule."},
+    {k:"D", t:"Estimate EAC using BAC/CPI, compare the forecast variance with the threshold, and escalate if the threshold is exceeded."}
+  ],
+  answer:["D"],
+  why:"CPI = EV/AC = 1.0/1.25 = 0.80, so EAC using BAC/CPI is about 3.0M, a forecast overrun of about 0.6M (25% of BAC). That exceeds the 10% threshold, so the governance path should be used.",
+  notes:[]
+},
+{
+  id:67, meta:"Process | Adaptive | Hard | Single response",
+  passage:"A team discovers that a backlog item originally framed as a simple feature requires a new external data-sharing agreement. The product owner still wants it in the current iteration.",
+  stem:"What should the project manager or team do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Reassess the item's scope, dependencies, compliance/contract implications, and feasibility, then adapt the iteration/backlog through the agreed process."},
+    {k:"B", t:"Continue because the item is already in the sprint."},
+    {k:"C", t:"Cancel the product."},
+    {k:"D", t:"Ask the developers to hide the external dependency."}
+  ],
+  answer:["A"],
+  why:"New information changes the work context. Adaptive planning still requires analysis of dependencies and constraints; iteration commitment should not override legal or practical feasibility.",
+  notes:[]
+},
+{
+  id:68, meta:"Process | Hybrid | Hard | Graphic-based",
+  stem:"The chart shows the next iteration's required and available FTE by role. What should the project manager do FIRST?",
+  type:"single",
+  chart:{type:"table", title:"Next Iteration Resource Capacity (FTE)", headers:["Role","Needed FTE","Available FTE"], rows:[
+    ["Data Eng","4","3"],["Security","2","2"],["QA","3","2"],["UX","2","3"]
+  ]},
+  options:[
+    {k:"A", t:"Move one UX person to security because UX has spare capacity."},
+    {k:"B", t:"Start the iteration because total available FTE equals total needed FTE."},
+    {k:"C", t:"Address the role-specific shortages in data engineering and QA by analyzing priority, cross-skilling, sequencing, or additional capacity before committing the plan."},
+    {k:"D", t:"Ask all staff to work overtime."}
+  ],
+  answer:["C"],
+  why:"Capacity is not interchangeable when skills differ. The team has specific shortages in data engineering and QA, so the plan should be adjusted based on skills, priorities, and feasible options.",
+  notes:[]
+},
+{
+  id:69, meta:"Process | Predictive | Hard | Matching",
+  passage:"Choose the correct mapping: 1) contingency reserve, 2) management reserve, 3) cost baseline, 4) BAC.",
+  stem:"Match each finance concept to its MOST appropriate use.",
+  type:"single",
+  options:[
+    {k:"A", t:"1-management reserve; 2-contingency reserve; 3-business-case benefits; 4-current actual cost"},
+    {k:"B", t:"1-profit allowance; 2-approved change log; 3-only actual cost to date; 4-estimate to complete"},
+    {k:"C", t:"1-schedule buffer only; 2-team performance bonus; 3-risk register; 4-earned value to date"},
+    {k:"D", t:"1-allowance in the baseline for identified risks with planned responses; 2-reserve controlled through management/governance for unforeseen work within project scope and outside the cost baseline; 3-time-phased approved budget excluding management reserve; 4-total budget at completion for the cost baseline"}
+  ],
+  answer:["D"],
+  why:"Contingency reserve is budget within the baseline for identified risks with active/planned responses. Management reserve is controlled through management/governance for unforeseen work within project scope and is outside the cost baseline. The cost baseline is the approved time-phased budget excluding management reserve, and BAC is the total budget at completion for that baseline.",
+  notes:[]
+},
+{
+  id:70, meta:"Process | Adaptive | Hard | Single response",
+  passage:"Velocity has increased 25% for three iterations, but customer task-completion time and satisfaction have not improved.",
+  stem:"What should the project manager conclude?",
+  type:"single",
+  options:[
+    {k:"A", t:"The project is successful because productivity increased."},
+    {k:"B", t:"Velocity is an internal delivery measure; the team should examine whether delivered work is producing the intended customer outcomes and adapt priorities accordingly."},
+    {k:"C", t:"Stop collecting customer metrics."},
+    {k:"D", t:"Increase velocity another 25%."}
+  ],
+  answer:["B"],
+  why:"Higher output does not prove higher value. Outcome measures and stakeholder feedback should guide adaptation.",
+  notes:[]
+},
+{
+  id:71, meta:"Process | Hybrid | Hard | Single response",
+  passage:"A new sustainability target requires the construction stream to use lower-carbon materials. The material choice may increase cost and lead time but could reduce lifecycle operating cost and improve regulatory eligibility. The digital stream is unaffected technically but shares the same funding and launch date.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Apply the sustainability target only to construction and leave the integrated plan unchanged."},
+    {k:"B", t:"Assess lifecycle value, cost, schedule, procurement/resource dependencies, funding, and compliance impacts across the integrated plan before recommending the delivery option through governance."},
+    {k:"C", t:"Automatically use management reserve for the premium."},
+    {k:"D", t:"Reject the target because it increases project cost."}
+  ],
+  answer:["B"],
+  why:"Sustainability should be integrated into project decision-making and value, not treated as an isolated add-on. The PM should analyze whole-system impacts before an authorized decision.",
+  notes:[]
+},
+{
+  id:72, meta:"Process | Predictive | Hard | Single response",
+  passage:"A project is under budget today, but a confirmed supplier price increase will raise future costs above the approved forecast threshold next quarter.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Keep status green until actual costs exceed the budget."},
+    {k:"B", t:"Ignore future costs because EVM uses actuals only."},
+    {k:"C", t:"Move the increase into contingency even if it was not planned there."},
+    {k:"D", t:"Update the forecast using the confirmed information, analyze the variance and options, and use the governance/change process before the threshold is breached if required."}
+  ],
+  answer:["D"],
+  why:"Financial management includes anticipating future challenges and monitoring variations, not waiting for an overrun to appear in actuals.",
+  notes:[]
+},
+{
+  id:73, meta:"Process | Adaptive | Hard | Single response",
+  passage:"A team is dependent on a machine-learning specialist for every model review. Work queues are growing and the specialist is becoming a bottleneck.",
+  stem:"Which action is MOST appropriate?",
+  type:"single",
+  options:[
+    {k:"A", t:"Give the specialist more simultaneous assignments."},
+    {k:"B", t:"Increase WIP so everyone stays busy."},
+    {k:"C", t:"Remove reviews."},
+    {k:"D", t:"Reduce dependency by cross-training/pairing, clarify review criteria, and adjust flow/capacity while protecting quality."}
+  ],
+  answer:["D"],
+  why:"Resource optimization should improve flow and resilience without sacrificing quality. More WIP usually worsens bottlenecks.",
+  notes:[]
+},
+{
+  id:74, meta:"Process | Hybrid | Hard | Single response",
+  passage:"A new legal requirement adds audit fields to a product. The agile team can implement them quickly, but the data warehouse baseline and vendor interface are controlled predictively.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Reject it as scope creep."},
+    {k:"B", t:"Confirm the requirement, analyze impacts across backlog, baselines, interfaces, cost/schedule, and use the applicable change/governance process while coordinating implementation."},
+    {k:"C", t:"Put the item only in the agile backlog because regulatory work is automatically approved."},
+    {k:"D", t:"Wait until the next release because the warehouse is predictive."}
+  ],
+  answer:["B"],
+  why:"Hybrid projects require integrated treatment of changes across different delivery methods. Mandatory work still needs coordinated analysis and authorized baseline changes where applicable.",
+  notes:[]
+},
+{
+  id:75, meta:"Process | Predictive | Hard | Single response",
+  passage:"A low-probability, high-impact risk was identified, but leadership chose not to allocate sufficient contingency for the planned response. The event now occurs and the response requires funding beyond the PM's current authority.",
+  stem:"What should the project manager do NEXT?",
+  type:"single",
+  options:[
+    {k:"A", t:"Execute any authorized immediate response, assess the remaining cost/schedule impact and funding gap, update the risk/issue and financial information, and use the authorized financial/change governance path for additional funding; access to management reserve depends on organizational authority and policy."},
+    {k:"B", t:"Refuse to respond because the project did not fund the contingency in advance."},
+    {k:"C", t:"Use management reserve automatically because the risk event has occurred."},
+    {k:"D", t:"Rebaseline the cost baseline to include the full response cost and seek approval afterward."}
+  ],
+  answer:["A"],
+  why:"The occurred risk requires active response and transparent reassessment. A funding shortfall must be handled through the authorized governance process; management reserve is not automatically available to the PM and may be used only when the organization's reserve policy and decision authority permit it.",
+  notes:[]
+},
+{
+  id:76, meta:"Process | Adaptive | Hard | Multiple response — Select 3",
+  passage:"A team wants to use generative AI to create estimates and user stories from historical project data.",
+  stem:"Which THREE practices best align with responsible project management?",
+  type:"multi", selectN:3,
+  options:[
+    {k:"A", t:"Check data quality and relevance before relying on generated outputs."},
+    {k:"B", t:"Use the tool only if every output is perfect."},
+    {k:"C", t:"Protect sensitive/confidential data and follow organizational/legal controls."},
+    {k:"D", t:"Replace stakeholder conversations with AI-generated requirements."},
+    {k:"E", t:"Keep accountable humans responsible for reviewing and approving decisions."}
+  ],
+  answer:["A","C","E"],
+  why:"AI can support work, but data quality, human accountability, privacy/security, and governance remain essential. It should augment rather than replace stakeholder engagement and judgment.",
+  notes:[]
+},
+{
+  id:77, meta:"Process | Hybrid | Expert | Single response",
+  passage:"A two-year transformation is 70% complete, on schedule, and within budget. A competitor launches a low-cost alternative, reducing the expected market-share benefit by half. The remaining work includes a mandatory platform replacement that prevents a significant operational risk, plus optional customer features. Executives argue that stopping now would make prior spending \"wasted.\"",
+  stem:"What should the project manager recommend FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Reassess the remaining business value and benefits with key stakeholders using current evidence, separate mandatory/risk-reduction outcomes from optional scope, evaluate delivery alternatives, and take the investment decision through governance."},
+    {k:"B", t:"Ask the sponsor to confirm whether the original business case is still valid before the team performs further option analysis."},
+    {k:"C", t:"Continue the mandatory platform replacement and preserve the optional feature plan until finance issues a revised benefits forecast, because the project is still on schedule and within budget."},
+    {k:"D", t:"Recommend stopping the optional customer features now while completing the mandatory platform replacement, then update the business case to reflect the decision."}
+  ],
+  answer:["A"],
+  why:"Past spending is sunk and should not determine future investment. The PM should first reassess the value of remaining work and compare alternatives, including mandatory risk-reduction outcomes, before recommending a specific scope decision through governance.",
+  notes:["Options A and C make scope decisions before the integrated value assessment; D delegates analysis that the project should support."]
+},
+{
+  id:78, meta:"Process | Predictive | Expert | Single response",
+  passage:"A construction project is behind schedule because of productivity issues and is also experiencing higher material prices. The sponsor asks for a single EAC. Historical analysis shows the cost inefficiency and schedule inefficiency are both likely to influence remaining work.",
+  stem:"Which forecasting approach is most appropriate conceptually?",
+  type:"single",
+  options:[
+    {k:"A", t:"Use BAC/CPI without considering schedule because schedule never affects cost."},
+    {k:"B", t:"Set EAC equal to BAC because the baseline is approved."},
+    {k:"C", t:"Use AC only."},
+    {k:"D", t:"Use a forecast method that reflects both cost and schedule performance when the remaining cost is expected to be influenced by both, and document the assumptions."}
+  ],
+  answer:["D"],
+  why:"Forecasting should reflect the conditions expected to continue. When both cost and schedule performance materially influence remaining cost, the PM should use an appropriate combined forecast and make assumptions transparent.",
+  notes:[]
+},
+{
+  id:79, meta:"Process | Adaptive | Expert | Single response",
+  passage:"A digital service is achieving the planned feature roadmap, but user research shows the underlying customer problem has shifted. The product owner proposes a major pivot that would discard several planned features but may achieve the intended outcome faster. Funding and regulatory boundaries remain unchanged.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Evaluate the new evidence and value hypothesis with key stakeholders, assess risks, dependencies, commitments and decision authority, and then adapt the backlog/plan through the appropriate governance if the pivot is justified."},
+    {k:"B", t:"Ask the product owner to create a revised backlog and run a timeboxed experiment before changing the roadmap, because the funding and regulatory boundaries are unchanged."},
+    {k:"C", t:"Escalate the proposed pivot as a business-case change because discarding approved roadmap items always requires sponsor authorization."},
+    {k:"D", t:"Finish the current iteration, then use the next review to seek stakeholder approval for the pivot before analyzing broader dependencies."}
+  ],
+  answer:["A"],
+  why:"Adaptive delivery should respond to evidence, but a major pivot should be grounded in the changed customer problem and integrated impacts before a specific experiment or governance action is chosen.",
+  notes:["A timeboxed experiment may be an option after that assessment; waiting delays useful analysis; authorization depends on the actual governance boundaries rather than an automatic rule."]
+},
+
+{
+  id:80, meta:"Business Environment | Predictive | Easy | Single response",
+  passage:"A construction project must comply with new environmental regulations announced mid-project.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Ignore the regulation until the project closes."},
+    {k:"B", t:"Assess the impact, update the plan/baseline through change control, and ensure compliance."},
+    {k:"C", t:"Ask the team to work faster to finish before the regulation applies."},
+    {k:"D", t:"Cancel the project."}
+  ],
+  answer:["B"],
+  why:"External regulatory changes should be assessed for impact and incorporated into the project through the appropriate change control process.",
+  notes:[]
+},
+{
+  id:81, meta:"Business Environment | Adaptive | Easy | Single response",
+  passage:"A product team wants to ensure regulatory compliance is addressed continuously rather than at the end.",
+  stem:"What is the BEST approach?",
+  type:"single",
+  options:[
+    {k:"A", t:"Add compliance checks to the definition of done and relevant backlog items."},
+    {k:"B", t:"Address compliance only in a final hardening sprint."},
+    {k:"C", t:"Assume compliance is the vendor's responsibility."},
+    {k:"D", t:"Skip compliance if velocity is high."}
+  ],
+  answer:["A"],
+  why:"Continuous compliance is best supported by embedding it into working agreements like the definition of done, not deferring it to the end.",
+  notes:[]
+},
+{
+  id:82, meta:"Business Environment | Hybrid | Easy | Single response",
+  passage:"A project's business case includes a benefits management plan describing expected outcomes after go-live.",
+  stem:"Who is typically responsible for tracking whether benefits are ultimately realized?",
+  type:"single",
+  options:[
+    {k:"A", t:"The project manager alone, indefinitely."},
+    {k:"B", t:"No one, once the project closes."},
+    {k:"C", t:"Business/product owners or sponsors, often beyond the project's timeline, per the benefits management plan."},
+    {k:"D", t:"The vendor."}
+  ],
+  answer:["C"],
+  why:"Benefits realization frequently continues after project closure and is typically owned by business/product leadership per the benefits management plan.",
+  notes:[]
+},
+{
+  id:83, meta:"Business Environment | Predictive | Easy | Single response",
+  passage:"A project manager has limited formal authority and must rely on functional managers to assign resources.",
+  stem:"What organizational structure does this MOST likely describe?",
+  type:"single",
+  options:[
+    {k:"A", t:"Strong matrix"},
+    {k:"B", t:"Projectized"},
+    {k:"C", t:"Functional"},
+    {k:"D", t:"Balanced matrix with full PM authority"}
+  ],
+  answer:["C"],
+  why:"In a functional organization, the project manager typically has limited authority and depends on functional managers for resources.",
+  notes:[]
+},
+{
+  id:84, meta:"Business Environment | Adaptive | Easy | Single response",
+  passage:"A team wants a single accountable voice for backlog priorities that reflects business/customer value.",
+  stem:"Which role typically fills this need?",
+  type:"single",
+  options:[
+    {k:"A", t:"Product owner/product manager"},
+    {k:"B", t:"Any team member on rotation"},
+    {k:"C", t:"The scrum master"},
+    {k:"D", t:"An external auditor"}
+  ],
+  answer:["A"],
+  why:"The product owner (or equivalent) is typically accountable for backlog prioritization based on value.",
+  notes:[]
+},
+{
+  id:85, meta:"Business Environment | Hybrid | Moderate | Single response",
+  passage:"Currency fluctuations increase the cost of imported components used by a hybrid program's hardware stream, while the software stream is unaffected.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Ignore it because the software stream is unaffected."},
+    {k:"B", t:"Assess the financial impact on cost/budget, evaluate response options, and use the governance/change process if thresholds are affected."},
+    {k:"C", t:"Ask the supplier to absorb all currency risk without discussion."},
+    {k:"D", t:"Halt the entire program immediately."}
+  ],
+  answer:["B"],
+  why:"External economic factors affecting cost should be assessed and managed through financial and governance processes, proportionate to the impact.",
+  notes:[]
+},
+{
+  id:86, meta:"Business Environment | Predictive | Moderate | Single response",
+  passage:"A change control board approves a scope change that increases cost and duration.",
+  stem:"What should the project manager do NEXT?",
+  type:"single",
+  options:[
+    {k:"A", t:"Wait for the customer to notice the change."},
+    {k:"B", t:"Update the relevant baselines/plans and communicate the approved change to stakeholders."},
+    {k:"C", t:"Ignore the approval since scope was already fixed."},
+    {k:"D", t:"Implement the change without updating any documentation."}
+  ],
+  answer:["B"],
+  why:"After a change is approved, baselines and plans should be updated and communicated so the team and stakeholders work from current information.",
+  notes:[]
+},
+{
+  id:87, meta:"Business Environment | Adaptive | Moderate | Matching",
+  passage:"Choose the correct mapping: 1) product owner, 2) scrum master/team facilitator, 3) sponsor, 4) PMO.",
+  stem:"Match each role to its MOST typical responsibility.",
+  type:"single",
+  options:[
+    {k:"A", t:"1-writes all code; 2-approves the budget; 3-facilitates daily standups; 4-owns the backlog"},
+    {k:"B", t:"1-prioritizes the backlog for value; 2-removes impediments and supports team process; 3-provides resources/authorizes the project and champions it; 4-provides governance, standards, and organizational support"},
+    {k:"C", t:"1-signs contracts only; 2-manages the risk register; 3-writes user stories; 4-performs QA testing"},
+    {k:"D", t:"1-manages vendors exclusively; 2-owns the business case; 3-runs retrospectives; 4-tracks velocity"}
+  ],
+  answer:["B"],
+  why:"The product owner prioritizes the backlog for value, the facilitator/scrum master supports team process and removes impediments, the sponsor authorizes and champions the project, and the PMO provides governance, standards, and organizational support.",
+  notes:[]
+},
+{
+  id:88, meta:"Business Environment | Hybrid | Moderate | Single response",
+  passage:"Staff resist adopting a new hybrid delivery system because it changes established reporting and approval habits.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Mandate adoption with no explanation."},
+    {k:"B", t:"Apply organizational change management: communicate the rationale, involve stakeholders, provide training/support, and address concerns."},
+    {k:"C", t:"Ignore resistance because the system was approved."},
+    {k:"D", t:"Revert to the old system permanently."}
+  ],
+  answer:["B"],
+  why:"Sustained adoption of change usually requires structured change management, communication, and stakeholder engagement, not mandate alone.",
+  notes:[]
+},
+{
+  id:89, meta:"Business Environment | Predictive | Moderate | Single response",
+  passage:"A project is closing. The team has learned several things that would help future, similar projects.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Keep the lessons informal and undocumented."},
+    {k:"B", t:"Document lessons learned and transfer knowledge to the organizational repository/PMO for future use."},
+    {k:"C", t:"Share lessons only with the sponsor verbally."},
+    {k:"D", t:"Discard lessons once the final report is submitted."}
+  ],
+  answer:["B"],
+  why:"Capturing and transferring lessons learned into organizational process assets supports future project success.",
+  notes:[]
+},
+{
+  id:90, meta:"Business Environment | Adaptive | Moderate | Multiple response — Select 3",
+  passage:"A product organization wants to strengthen its ability to confirm that delivered increments are producing intended benefits.",
+  stem:"Which THREE practices support this goal?",
+  type:"multi", selectN:3,
+  options:[
+    {k:"A", t:"Define outcome/benefit metrics tied to the business case."},
+    {k:"B", t:"Review metrics regularly with business stakeholders and adapt priorities based on evidence."},
+    {k:"C", t:"Measure only team velocity."},
+    {k:"D", t:"Assign clear ownership for benefits tracking beyond project delivery."},
+    {k:"E", t:"Stop measuring once the increment ships."}
+  ],
+  answer:["A","B","D"],
+  why:"Confirming benefit realization requires defined outcome metrics, ongoing review with stakeholders, adaptive prioritization based on evidence, and clear ownership — not output-only measures like velocity, and not measurement that stops at shipment.",
+  notes:[]
+},
+{
+  id:91, meta:"Business Environment | Hybrid | Moderate | Graphic-based",
+  stem:"Review the stakeholder power/interest grid. Which engagement approach is MOST appropriate for Stakeholder C?",
+  type:"single",
+  chart:{type:"table", title:"Stakeholder Power/Interest Grid", headers:["Stakeholder","Power","Interest"], rows:[
+    ["A","High","High"],["B","High","Low"],["C","Low","High"],["D","Low","Low"]
+  ]},
+  options:[
+    {k:"A", t:"Manage closely with frequent two-way engagement."},
+    {k:"B", t:"Keep satisfied with periodic high-level updates."},
+    {k:"C", t:"Keep informed, since they are interested but have limited power to influence decisions directly."},
+    {k:"D", t:"Monitor with minimal effort."}
+  ],
+  answer:["C"],
+  why:"Low power/high interest stakeholders are generally kept informed, since they care about outcomes but have limited direct influence.",
+  notes:[]
+},
+{
+  id:92, meta:"Business Environment | Predictive | Hard | Single response",
+  passage:"A multinational infrastructure project must satisfy two jurisdictions whose environmental regulations partially conflict.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Comply with whichever jurisdiction has looser requirements."},
+    {k:"B", t:"Engage legal/compliance and relevant stakeholders to clarify applicable requirements and resolve or escalate the conflict before proceeding with affected work."},
+    {k:"C", t:"Proceed with construction and resolve compliance after completion."},
+    {k:"D", t:"Let each site team decide independently."}
+  ],
+  answer:["B"],
+  why:"Conflicting regulatory requirements require expert legal/compliance analysis and stakeholder resolution before affected work proceeds, not ad hoc or after-the-fact decisions.",
+  notes:[]
+},
+{
+  id:93, meta:"Business Environment | Adaptive | Hard | Single response",
+  passage:"An organization's culture rewards individual heroics and blame, which conflicts with the collaboration needed for an agile transformation.",
+  stem:"What should the project/agile leader do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Address cultural and organizational factors deliberately alongside process changes, working with leadership on incentives and norms."},
+    {k:"B", t:"Focus only on process training since process drives culture automatically."},
+    {k:"C", t:"Wait for culture to change on its own before continuing."},
+    {k:"D", t:"Ignore culture since it is outside the team's control."}
+  ],
+  answer:["A"],
+  why:"Sustainable agile adoption usually requires addressing organizational culture, incentives, and leadership behavior, not process change alone.",
+  notes:[]
+},
+{
+  id:94, meta:"Business Environment | Hybrid | Hard | Single response",
+  passage:"A project delivers a new operating model and closes. Six months later, the expected efficiency benefits have not materialized, and no one owns tracking them.",
+  stem:"What does this scenario MOST clearly indicate was needed?",
+  type:"single",
+  options:[
+    {k:"A", t:"A properly assigned benefits management plan with clear post-project ownership and metrics, established during planning."},
+    {k:"B", t:"A larger team during execution."},
+    {k:"C", t:"More status reports during the project."},
+    {k:"D", t:"A different scheduling tool."}
+  ],
+  answer:["A"],
+  why:"Benefits realization requires an assigned owner, defined metrics, and a plan that extends beyond project closure — gaps here are a benefits-management failure, not a delivery capacity issue.",
+  notes:[]
+},
+{
+  id:95, meta:"Business Environment | Predictive | Hard | Matching",
+  passage:"Choose the correct mapping: 1) business case, 2) benefits management plan, 3) project charter, 4) governance framework.",
+  stem:"Match each artifact/structure to its MOST appropriate purpose.",
+  type:"single",
+  options:[
+    {k:"A", t:"1-defines the business need, justification, and expected value; 2-defines how and when benefits will be realized, measured, and by whom; 3-formally authorizes the project and names the PM; 4-defines decision rights, oversight, and escalation structures"},
+    {k:"B", t:"1-lists project risks; 2-assigns daily tasks; 3-tracks velocity; 4-approves invoices"},
+    {k:"C", t:"1-schedules resources; 2-defines test cases; 3-lists stakeholders only; 4-tracks defects"},
+    {k:"D", t:"1-authorizes the project; 2-defines the WBS; 3-justifies the business need; 4-runs retrospectives"}
+  ],
+  answer:["A"],
+  why:"The business case justifies the investment; the benefits management plan defines how/when benefits are realized and by whom; the charter formally authorizes the project; governance defines decision rights and escalation.",
+  notes:[]
+},
+{
+  id:96, meta:"Business Environment | Adaptive | Hard | Multiple response — Select 3",
+  passage:"An organization is scaling agile delivery across multiple teams that share a platform and have interdependent backlogs.",
+  stem:"Which THREE practices best support successful scaling?",
+  type:"multi", selectN:3,
+  options:[
+    {k:"A", t:"Establish shared cadences, dependency visibility, and cross-team coordination mechanisms."},
+    {k:"B", t:"Let each team define incompatible definitions of done with no coordination."},
+    {k:"C", t:"Align teams around a shared vision, priorities, and outcome metrics."},
+    {k:"D", t:"Invest in communities of practice and leadership support for the transformation."},
+    {k:"E", t:"Remove all cross-team communication to preserve team autonomy."}
+  ],
+  answer:["A","C","D"],
+  why:"Scaling agile successfully typically requires coordination mechanisms, shared vision/outcomes, and organizational/leadership support — not isolation or incompatible standards across teams.",
+  notes:[]
+},
+{
+  id:97, meta:"Business Environment | Hybrid | Hard | Graphic-based",
+  stem:"Review the stakeholder grid for a hybrid regulatory program. Which stakeholder requires the MOST proactive, frequent, tailored engagement?",
+  type:"single",
+  chart:{type:"table", title:"Program Stakeholder Grid", headers:["Stakeholder","Power","Interest","Current Support"], rows:[
+    ["Regulator","High","High","Neutral"],["Internal Sponsor","High","High","Supportive"],["End Users","Low","High","Neutral"],["Vendor","Medium","Medium","Supportive"]
+  ]},
+  options:[
+    {k:"A", t:"Vendor, because they are delivering the work."},
+    {k:"B", t:"End users, because they have the highest interest."},
+    {k:"C", t:"The regulator, because they combine high power, high interest, and neutral support, creating the greatest risk if unmanaged."},
+    {k:"D", t:"Internal sponsor, because they hold the most power."},
+  ],
+  answer:["C"],
+  why:"High power, high interest stakeholders who are not yet supportive represent the greatest risk and typically warrant the most proactive, tailored engagement — here, the regulator.",
+  notes:[]
+},
+{
+  id:98, meta:"Business Environment | Predictive | Expert | Single response",
+  passage:"A predictive infrastructure program spans three countries with different labor laws, environmental standards, and procurement regulations. The sponsor wants one unified compliance approach to reduce administrative overhead, but legal counsel warns that a single unified approach may violate the stricter of the three jurisdictions' requirements in some areas while being unnecessarily conservative in others.",
+  stem:"What should the project manager do?",
+  type:"single",
+  options:[
+    {k:"A", t:"Apply the strictest jurisdiction's rules everywhere to guarantee compliance, without further analysis."},
+    {k:"B", t:"Let each country team interpret requirements independently with no central coordination."},
+    {k:"C", t:"Work with legal/compliance and governance to define a jurisdiction-aware compliance framework that meets each location's requirements, escalating unresolved conflicts, rather than forcing one-size-fits-all administrative simplicity."},
+    {k:"D", t:"Apply the loosest jurisdiction's rules to minimize cost and schedule impact."}
+  ],
+  answer:["C"],
+  why:"Multi-jurisdictional compliance requires expert legal analysis and a tailored, coordinated framework. Forcing uniform rules in either direction (strictest or loosest) trades away either cost/schedule efficiency or legal compliance without proper analysis, and uncoordinated local interpretation creates inconsistent risk exposure.",
+  notes:[]
+},
+{
+  id:99, meta:"Business Environment | Adaptive | Expert | Single response",
+  passage:"A global product organization is transforming from project-based funding to product-based, outcome-funded teams. Some regional leaders embrace the change; others quietly continue project-style governance and reporting because their performance incentives are still tied to project milestones. The transformation sponsor asks the project/agile leader to \"just enforce compliance.\"",
+  stem:"What should the project/agile leader do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Enforce compliance through mandates and audits across all regions immediately."},
+    {k:"B", t:"Ignore the misalignment since it is a leadership incentive issue outside project scope."},
+    {k:"C", t:"Diagnose the root cause — including the conflicting incentive structures — and work with sponsors/leadership to align incentives, governance, and support alongside any compliance actions."},
+    {k:"D", t:"Allow each region to choose its own funding model permanently to avoid conflict."}
+  ],
+  answer:["C"],
+  why:"Sustainable transformation requires addressing root causes, including misaligned incentives and governance, in partnership with leadership — not enforcement alone, avoidance, or permanent fragmentation.",
+  notes:[]
+},
+{
+  id:100, meta:"Business Environment | Hybrid | Expert | Single response",
+  passage:"A hybrid public-sector program modernizing a citizen services platform is 80% complete. A newly elected administration announces a policy priority shift that reduces funding for optional features but adds a mandatory accessibility compliance requirement with a hard legal deadline. The vendor contract for the predictive infrastructure stream includes fixed milestones that assumed the original scope, and agile product teams have several in-flight increments aligned to the original roadmap.",
+  stem:"What should the project manager do FIRST?",
+  type:"single",
+  options:[
+    {k:"A", t:"Continue the original roadmap until formal budget documents are issued, since verbal policy announcements are not binding on contracts already in force."},
+    {k:"B", t:"Assess the full impact of the funding and compliance change across contracts, backlog, and integrated plan; engage sponsors, legal, and the vendor; then reprioritize/replan through governance with the mandatory deadline as a key constraint."},
+    {k:"C", t:"Unilaterally instruct the vendor to stop the optional-feature milestones and redirect funds to accessibility work without contract discussion."},
+    {k:"D", t:"Instruct agile teams to immediately drop all in-flight increments and start accessibility work without assessing contractual and integrated impacts."}
+  ],
+  answer:["B"],
+  why:"A major external policy and funding shift with a hard legal deadline requires integrated impact assessment across contractual and adaptive work, stakeholder and legal engagement, and governance-based replanning — not premature unilateral action in either direction, and not ignoring a clear signal pending paperwork.",
+  notes:["The mandatory legal deadline elevates urgency, but disciplined assessment and governance still precede large scope/contract changes."]
+}
+];
+
 /* Test registry — add future tests here and list their id in TEST_ORDER. */
 const TESTS = {
   "mock-test-01": {
@@ -562,9 +2100,17 @@ const TESTS = {
     subtitle: "Lessons 1 to 5 | 20 questions | Case studies + standalone scenarios | ~55-65 min",
     cases: CASES_MT01,
     questions: QUESTIONS_MT01
+  },
+  "mock-test-02": {
+    id: "mock-test-02",
+    title: "Mock Test 02",
+    fullTitle: "PMP 2026 — 100-Question Full-Length Mock Exam",
+    subtitle: "Lessons 1 to 5 | 100 questions | Mixed domains, approaches & difficulty | ~135 min",
+    cases: CASES_MT02,
+    questions: QUESTIONS_MT02
   }
 };
-const TEST_ORDER = ["mock-test-01"];
+const TEST_ORDER = ["mock-test-01", "mock-test-02"];
 
 /* Change this to update the trainer passcode. It is stored in plain text in this
    file (visible in page source) — it is only meant to keep casual visitors out of
@@ -781,6 +2327,12 @@ function beginQuiz(){
 
 function renderChart(q){
   if(!q.chart) return '';
+  if(q.chart.type === 'table'){
+    let headRow = '<tr>' + q.chart.headers.map(h=>`<th>${h}</th>`).join('') + '</tr>';
+    let bodyRows = q.chart.rows.map(r=>'<tr>' + r.map(c=>`<td>${c}</td>`).join('') + '</tr>').join('');
+    return `<div class="chart-box"><div class="chart-title">${q.chart.title}</div>
+      <table class="dash">${headRow}${bodyRows}</table></div>`;
+  }
   if(q.chart.bars){
     let rows = q.chart.bars.map(b=>{
       return `<div class="bar-row"><div class="bar-label">${b.label}</div><div class="bar-track"><div class="bar-fill" style="width:${b.pct}%">${b.pct}%</div></div><div class="bar-n">n=${b.n}</div></div>`;
@@ -996,7 +2548,6 @@ function submitPasscode(){
   render();
 }
 function renderTrainerView(){
-  const netlifySiteId = "d7700b24-07fc-4404-930e-aebf82e45707";
   const formsUrl = `https://app.netlify.com/projects/pmpmockexamsanjeewani/forms`;
 
   const local = getLocalAttempts().slice().reverse();
